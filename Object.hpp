@@ -8,13 +8,16 @@ public:
 	virtual ~Object() = 0;
 	virtual void step() = 0;
 
+	static void setWorms();
+
+	static std::vector<Object> *_worms;
+	static std::vector<Object> *_towers;
+	static std::vector<std::vector<int>> *_map;
+	static std::vector<std::vector<int>> *_path;
+
 protected:
 	int _x = -1;
 	int _y = -1;
-	std::vector<Object> *_worms;
-	std::vector<Object> *_towers;
-	std::vector<std::vector<int>> *_map;
-	std::vector<std::vector<int>> *_path;
 };
 
 #endif /* OBJECT_HPP_ */
