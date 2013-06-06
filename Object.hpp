@@ -8,7 +8,9 @@ public:
 	virtual ~Object() = 0;
 	virtual void step() = 0;
 
-	static void setWorms();
+	static void setWorms(std::vector<Object> &worms) {
+
+	}
 
 	static std::vector<Object> *_worms;
 	static std::vector<Object> *_towers;
