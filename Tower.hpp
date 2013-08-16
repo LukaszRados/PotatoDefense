@@ -1,18 +1,27 @@
 #ifndef TOWER_HPP_
 #define TOWER_HPP_
 
-#include "Object.hpp"
+#include "Clickable.hpp"
+#include <SFML/Graphics.hpp>
 
-class Tower : public Object {
+class Tower : public Clickable {
 public:
-	void searchClosestTarget();
-	void upgrade();
-	static const int cost[];
-private:
-	int _dmg;
+	Tower();
+	Tower(int);
+	virtual ~Tower();
+	virtual void shoot(int**);
+	virtual void firstClick();
+	virtual Clickable* secondClick(int, int);
+	virtual std::string getName() const;
+	int getLevel() const;
+	int getNumber() const;
+	void levelUp();
+protected:
+	int _level = 1;
+	int _no;
 	int _range;
-	int _fireRate;
-	int _level;
+	int _damage;
+	int _reloadTime;
 };
 
 
