@@ -2,7 +2,7 @@
 #define TOWERBUILDER_HPP_
 
 #include "Clickable.hpp"
-#include "FirstTower.hpp"
+#include "Tower.hpp"
 #include <SFML/Graphics.hpp>
 
 class TowerBuilder : public Clickable {

@@ -60,3 +60,4 @@ int TowerBuilder::getSellingCost(int lvl) const {
 	}
 	return cost * 0.8;
 }
+

@@ -27,3 +27,7 @@ unsigned int Clickable::getY() const {
 sf::IntRect Clickable::getSprite() const {
 	return _sprite;
 }
+
+std::string Clickable::getDesc() const {
+	return _desc;
+}

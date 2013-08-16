@@ -45,5 +45,8 @@ void BgLayer::draw() {
 
 	_window->draw(text);
 
+	text.setString(GameState::info);
+	text.setPosition(610, 170);
 
+	_window->draw(text);
 }

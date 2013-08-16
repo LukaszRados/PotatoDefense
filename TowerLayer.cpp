@@ -23,11 +23,13 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		_next->parseEvent(event);
 	}
 
-	switch(event.type) {
+	int x, y;
+	bool builder;
 
+	switch(event.type) {
 	case sf::Event::MouseButtonPressed:
-		int x = event.mouseButton.x / 40;
-		int y = event.mouseButton.y / 40;
+		x = event.mouseButton.x / 40;
+		y = event.mouseButton.y / 40;
 
 		//if(x < 1 || x > Board::width - 2 || y < 1 || y > Board::height - 2) return;
 
@@ -36,7 +38,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 			// bufor pusty: nic nie rob
 			// bufor cos ma: postaw wiezyczke
 
-		bool builder = false;
+		builder = false;
 
 		for(auto i : _builders) {
 			if(i->getX() == x && i->getY() == y) {
@@ -44,6 +46,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 				builder = true;
 
 				Board::buffer = tmp;
+				GameState::info = "Click to build new tower.";
 
 				break;
 			}
@@ -75,10 +78,12 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 					GameState::money -= b->getCost(0);
 					std::cout << "Yep, you got: $" << GameState::money << std::endl;
+					GameState::info = "New tower built ($ " + toString(b->getCost(0)) + ").";
 
 				}
 				else {
 					std::cout << "Not enough money, sorry" << std::endl;
+					GameState::info = "Not enough money ($ " + toString(b->getCost(0)) + " required).";
 				}
 
 				Board::buffer = 0;
@@ -93,6 +98,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 				if(x < tmp->getX()) {
 					if(level >= 3) {
 						std::cout << "No more leveling, man!" << std::endl;
+						GameState::info = "Max. level reached.";
 						Board::buffer = 0;
 					}
 					else {
@@ -102,8 +108,10 @@ void TowerLayer::parseEvent(sf::Event &event) {
 						if(GameState::money >= nextLevelCost) {
 							GameState::money -= nextLevelCost;
 							tmp->levelUp();
+							GameState::info = "New level set: " + toString(level + 1);
 						}
 						else {
+							GameState::info = "Not enough money \n($ " + toString(nextLevelCost) + " required).";
 							std::cout << "Sorry, bro, no money." << std::endl;
 						}
 						Board::buffer = 0;
@@ -118,13 +126,13 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 					delete Board::board[y][x];
 
-					for(int i = 0; i < _toDraw.size(); ++i) {
-						if(_toDraw[i]->getX() == x && _toDraw[i]->getY() == y - 1) {
-
-							//_toDraw[i] = 0;
-							break;
-						}
-					}
+//					for(int i = 0; i < _toDraw.size(); ++i) {
+//						if(_toDraw[i]->getX() == x && _toDraw[i]->getY() == y - 1) {
+//
+//							//_toDraw[i] = 0;
+//							break;
+//						}
+//					}
 
 					int off = 0;
 					while(off < _toDraw.size()) {
@@ -141,6 +149,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 					//_toDraw[i] = 0;
 
 					std::cout << "Yep, you got: $" << GameState::money << std::endl;
+					GameState::info = "Tower sold ($ " + toString(levelCost) + ").";
 					Board::buffer = 0;
 
 				}

@@ -6,6 +6,7 @@
 #include "Tower.hpp"
 #include "Dialog.hpp"
 #include "BgLayer.hpp"
+#include "ToString.hpp"
 
 #include <iostream>
 

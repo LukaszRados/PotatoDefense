@@ -3,6 +3,7 @@
 
 #include "Clickable.hpp"
 #include <SFML/Graphics.hpp>
+#include "ToString.hpp"
 
 class Tower : public Clickable {
 public:
@@ -16,6 +17,8 @@ public:
 	int getLevel() const;
 	int getNumber() const;
 	void levelUp();
+	virtual std::string getDesc() const;
+
 protected:
 	int _level = 1;
 	int _no;
