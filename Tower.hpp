@@ -11,8 +11,6 @@ public:
 	Tower(int);
 	virtual ~Tower();
 	virtual void shoot(int**);
-	virtual void firstClick();
-	virtual Clickable* secondClick(int, int);
 	virtual std::string getName() const;
 	int getLevel() const;
 	int getNumber() const;

@@ -4,6 +4,10 @@
 #include <string>
 #include <sstream>
 
+/**
+ * Function changing any type to string
+ * (Overriden operator << required)
+ */
 template<typename T>
 std::string toString(T val) {
 	std::stringstream str;
@@ -11,6 +15,10 @@ std::string toString(T val) {
 	return str.str();
 }
 
+/**
+ * Function changing string to any type
+ * (Overriden operator >> required)
+ */
 template<typename T>
 T stringTo(std::string txt) {
 	std::stringstream str(txt);

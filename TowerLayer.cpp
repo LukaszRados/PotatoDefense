@@ -16,6 +16,12 @@ TowerLayer::TowerLayer(sf::RenderWindow *w):Layer(w) {
 
 	_next = new BgLayer(w);
 
+	GameState::textures["towers"] = new sf::Texture();
+	GameState::textures["towers"]->loadFromFile("graphics/towers.png");
+
+	GameState::textures["dialog"] = new sf::Texture();
+	GameState::textures["dialog"]->loadFromFile("graphics/dialog.png");
+
 }
 
 void TowerLayer::parseEvent(sf::Event &event) {
@@ -24,48 +30,37 @@ void TowerLayer::parseEvent(sf::Event &event) {
 	}
 
 	int x, y;
-	bool builder;
 
 	switch(event.type) {
 	case sf::Event::MouseButtonPressed:
 		x = event.mouseButton.x / 40;
 		y = event.mouseButton.y / 40;
 
-		//if(x < 1 || x > Board::width - 2 || y < 1 || y > Board::height - 2) return;
+		if(Board::buffer == 0 && _dialog == 0) {
+			for(auto i : _builders) {
+				if(i->getX() == x && i->getY() == y) {
+					TowerBuilder *tmp = (TowerBuilder*)i;
 
-		// jezeli kliknieto w buildera - ustaw go w buforze
-		// jesli nie:
-			// bufor pusty: nic nie rob
-			// bufor cos ma: postaw wiezyczke
+					Board::buffer = tmp;
+					GameState::info = "Click to build new tower.";
 
-		builder = false;
+					return;
+				}
+			}
 
-		for(auto i : _builders) {
-			if(i->getX() == x && i->getY() == y) {
-				TowerBuilder *tmp = (TowerBuilder*)i;
-				builder = true;
+			for(auto i : _toDraw) {
+				if(i != 0 && i->getX() == x && i->getY() == y) {
+					std::cout << "I dare you, I double dare you!" << std::endl;
 
-				Board::buffer = tmp;
-				GameState::info = "Click to build new tower.";
+					Board::buffer = i;
+					_dialog = new Dialog(((Tower*)i)->getLevel() < 3, x, y);
 
-				break;
+					return;
+				}
 			}
 		}
 
-		for(auto i : _toDraw) {
-			if(i != 0 && i->getX() == x && i->getY() == y && Board::buffer == 0) {
-				std::cout << "I dare you, I double dare you!" << std::endl;
-				builder = true;
-
-				Board::buffer = i;
-				// dodaj okienko dialogowe
-				_dialog = new Dialog(((Tower*)i)->getLevel() < 3, x, y);
-
-				break;
-			}
-		}
-
-		if(!builder && Board::buffer != 0 && Board::buffer->getName() == "towerBuilder") {
+		if(Board::buffer != 0 && Board::buffer->getName() == "towerBuilder") {
 			if(Board::board[y][x] == 0) {
 				TowerBuilder *b = (TowerBuilder*)Board::buffer;
 
@@ -89,7 +84,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 				Board::buffer = 0;
 			}
 		}
-		else if(!builder && Board::buffer != 0 && Board::buffer->getName() == "tower") {
+		else if(Board::buffer != 0 && Board::buffer->getName() == "tower") {
 			Tower* tmp = (Tower*)Board::buffer;
 			int level = tmp->getLevel();
 			int number = tmp->getNumber();
@@ -126,14 +121,6 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 					delete Board::board[y][x];
 
-//					for(int i = 0; i < _toDraw.size(); ++i) {
-//						if(_toDraw[i]->getX() == x && _toDraw[i]->getY() == y - 1) {
-//
-//							//_toDraw[i] = 0;
-//							break;
-//						}
-//					}
-
 					int off = 0;
 					while(off < _toDraw.size()) {
 						if(_toDraw[off] != 0 && _toDraw[off]->getX() == x && _toDraw[off]->getY() == y - 1) {
@@ -142,11 +129,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 						++off;
 					}
 
-					std::cout << off << std::endl;
-
 					_toDraw.erase(_toDraw.begin() + off);
-
-					//_toDraw[i] = 0;
 
 					std::cout << "Yep, you got: $" << GameState::money << std::endl;
 					GameState::info = "Tower sold ($ " + toString(levelCost) + ").";
@@ -156,12 +139,13 @@ void TowerLayer::parseEvent(sf::Event &event) {
 				else {
 					Board::buffer = 0;
 				}
+//
+			}
 
-				if(_dialog != 0) {
-					delete _dialog;
-					_dialog = 0;
-				}
-
+			if(_dialog != 0) {
+				Board::buffer = 0;
+				delete _dialog;
+				_dialog = 0;
 			}
 		}
 
@@ -177,18 +161,12 @@ void TowerLayer::draw() {
 
 	int tx, ty;
 
-	sf::Texture sprites;
-	if(!sprites.loadFromFile("graphics/towers.png")) {
-		std::cout << "Error: Cannot load towers.png!";
-		return;
-	}
-
 	for(auto i : _builders) {
 		tx = i->getX();
 		ty = i->getY();
 
 		sf::Sprite sprite;
-		sprite.setTexture(sprites);
+		sprite.setTexture(*(GameState::textures["towers"]));
 		sprite.setTextureRect(i->getSprite());
 		sprite.setPosition(tx * Board::fieldW, ty * Board::fieldH);
 
@@ -201,7 +179,7 @@ void TowerLayer::draw() {
 			ty = i->getY();
 
 			sf::Sprite sprite;
-			sprite.setTexture(sprites);
+			sprite.setTexture(*(GameState::textures["towers"]));
 			sprite.setTextureRect(i->getSprite());
 			sprite.setPosition(tx * Board::fieldW, ty * Board::fieldH);
 
@@ -215,14 +193,8 @@ void TowerLayer::draw() {
 		int y = _dialog->getY();
 		bool opt = _dialog->getOptions();
 
-		sf::Texture s;
-		if(!s.loadFromFile("graphics/dialog.png")) {
-			std::cout << "Error: Cannot load dialog.png!";
-			return;
-		}
-
 		sf::Sprite sprite;
-		sprite.setTexture(s);
+		sprite.setTexture(*(GameState::textures["dialog"]));
 		if(_dialog->getOptions()) {
 			sprite.setTextureRect(sf::IntRect(0, 0, 120, 40));
 		}

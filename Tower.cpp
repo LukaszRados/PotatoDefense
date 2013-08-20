@@ -19,14 +19,6 @@ void Tower::shoot(int **enemies) {
 
 }
 
-void Tower::firstClick() {
-
-}
-
-Clickable* Tower::secondClick(int x, int y) {
-	return 0;
-}
-
 std::string Tower::getName() const {
 	return "tower";
 }
@@ -44,6 +36,9 @@ void Tower::levelUp() {
 	_sprite = sf::IntRect(_no * 40, (_level - 1) * 40, 40, 40);
 }
 
+/**
+ * Returns information that should be displayed after hover
+ */
 std::string Tower::getDesc() const {
 	return "Level:\t\t  " + toString(_level) + "\n"
 			+ "Range:\t\t 20 \n"
