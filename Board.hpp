@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Clickable.hpp"
+#include "Wall.hpp"
 
 class Board {
 public:

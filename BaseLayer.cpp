@@ -20,6 +20,17 @@ BaseLayer::BaseLayer(sf::RenderWindow *w):Layer(w) {
 		Board::board[i][Board::width - 1] = wall;
 	}
 
+	for(int i = 14; i < Board::width - 1; ++i) {
+		for(int j = 1; j < Board::height - 1; ++j) {
+			Board::board[j][i] = wall;
+		}
+	}
+
+	Board::board[7][1] = wall;
+	Board::board[7][0] = new Wall(2);
+	Board::board[7][13] = wall;
+	Board::board[7][14] = new Wall(3);
+
 	_toDraw.push_back(wall);
 }
 

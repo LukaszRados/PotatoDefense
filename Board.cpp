@@ -40,7 +40,7 @@ void Board::init() {
 	fieldW = 40;
 	fieldH = 40;
 
-	window = new sf::RenderWindow(sf::VideoMode(width * fieldW, height * fieldH), "Potato Defense", sf::Style::Fullscreen); // sf::Style::Fullscreen
+	window = new sf::RenderWindow(sf::VideoMode(width * fieldW, height * fieldH), "Potato Defense"); // sf::Style::Fullscreen
 	buffer = 0;
 
 	for(int i = 0; i < Board::height; ++i) {
@@ -69,6 +69,7 @@ std::vector<std::vector<int>> Board::getBoardAsInts() {
 
 		for(int j = 0; j < Board::board[i].size(); ++j) {
 			if(Board::board[i][j] == 0) tmp[i].push_back(0);
+			else if(Board::board[i][j]->getName() == "wall") tmp[i].push_back(((Wall*)Board::board[i][j])->getNumber());
 			else tmp[i].push_back(1);
 		}
 	}
