@@ -14,7 +14,7 @@ TowerLayer::TowerLayer(sf::RenderWindow *w):Layer(w) {
 		_builders.push_back(tmp);
 	}
 
-	_next = new BgLayer(w);
+	_next =new WormLayer(w);
 
 	GameState::textures["towers"] = new sf::Texture();
 	GameState::textures["towers"]->loadFromFile("graphics/towers.png");
@@ -35,6 +35,9 @@ void TowerLayer::parseEvent(sf::Event &event) {
 	case sf::Event::MouseButtonPressed:
 		x = event.mouseButton.x / 40;
 		y = event.mouseButton.y / 40;
+
+		//troche na sile, ale to sie poprawi :)
+		((WormLayer*)_next)->getBoard(Board::getBoardAsInts());
 
 		if(Board::buffer == 0 && _dialog == 0) {
 			for(auto i : _builders) {
