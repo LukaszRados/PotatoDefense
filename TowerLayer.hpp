@@ -5,7 +5,7 @@
 #include "TowerBuilder.hpp"
 #include "Tower.hpp"
 #include "Dialog.hpp"
-#include "BgLayer.hpp"
+#include "WormLayer.hpp"
 #include "ToString.hpp"
 
 #include <iostream>

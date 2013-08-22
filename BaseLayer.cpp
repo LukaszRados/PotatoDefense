@@ -25,10 +25,10 @@ BaseLayer::BaseLayer(sf::RenderWindow *w):Layer(w) {
 			Board::board[j][i] = wall;
 		}
 	}
-
-	Board::board[7][1] = wall;
+	//po co te dwie linijki? jak one sa to stonki nigdzie nie pojda :P
+	//Board::board[7][1] = wall;
 	Board::board[7][0] = new Wall(2);
-	Board::board[7][13] = wall;
+	//Board::board[7][13] = wall;
 	Board::board[7][14] = new Wall(3);
 
 	_toDraw.push_back(wall);
