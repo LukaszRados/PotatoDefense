@@ -19,7 +19,7 @@ public:
 	virtual void draw();
 
 private:
-	sf::RectangleShape _active;
+	// ---- sf::RectangleShape _active;
 };
 
 

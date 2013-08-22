@@ -19,6 +19,7 @@ public:
 private:
 	std::vector<TowerBuilder*> _builders;
 	Dialog* _dialog = 0;
+	sf::RectangleShape _active;
 };
 
 
