@@ -63,8 +63,8 @@ std::vector<std::vector<int> > WormLayer::findPath(std::vector<std::vector<int> 
 
 //	std::cout << path[0].size() << " " << _s*_dens<< std::endl;
 
-	for(auto i=0;i<_s*_dens;i++)
-		for(auto j=0;j<_s*_dens;j++){
+	for(auto i=0;i<_s;i++)
+		for(auto j=0;j<_s;j++){
 			switch(path[i][j]){
 			case 1:
 				path[i][j]=-1;
@@ -78,12 +78,12 @@ std::vector<std::vector<int> > WormLayer::findPath(std::vector<std::vector<int> 
 			}
 
 		}
-
+	printPath(path);
 	bool change=true;
 	while(change){
 		change=false;
-		for(auto y=1;y<_s*_dens-1;y++)
-			for(auto x=1;x<_s*_dens-1;x++){
+		for(auto y=1;y<_s-1;y++)
+			for(auto x=1;x<_s-1;x++){
 
 				if(path[x][y]<0) continue;
 				int tmp=path[x][y];
@@ -124,15 +124,14 @@ std::vector<std::vector<int> > WormLayer::getBoard(std::vector<std::vector<int> 
 }
 
 void WormLayer::setPath(std::vector<std::vector<int> >  ints){
+	//_path=findPath(getBoard(ints));
+	_path=findPath(ints);
 
-
-
-	_path=findPath(getBoard(ints));
-	//printPath(_path);
+	printPath(_path);
 }
 
 bool WormLayer::pathExists(std::vector<std::vector<int> > ints){
-	auto tmp=findPath(getBoard(ints));
+	auto tmp=findPath(ints);//getBoard(ints));
 
-	return (tmp[21][1] || tmp[22][1] || tmp[23][1]);
+	return (tmp[7][1]);
 }
