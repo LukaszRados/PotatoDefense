@@ -356,6 +356,8 @@ void TowerLayer::parseEvent(sf::Event &event) {
 //							std::cout << std::endl;
 //						}
 
+					// zeby przeliczylo po sprzedaniu
+					((WormLayer*)_next)->setPath(Board::getBoardAsInts());
 					int off = 0;
 					while(off < _toDraw.size()) {
 						if(_toDraw[off] != 0 && _toDraw[off]->getX() == x && _toDraw[off]->getY() == y - 1) {

@@ -47,13 +47,13 @@ void WormLayer::printPath(std::vector<std::vector<int> >  path){
 	}
 }
 
-void WormLayer::fillBoard(std::vector<std::vector<int> >  & board,int val, int x, int y){
-	for(int i=0;i<_dens;i++)
-		for(int j=0;j<_dens;j++){
-			board[x*_dens+i][y*_dens+j]=val;
-		}
-}
-
+//void WormLayer::fillBoard(std::vector<std::vector<int> >  & board,int val, int x, int y){
+//	for(int i=0;i<_dens;i++)
+//		for(int j=0;j<_dens;j++){
+//			board[x*_dens+i][y*_dens+j]=val;
+//		}
+//}
+//
 
 
 std::vector<std::vector<int> > WormLayer::findPath(std::vector<std::vector<int> >  board){
@@ -111,17 +111,17 @@ std::vector<std::vector<int> > WormLayer::findPath(std::vector<std::vector<int> 
 	return path;
 }
 
-std::vector<std::vector<int> > WormLayer::getBoard(std::vector<std::vector<int> >  ints){
-	std::vector<std::vector<int> > tmp;
-	for(int i=0;i<_s*_dens;i++)
-		tmp.push_back(std::vector<int>(_s*_dens));
-
-	for(int i=0;i<_s;i++)
-		for(int j=0;j<_s;j++){
-			fillBoard(tmp,ints[i][j], i, j);
-		}
-	return tmp;
-}
+//std::vector<std::vector<int> > WormLayer::getBoard(std::vector<std::vector<int> >  ints){
+//	std::vector<std::vector<int> > tmp;
+//	for(int i=0;i<_s*_dens;i++)
+//		tmp.push_back(std::vector<int>(_s*_dens));
+//
+//	for(int i=0;i<_s;i++)
+//		for(int j=0;j<_s;j++){
+//			fillBoard(tmp,ints[i][j], i, j);
+//		}
+//	return tmp;
+//}
 
 void WormLayer::setPath(std::vector<std::vector<int> >  ints){
 	//_path=findPath(getBoard(ints));
@@ -133,5 +133,5 @@ void WormLayer::setPath(std::vector<std::vector<int> >  ints){
 bool WormLayer::pathExists(std::vector<std::vector<int> > ints){
 	auto tmp=findPath(ints);//getBoard(ints));
 
-	return (tmp[7][1]);
+	return (tmp[7][1]); //jesli tam jest 0 to znaczy ze nie ma sciezki
 }
