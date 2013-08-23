@@ -15,18 +15,24 @@ public:
 	virtual ~WormLayer();
 	virtual void parseEvent(sf::Event &event);
 	virtual void draw();
-	void getBoard(std::vector<std::vector<int> >  ints);
+	void setPath(std::vector<std::vector<int> >);
+	std::vector<std::vector<int> >  findPath(std::vector<std::vector<int> >);
+	bool pathExists(std::vector<std::vector<int> >);
 private:
 	const int _dens=3; // stala okresla gestosc siatki po ktorej chodza stonki
 	// Board::height okresla rozmiar planszy
 	const int _s = Board::height; //s jak size
 
-	std::vector<std::vector<int> > _board;
+	// metoda do przerabiania siatki wiez na siatke robakow
+	std::vector<std::vector<int> > getBoard(std::vector<std::vector<int> >);
+	//std::vector<std::vector<int> > _board;
+	std::vector<std::vector<int> > _path;
 	void printBoard();
+	void printPath(std::vector<std::vector<int> >);
 	/** Wypelnia tablice _board o gestszej siatce wartosciami val w polach x,y(w zasiegu _dens)
 	 *
 	 */
-	void fillBoard(int val, int x, int y);
+	void fillBoard(std::vector<std::vector<int> >  & board,int val, int x, int y);
 
 };
 

@@ -12,7 +12,7 @@ class Board {
 public:
 	static void init();
 	static void deinit();
-	static std::vector<std::vector<int>> getBoardAsInts();
+	static std::vector<std::vector<int>>  getBoardAsInts();
 
 	static std::vector<std::vector<Clickable*>> board;
 	static sf::RenderWindow* window;
@@ -21,6 +21,7 @@ public:
 	static int height;
 	static int fieldW;
 	static int fieldH;
+
 };
 
 #endif /* BOARD_HPP_ */

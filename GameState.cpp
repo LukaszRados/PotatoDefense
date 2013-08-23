@@ -10,3 +10,4 @@ std::string GameState::info = "[ESC] Exit";
  */
 std::map<std::string, sf::Texture*> GameState::textures = std::map<std::string, sf::Texture*>();
 
+sf::Clock GameState::globalTime;

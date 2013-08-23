@@ -3,6 +3,7 @@
 BgLayer::BgLayer(sf::RenderWindow *w):Layer(w) {
 	GameState::textures["bg"] = new sf::Texture();
 	GameState::textures["bg"]->loadFromFile("graphics/bg.png");
+	GameState::globalTime.restart();
 }
 
 void BgLayer::parseEvent(sf::Event &event) {
@@ -49,4 +50,12 @@ void BgLayer::draw() {
 	text.setPosition(610, 170);
 
 	_window->draw(text);
+
+	int seconds = (int)GameState::globalTime.getElapsedTime().asSeconds();
+	std::string time=toString(seconds/60)+":"+(seconds % 60 < 10 ? "0" : "")+toString(seconds % 60);
+
+	text.setString(time);
+	text.setPosition(650,10);
+	_window->draw(text);
+
 }

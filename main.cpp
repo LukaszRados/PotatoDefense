@@ -11,7 +11,7 @@ int main() {
 
 	/**
 	 * Showcase of getBoardAsInts() result
-	 */
+	*/
 	auto b = Board::getBoardAsInts();
 	for(auto i : b) {
 		for(auto j : i) {
@@ -19,7 +19,7 @@ int main() {
 		}
 		std::cout << std::endl;
 	}
-	/**
+/*
 	 * End of showcase.
 	 */
 
