@@ -1,9 +1,12 @@
 #include "WormLayer.hpp"
 
+ std::vector<std::vector<int> > WormLayer::_path;
+ std::list<Worm> WormLayer::worms;
+
 WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	_next= new BgLayer(w);
 
-
+	_time.restart();
 //
 //	for(int i=0;i<_s*_dens;i++)
 //		_board.push_back(std::vector<int>(_s*_dens));
@@ -16,10 +19,26 @@ void WormLayer::parseEvent(sf::Event &event){
 		_next->parseEvent(event);
 	}
 
+	worms.remove_if(Worm::isDead);
+
+	for(auto worm : worms){
+		if(worm.go(int(_time.getElapsedTime().asMilliseconds()))){
+			//odbieranie nam szans itp
+		}
+	}
+	//zeby przy nastepnym przesuwaniu wiadomo bylo o ile przesunac
+	_time.restart();
+
+
 }
 
 void WormLayer::draw(){
 	_next->draw();
+
+	//rysowanie robakow
+	for(auto i:worms){
+		_window->draw(i);
+	}
 }
 
 WormLayer::~WormLayer(){
@@ -78,7 +97,7 @@ std::vector<std::vector<int> > WormLayer::findPath(std::vector<std::vector<int> 
 			}
 
 		}
-	printPath(path);
+	//printPath(path);
 	bool change=true;
 	while(change){
 		change=false;
@@ -127,7 +146,7 @@ void WormLayer::setPath(std::vector<std::vector<int> >  ints){
 	//_path=findPath(getBoard(ints));
 	_path=findPath(ints);
 
-	printPath(_path);
+	//printPath(_path);
 }
 
 bool WormLayer::pathExists(std::vector<std::vector<int> > ints){

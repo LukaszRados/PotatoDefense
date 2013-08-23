@@ -2,7 +2,7 @@
 #define BASELAYER_HPP_
 
 #include "Layer.hpp"
-#include "DialogLayer.hpp"
+#include "TowerLayer.hpp"
 #include "Wall.hpp"
 #include <iostream>
 
