@@ -197,8 +197,6 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		_active.setPosition(x * 40, y * 40);
 		_shadow.setPosition(x * 40, y * 40);
 
-
-
 		if(Board::board[y][x]) {
 			_active.setOutlineColor(sf::Color(255, 0, 0, 125));
 			_shadow.setPosition(-100, -100);
