@@ -61,3 +61,7 @@ int TowerBuilder::getSellingCost(int lvl) const {
 	return cost * 0.8;
 }
 
+std::string TowerBuilder::getDesc() const {
+	return "Cost:\t\t $" + toString(_cost[_towerNumber][0]) + "\n" + Tower(_towerNumber).getDesc();
+}
+

@@ -40,7 +40,5 @@ void Tower::levelUp() {
  * Returns information that should be displayed after hover
  */
 std::string Tower::getDesc() const {
-	return "Level:\t\t  " + toString(_level) + "\n"
-			+ "Range:\t\t 20 \n"
-			+ "Reload:\t\t2s";
+	return "Range:\t\t 20 \nReload:\t\t2s";
 }

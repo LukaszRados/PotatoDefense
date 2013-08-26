@@ -16,6 +16,7 @@ public:
 	int getSellingCost(int lvl) const;
 	Tower* putTower();
 	virtual std::string getName() const;
+	virtual std::string getDesc() const;
 
 
 protected:
