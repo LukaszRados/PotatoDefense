@@ -8,7 +8,7 @@
 int main() {
 	Board::init();
 	Layer *layer = new BaseLayer(Board::window);
-
+	std::cout << "Git ssie" << std::endl;
 	/**
 	 * Showcase of getBoardAsInts() result
 	 */
