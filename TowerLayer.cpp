@@ -141,11 +141,10 @@ void TowerLayer::parseEvent(sf::Event &event) {
 				else if(x == tmp->getX()) {
 					std::cout << "Sell it, sell this shit!" << std::endl;
 					int levelCost = TowerBuilder(number).getSellingCost(level);
-					std::cout << levelCost << std::endl;
 					GameState::money += levelCost;
 
-					//delete Board::board[y][x];
-					Board::board[y][x] = nullptr;
+					//delete Board::board[y - 1][x];	// uzycie tego delete powoduje segmentation fault
+					Board::board[y - 1][x] = 0;
 
 					int off = 0;
 					while(off < _toDraw.size()) {
