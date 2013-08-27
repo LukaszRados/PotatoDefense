@@ -3,6 +3,10 @@
 
 #include "Board.hpp"
 #include <SFML/Graphics.hpp>
+#include <ctime>
+#include <cstdlib>
+
+
 
 class Worm : public sf::Drawable {
 public:
@@ -38,19 +42,21 @@ public:
 		return _flying;
 	}
 
-	sf::Vector2<int> getPos(){
+	sf::Vector2<float> getPos(){
 		return _pos;
 	}
 
 	static bool isDead(const Worm & worm){
 		return !worm._alive;
 	}
+	// frienship for accessing private members
+	friend class WormLayer;
 private:
 	static sf::Texture _texture; //tekstura gdzie będą wszystkie sprite'y, zeby tylko raz ladowac z dysku
 	sf::Sprite getSprite(int type); //wycina z tekstury odpowiedni dla typu robaka fragment
 
-	sf::Vector2<int> _dir;
-	sf::Vector2<int> _pos;
+	sf::Vector2<float> _dir;
+	sf::Vector2<float> _pos;
 	int _health=0;
 	bool _alive=true; //mozliwe ze zbedne
 

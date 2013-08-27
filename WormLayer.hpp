@@ -3,8 +3,9 @@
 
 #include "Layer.hpp"
 #include "BgLayer.hpp"
-#include <list>
 #include "Worm.hpp"
+#include <list>
+
 
 /**
  * Warstwa do obslugi robakow. Szuka im sciezki, animuje je oraz decyduje kiedy wchodza nastepne
@@ -19,16 +20,17 @@ public:
 	void setPath(std::vector<std::vector<int> >);
 
 	bool pathExists(std::vector<std::vector<int> >);
+	// wg tej sciezki beda chodzic robaki
 	static std::vector<std::vector<int> > _path;
 	static std::list<Worm> worms;
 private:
 	const int _dens=3; // stala okresla gestosc siatki po ktorej chodza stonki
 	// Board::height okresla rozmiar planszy
 	const int _s = Board::height; //s jak size
-	// wg tej sciezki beda chodzic robaki
+
 
 	sf::Clock _time;
-
+	static bool move(Worm &, int);
 
 
 
