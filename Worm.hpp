@@ -1,6 +1,7 @@
 #ifndef WORM_HPP_
 #define WORM_HPP_
 
+#include "Board.hpp"
 #include <SFML/Graphics.hpp>
 
 class Worm : public sf::Drawable {
@@ -51,16 +52,16 @@ private:
 	sf::Vector2<int> _dir;
 	sf::Vector2<int> _pos;
 	int _health=0;
-	bool _alive=0; //mozliwe ze zbedne
+	bool _alive=true; //mozliwe ze zbedne
 
 
 // consty
 	sf::Sprite _sprite;
-	const int _value=0;
-	const float _v=0;
-	const int _type=0;
-	const bool _flying=false;
-	const int _max_health=0;
+	int _value;
+	float _v;
+	int _type;
+	bool _flying;
+	int _max_health;
 };
 
 

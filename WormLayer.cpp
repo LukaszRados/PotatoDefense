@@ -5,7 +5,7 @@
 
 WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	_next= new BgLayer(w);
-
+	Worm::loadTexture();
 	_time.restart();
 //
 //	for(int i=0;i<_s*_dens;i++)
@@ -46,16 +46,6 @@ WormLayer::~WormLayer(){
 		delete _next;
 }
 
-//
-//void WormLayer::printBoard(std::vector<std::vector<int> > board){
-//	std::cout << std::endl;
-//	for(auto i : board){
-//		for(auto j : i)
-//			std::cout << j << " ";
-//		std::cout << std::endl;
-//	}
-//}
-
 
 void WormLayer::printPath(std::vector<std::vector<int> >  path){
 	std::cout << std::endl;
@@ -66,21 +56,12 @@ void WormLayer::printPath(std::vector<std::vector<int> >  path){
 	}
 }
 
-//void WormLayer::fillBoard(std::vector<std::vector<int> >  & board,int val, int x, int y){
-//	for(int i=0;i<_dens;i++)
-//		for(int j=0;j<_dens;j++){
-//			board[x*_dens+i][y*_dens+j]=val;
-//		}
-//}
-//
 
 
 std::vector<std::vector<int> > WormLayer::findPath(std::vector<std::vector<int> >  board){
 
 
 	auto path=board;
-
-//	std::cout << path[0].size() << " " << _s*_dens<< std::endl;
 
 	for(auto i=0;i<_s;i++)
 		for(auto j=0;j<_s;j++){
@@ -130,27 +111,14 @@ std::vector<std::vector<int> > WormLayer::findPath(std::vector<std::vector<int> 
 	return path;
 }
 
-//std::vector<std::vector<int> > WormLayer::getBoard(std::vector<std::vector<int> >  ints){
-//	std::vector<std::vector<int> > tmp;
-//	for(int i=0;i<_s*_dens;i++)
-//		tmp.push_back(std::vector<int>(_s*_dens));
-//
-//	for(int i=0;i<_s;i++)
-//		for(int j=0;j<_s;j++){
-//			fillBoard(tmp,ints[i][j], i, j);
-//		}
-//	return tmp;
-//}
-
 void WormLayer::setPath(std::vector<std::vector<int> >  ints){
-	//_path=findPath(getBoard(ints));
 	_path=findPath(ints);
-
-	//printPath(_path);
+	_path[Board::height/2][0]=_path[Board::height/2][1]+1;
+	printPath(_path);
 }
 
 bool WormLayer::pathExists(std::vector<std::vector<int> > ints){
-	auto tmp=findPath(ints);//getBoard(ints));
+	auto tmp=findPath(ints);
 
-	return (tmp[7][1] > 0); //jesli tam jest 0 to znaczy ze nie ma sciezki
+	return (tmp[7][1] > 0); //jesli tam jest <0 to znaczy ze nie ma sciezki
 }
