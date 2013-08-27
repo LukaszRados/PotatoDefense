@@ -81,7 +81,10 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		}
 
 		if(Board::buffer != 0 && Board::buffer->getName() == "towerBuilder") {
-			if(Board::board[y][x] == 0) {
+			auto tmp=Board::getBoardAsInts();
+			tmp[y][x]=1;
+
+			if(Board::board[y][x] == 0 && ((WormLayer*)_next)->pathExists(tmp)) {
 				TowerBuilder *b = (TowerBuilder*)Board::buffer;
 
 				if(GameState::money > b->getCost(0)) {
@@ -163,12 +166,9 @@ void TowerLayer::parseEvent(sf::Event &event) {
 					std::cout << "Yep, you got: $" << GameState::money << std::endl;
 					GameState::info = "Tower sold ($ " + toString(levelCost) + ").";
 					Board::buffer = 0;
-
-
 				}
 				else {
 					Board::buffer = 0;
-
 				}
 //
 			}
@@ -188,6 +188,9 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		int x = event.mouseMove.x / 40;
 		int y = event.mouseMove.y / 40;
 
+		_active.setPosition(-100, -100);
+		_shadow.setPosition(-100, -100);
+
 		for(auto i : _builders) {
 			if(i->getX() == x && i->getY() == y) {
 				GameState::info = ((TowerBuilder*)i)->getDesc();
@@ -196,9 +199,15 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		}
 
 		if(x > 14) {
-			_active.setPosition(-100, -100);
-			_shadow.setPosition(-100, -100);
-			break;
+			return;
+		}
+
+		auto tmp=Board::getBoardAsInts();
+		tmp[y][x]=1;
+		bool pathExists = ((WormLayer*)_next)->pathExists(tmp);
+
+		if(_dialog != 0) {
+			return;
 		}
 
 		_active.setPosition(x * 40, y * 40);
@@ -210,34 +219,20 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		}
 		else {
 			_active.setOutlineColor(sf::Color(255, 255, 255, 100));
-			if(Board::buffer == 0 || Board::buffer->getName() != "towerBuilder") {
-				_shadow.setPosition(-100, -100);
-			}
-			else {
-				_shadow.setTextureRect(sf::IntRect(Board::buffer->getSprite().left, 120, 40, 40));
-			}
-		_active.setTexture(GameState::textures["towers"]);
-		_active.setTextureRect(sf::IntRect(0, 0, 40, 40));
-
-		if(Board::buffer != 0 && Board::buffer->getName() == "towerBuilder"){
-			// this is how you can chceck whether path for worms exists
-			// move this wherever you want :P
-			auto tmp=Board::getBoardAsInts();
-			tmp[y][x]=1;
-			if(((WormLayer*)_next)->pathExists(tmp)){ //!!
-				_active.setOutlineColor(sf::Color(255, 255, 255, 100));
-			} else {
-				_active.setOutlineColor(sf::Color(255, 0, 0, 125));
-			}
-		} else {
-			if(Board::board[y][x]) {
-				_active.setOutlineColor(sf::Color(255, 0, 0, 125));
-			}
-			else {
-				_active.setOutlineColor(sf::Color(255, 255, 255, 100));
-
-			}
 		}
+
+		if(Board::buffer == 0 || Board::buffer->getName() != "towerBuilder") {
+			_shadow.setPosition(-100, -100);
+		}
+		else if(Board::buffer != 0 && Board::buffer->getName() == "towerBuilder" && pathExists) {
+			_shadow.setTextureRect(sf::IntRect(Board::buffer->getSprite().left, 120, 40, 40));
+		}
+		else if(!pathExists) {
+			_shadow.setPosition(-100, -100);
+		}
+
+		if(!pathExists) {
+			_active.setOutlineColor(sf::Color(255, 0, 0, 125));
 		}
 		break;
 	}

@@ -152,5 +152,5 @@ void WormLayer::setPath(std::vector<std::vector<int> >  ints){
 bool WormLayer::pathExists(std::vector<std::vector<int> > ints){
 	auto tmp=findPath(ints);//getBoard(ints));
 
-	return (tmp[7][1]); //jesli tam jest 0 to znaczy ze nie ma sciezki
+	return (tmp[7][1] > 0); //jesli tam jest 0 to znaczy ze nie ma sciezki
 }
