@@ -191,6 +191,8 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		_active.setPosition(-100, -100);
 		_shadow.setPosition(-100, -100);
 
+		GameState::info = "";
+
 		for(auto i : _builders) {
 			if(i->getX() == x && i->getY() == y) {
 				GameState::info = ((TowerBuilder*)i)->getDesc();
@@ -199,6 +201,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		}
 
 		if(x > 14) {
+			GameState::info = "";
 			return;
 		}
 
@@ -207,6 +210,35 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		bool pathExists = ((WormLayer*)_next)->pathExists(tmp);
 
 		if(_dialog != 0) {
+			Tower* tmp = (Tower*)Board::buffer;
+			TowerBuilder tb(tmp->getNumber());
+			if(tmp->getY() + 1 == y) {
+				switch(x - tmp->getX()) {
+				case 0:
+					GameState::info = "Sale price is $ " + toString(tb.getSellingCost(tmp->getLevel()));
+					break;
+
+				case 1:
+					GameState::info = "Cancel";
+					break;
+
+				case -1:
+					if(tmp->getLevel() == 3) {
+						GameState::info = "Tower reached max. level";
+					}
+					else {
+						GameState::info = "Upgrading to level " + toString(tmp->getLevel() + 1) + "\ncosts $ " + toString(tb.getCost(tmp->getLevel()));
+					}
+					break;
+
+				default:
+					GameState::info = "";
+					break;
+				}
+			}
+			else {
+				GameState::info = "";
+			}
 			return;
 		}
 
@@ -228,6 +260,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 			_shadow.setTextureRect(sf::IntRect(Board::buffer->getSprite().left, 120, 40, 40));
 		}
 		else if(!pathExists) {
+			GameState::info = "This place is not avaible.";
 			_shadow.setPosition(-100, -100);
 		}
 
