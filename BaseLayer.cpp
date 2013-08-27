@@ -1,7 +1,7 @@
 #include "BaseLayer.hpp"
 
 BaseLayer::BaseLayer(sf::RenderWindow *w):Layer(w) {
-	_next = new DialogLayer(w);
+	_next = new TowerLayer(w);
 
 	Wall *wall = new Wall;
 
