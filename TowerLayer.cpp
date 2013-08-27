@@ -182,6 +182,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		//troche na sile, ale to sie poprawi :)
 				//((WormLayer*)_next)->getBoard(Board::getBoardAsInts());
 		break;
+//*********************** End of case ButtonPressed ***************************************************//
 
 	case sf::Event::MouseMoved:
 		int x = event.mouseMove.x / 40;
@@ -242,6 +243,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		break;
 	}
 }
+
 
 void TowerLayer::draw() {
 	if(_next != 0) {
