@@ -221,6 +221,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 		if(Board::buffer != 0 && Board::buffer->getName() == "towerBuilder"){
 			// this is how you can chceck whether path for worms exists
+			// move this wherever you want :P
 			auto tmp=Board::getBoardAsInts();
 			tmp[y][x]=1;
 			if(((WormLayer*)_next)->pathExists(tmp)){ //!!
