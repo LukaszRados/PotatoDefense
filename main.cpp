@@ -9,27 +9,6 @@ int main() {
 	Board::init();
 	Layer *layer = new BaseLayer(Board::window);
 
-	/**
-	 * Showcase of getBoardAsInts() result
-<<<<<<< HEAD
-	 */
-=======
-	*/
->>>>>>> krzychu
-//	auto b = Board::getBoardAsInts();
-//	for(auto i : b) {
-//		for(auto j : i) {
-//			std::cout << j << " ";
-//		}
-//		std::cout << std::endl;
-//	}
-<<<<<<< HEAD
-	/**
-=======
-/*
->>>>>>> krzychu
-	 * End of showcase.
-	 */
 
 	while(Board::window->isOpen()) {
 		Board::window->clear();

@@ -202,7 +202,6 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		}
 
 		_active.setPosition(x * 40, y * 40);
-
 		_shadow.setPosition(x * 40, y * 40);
 
 
@@ -218,7 +217,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 			}
 			else {
 				_shadow.setTextureRect(sf::IntRect(Board::buffer->getSprite().left, 120, 40, 40));
-
+			}
 		_active.setTexture(GameState::textures["towers"]);
 		_active.setTextureRect(sf::IntRect(0, 0, 40, 40));
 
@@ -239,6 +238,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 				_active.setOutlineColor(sf::Color(255, 255, 255, 100));
 
 			}
+		}
 		}
 		break;
 	}
