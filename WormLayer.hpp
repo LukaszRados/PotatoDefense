@@ -3,7 +3,8 @@
 
 #include "Layer.hpp"
 #include "BgLayer.hpp"
-
+#include <list>
+#include "Worm.hpp"
 
 /**
  * Warstwa do obslugi robakow. Szuka im sciezki, animuje je oraz decyduje kiedy wchodza nastepne
@@ -15,18 +16,41 @@ public:
 	virtual ~WormLayer();
 	virtual void parseEvent(sf::Event &event);
 	virtual void draw();
-	void getBoard(std::vector<std::vector<int> >  ints);
+	void setPath(std::vector<std::vector<int> >);
+
+	bool pathExists(std::vector<std::vector<int> >);
+	static std::vector<std::vector<int> > _path;
+	static std::list<Worm> worms;
 private:
 	const int _dens=3; // stala okresla gestosc siatki po ktorej chodza stonki
 	// Board::height okresla rozmiar planszy
 	const int _s = Board::height; //s jak size
+	// wg tej sciezki beda chodzic robaki
 
-	std::vector<std::vector<int> > _board;
-	void printBoard();
+	sf::Clock _time;
+
+
+
+
+
+
+
+
+	// metoda do przerabiania siatki wiez na siatke robakow - niepotrzebna
+	//std::vector<std::vector<int> > getBoard(std::vector<std::vector<int> >);
+	//std::vector<std::vector<int> > _board;
+
+	std::vector<std::vector<int> >  findPath(std::vector<std::vector<int> >);
+
+	/**
+	 * wypisuje dowolna tablice dwuwymiarowa, endl co wiersz
+	 */
+	void printPath(std::vector<std::vector<int> >);
 	/** Wypelnia tablice _board o gestszej siatce wartosciami val w polach x,y(w zasiegu _dens)
 	 *
 	 */
-	void fillBoard(int val, int x, int y);
+//	niepotrzebne
+//	void fillBoard(std::vector<std::vector<int> >  & board,int val, int x, int y);
 
 };
 
