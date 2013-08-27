@@ -68,7 +68,7 @@ std::vector<std::vector<int>> Board::getBoardAsInts() {
 		tmp.push_back(std::vector<int>());
 
 		for(int j = 0; j < Board::board[i].size(); ++j) {
-			if(Board::board[i][j] == 0) tmp[i].push_back(0);
+			if(!Board::board[i][j]) tmp[i].push_back(0);
 			else if(Board::board[i][j]->getName() == "wall") tmp[i].push_back(((Wall*)Board::board[i][j])->getNumber());
 			else tmp[i].push_back(1);
 		}

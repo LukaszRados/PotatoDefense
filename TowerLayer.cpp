@@ -39,6 +39,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 	int x, y;
 
+
 	switch(event.type) {
 	case sf::Event::MouseButtonPressed:
 		if(event.mouseButton.button == sf::Mouse::Button::Right) {
@@ -54,9 +55,6 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 		x = event.mouseButton.x / 40;
 		y = event.mouseButton.y / 40;
-
-		//troche na sile, ale to sie poprawi :)
-		((WormLayer*)_next)->getBoard(Board::getBoardAsInts());
 
 		if(Board::buffer == 0 && _dialog == 0) {
 			for(auto i : _builders) {
@@ -91,12 +89,13 @@ void TowerLayer::parseEvent(sf::Event &event) {
 					Tower* t = (Tower*)b->secondClick(x, y);
 
 					Board::board[y][x] = t;
+
 					_toDraw.push_back(t);
 
 					GameState::money -= b->getCost(0);
 					std::cout << "Yep, you got: $" << GameState::money << std::endl;
 					GameState::info = "New tower built ($ " + toString(b->getCost(0)) + ").";
-
+					((WormLayer*)_next)->setPath(Board::getBoardAsInts());
 				}
 				else {
 					std::cout << "Not enough money, sorry" << std::endl;
@@ -113,6 +112,8 @@ void TowerLayer::parseEvent(sf::Event &event) {
 			Tower* tmp = (Tower*)Board::buffer;
 			int level = tmp->getLevel();
 			int number = tmp->getNumber();
+
+
 
 			if(y == tmp->getY() + 1) {
 				if(x < tmp->getX()) {
@@ -143,9 +144,12 @@ void TowerLayer::parseEvent(sf::Event &event) {
 					int levelCost = TowerBuilder(number).getSellingCost(level);
 					GameState::money += levelCost;
 
+
 					//delete Board::board[y - 1][x];	// uzycie tego delete powoduje segmentation fault
 					Board::board[y - 1][x] = 0;
 
+					// zeby przeliczylo po sprzedaniu
+					((WormLayer*)_next)->setPath(Board::getBoardAsInts());
 					int off = 0;
 					while(off < _toDraw.size()) {
 						if(_toDraw[off] != 0 && _toDraw[off]->getX() == x && _toDraw[off]->getY() == y - 1) {
@@ -160,9 +164,11 @@ void TowerLayer::parseEvent(sf::Event &event) {
 					GameState::info = "Tower sold ($ " + toString(levelCost) + ").";
 					Board::buffer = 0;
 
+
 				}
 				else {
 					Board::buffer = 0;
+
 				}
 //
 			}
@@ -173,8 +179,10 @@ void TowerLayer::parseEvent(sf::Event &event) {
 				_dialog = 0;
 			}
 		}
-
+		//troche na sile, ale to sie poprawi :)
+				//((WormLayer*)_next)->getBoard(Board::getBoardAsInts());
 		break;
+//*********************** End of case ButtonPressed ***************************************************//
 
 	case sf::Event::MouseMoved:
 		int x = event.mouseMove.x / 40;
@@ -208,11 +216,32 @@ void TowerLayer::parseEvent(sf::Event &event) {
 			else {
 				_shadow.setTextureRect(sf::IntRect(Board::buffer->getSprite().left, 120, 40, 40));
 			}
-		}
+		_active.setTexture(GameState::textures["towers"]);
+		_active.setTextureRect(sf::IntRect(0, 0, 40, 40));
 
+		if(Board::buffer != 0 && Board::buffer->getName() == "towerBuilder"){
+			// this is how you can chceck whether path for worms exists
+			auto tmp=Board::getBoardAsInts();
+			tmp[y][x]=1;
+			if(((WormLayer*)_next)->pathExists(tmp)){ //!!
+				_active.setOutlineColor(sf::Color(255, 255, 255, 100));
+			} else {
+				_active.setOutlineColor(sf::Color(255, 0, 0, 125));
+			}
+		} else {
+			if(Board::board[y][x]) {
+				_active.setOutlineColor(sf::Color(255, 0, 0, 125));
+			}
+			else {
+				_active.setOutlineColor(sf::Color(255, 255, 255, 100));
+
+			}
+		}
+		}
 		break;
 	}
 }
+
 
 void TowerLayer::draw() {
 	if(_next != 0) {

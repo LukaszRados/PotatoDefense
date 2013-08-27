@@ -7,6 +7,7 @@
 #include "Dialog.hpp"
 #include "WormLayer.hpp"
 #include "ToString.hpp"
+#include "GameState.hpp"
 
 #include <iostream>
 
