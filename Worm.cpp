@@ -36,6 +36,7 @@ bool Worm::dmg(int attack){
 
 void Worm::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+
 	int w=25;
 	int h=3;
 
@@ -56,35 +57,19 @@ void Worm::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	target.draw(wholeHealth);
 	target.draw(health);
 	target.draw(_sprite);
+
 }
 
 
 bool Worm::go(int time, std::vector<std::vector<int> > path){
 	int x=((int)_pos.x)/40;
 	int y=((int)_pos.y)/40;
-//	if((_lastX != x || _lastY != y) && path[y][x]==-1){
-//		_dir=-_dir;
-//		_lastX=x;
-//		_lastY=y;
-//	} else
-	if(_lastX==x && _lastY==y){
-		//_dir=
-	}
-
 
 	if(len(_pos-sf::Vector2f(x*40+20,y*40+20)) < 1){
 		if(_lastX != x || _lastY != y){
 			_lastX=x;
 			_lastY=y;
 
-			//if(x>10)
-			{
-				std::cout << "x: " << x << " y: " << y << " dist: " << path[y][x] << std::endl;
-			}
-
-//			if(path[y][x]==-1){
-//
-//			}
 			int dist = path[y][x]; // current distance from exit
 
 			bool next=false;
@@ -137,7 +122,6 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 
 
 
-	//std::cout << "_dir: " << _dir.x << " " << _dir.y << std::endl;
 	// moving the worm
 	sf::Vector2f tmp(_dir);
 	tmp.x*=_v*time/20;
@@ -146,7 +130,6 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 	_pos+=tmp;
 
 	_sprite.setPosition(_pos-sf::Vector2<float>(10,10));
-//	std::cout << x << " " << y << std::endl;
 
 
 

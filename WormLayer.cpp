@@ -25,10 +25,6 @@ WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	moreEnemies=true;
 
 	setPath(Board::getBoardAsInts());
-//
-//	for(int i=0;i<_s*_dens;i++)
-//		_board.push_back(std::vector<int>(_s*_dens));
-
 
 }
 
@@ -55,18 +51,17 @@ void WormLayer::update(){
 		_next->update();
 
 	// adding new worms
-//	std:: cout <<enemies[GameState::wave-1][(int)GameState::waveTime.getElapsedTime().asSeconds()] << std::endl;
+
 
 	if(moreEnemies){
 		int i =(int)(GameState::waveTime.getElapsedTime().asSeconds());
 
-		//std::cout << "more enemies index: "<< i  << std::endl;
+
 
 		int nextWorm=enemies[GameState::wave-1][i];
 		enemies[GameState::wave-1][i]=0; // for not adding same worm more than once
 		if(nextWorm>0){
 			worms.push_back(Worm(nextWorm));
-			//std::cout << nextWorm << " ";
 		} else if(nextWorm==-1){
 			moreEnemies=false;
 		}
@@ -84,9 +79,8 @@ void WormLayer::update(){
 
 	}
 
-//	std::cout << "removing dead " << std::endl;
+
 	worms.remove_if(Worm::isDead); // forget the dead
-//	std::cout << "worms count: " << worms.size() << std::endl;
 	//to estimate time since last move
 	_time.restart();
 }
@@ -164,7 +158,7 @@ std::vector<std::vector<int> > WormLayer::findPath(std::vector<std::vector<int> 
 void WormLayer::setPath(std::vector<std::vector<int> >  ints){
 	_path=findPath(ints);
 	_path[Board::height/2][0]=_path[Board::height/2][1]+1;
-	printPath(_path);
+	//printPath(_path);
 }
 
 bool WormLayer::pathExists(std::vector<std::vector<int> > ints){
@@ -174,71 +168,3 @@ bool WormLayer::pathExists(std::vector<std::vector<int> > ints){
 }
 
 
-bool WormLayer::move(Worm & worm, int time){
-	std::cout << "moving worm "  << std::endl;
-
-	// changing names
-	sf::Vector2<float> & _pos=worm._pos;
-	sf::Vector2<float> & _dir=worm._dir;
-
-	std::cout << "referencje" << std::endl;
-
-//	std::srand((unsigned int)std::time(NULL));
-//		//updating direction
-//	//if(((((int)_pos.x)/20) % 2) && ((((int)_pos.x)/20) % 2)){
-//	sf::Vector2<float> board_pos(int(_pos.x)/40,int(_pos.y)/40);
-//
-//	if(len(_pos-board_pos) < 4)
-//	{
-//			int x=_pos.x/40;
-//			int y=_pos.y/40; // changing _pos to Board coords
-//
-//			int dist=WormLayer::_path[y][x]; //current distance to exit
-//			int next=0;
-//
-//			if(x>0 && WormLayer::_path[y][x-1]<dist){
-//				next=WormLayer::_path[y][x-1]; //go to the left
-//				_dir=_pos-sf::Vector2<float>((x-1)*40,y*50);
-//			}
-//
-//			if(WormLayer::_path[y][x+1]<dist){ //go to the right
-//				 if(next && next==WormLayer::_path[y][x+1] && std::rand() % 2){
-//					 _dir=_pos-sf::Vector2<float>((x+1)*40,y*50);
-//					 //_dir=sf::Vector2<float>(1,0);
-//				 } else {
-//					 _dir=_pos-sf::Vector2<float>((x+1)*40,(y)*50);
-//					 //_dir=sf::Vector2<float>(1,0);
-//					 next=WormLayer::_path[y][x+1];
-//				 }
-//			}
-//			if(WormLayer::_path[y-1][x]<dist){ //go to the top
-//				 if(next && next==WormLayer::_path[y-1][x] && std::rand() % 2){
-//					 _dir=_pos-sf::Vector2<float>((x)*40,(y-1)*50);
-//					 //_dir=sf::Vector2<float>(0,-1);
-//				 } else {
-//					 _dir=_pos-sf::Vector2<float>((x)*40,(y-1)*50);
-//					 //_dir=sf::Vector2<float>(0,-1);
-//					 next=WormLayer::_path[y-1][x];
-//				 }
-//			}
-//			if(WormLayer::_path[y+1][x]<dist){ //go to the bottom
-//				 if(next && next==WormLayer::_path[y+1][x] && std::rand() % 2){
-//					 _dir=_pos-sf::Vector2<float>((x)*40,(y+1)*50);
-//					 //_dir=sf::Vector2<float>(0,1);
-//				 } else {
-//					 _dir=_pos-sf::Vector2<float>((x)*40,(y+1)*50);
-//					 //_dir=sf::Vector2<float>(0,1);
-//					 next=WormLayer::_path[y+1][x];
-//				 }
-//			}
-//			//without else after each case, so the worm could change its mind where to go :)
-//		}
-//		// end of updating direction
-//
-		sf::Vector2f tmp(_dir);
-	//	tmp*=(worm._v*time/100);
-		_pos+=tmp;
-
-
-	//	return WormLayer::_path[_pos.y/40][_pos.y/40]==1;
-}

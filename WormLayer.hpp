@@ -45,7 +45,6 @@ private:
 
 
 	sf::Clock _time;
-	static bool move(Worm &, int);
 
 
 
