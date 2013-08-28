@@ -178,8 +178,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 				_dialog = 0;
 			}
 		}
-		//troche na sile, ale to sie poprawi :)
-				//((WormLayer*)_next)->getBoard(Board::getBoardAsInts());
+
 		break;
 //*********************** End of case ButtonPressed ***************************************************//
 
@@ -265,6 +264,10 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 		if(!pathExists) {
 			_active.setOutlineColor(sf::Color(255, 0, 0, 125));
+		}
+
+		if(!WormLayer::isFree(x,y)){
+			std::cout << x << " " << y << " is occupied!" << std::endl;
 		}
 		break;
 	}

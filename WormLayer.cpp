@@ -6,6 +6,16 @@ std::vector<std::vector<int> > WormLayer::enemies={
 		{1,0,1,0,1,0,1,0,1,0,1,1,1,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
 };
 
+bool WormLayer::isFree(int x, int y){
+	for(auto i : worms){
+		int _x=int(i._pos.x) / 40;
+		int _y=int(i._pos.y) / 40;
+		if(_x==x && _y==y)
+			return false;
+	}
+
+	return true;
+}
 
 WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	_next= new BgLayer(w);

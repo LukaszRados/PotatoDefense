@@ -31,6 +31,8 @@ public:
 	// 0- no enemy in this second
 	// -1 - end of wave
 
+	static bool isFree(int, int);
+
 	static std::vector<std::vector<int> > enemies;
 private:
 
