@@ -12,6 +12,7 @@ struct GameState {
 	static std::string info;
 	static std::map<std::string, sf::Texture*> textures;
 	static sf::Clock globalTime;
+	static sf::Clock waveTime;
 };
 
 #endif /* GAMESTATE_HPP_ */

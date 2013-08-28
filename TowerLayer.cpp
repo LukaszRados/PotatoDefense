@@ -15,7 +15,6 @@ TowerLayer::TowerLayer(sf::RenderWindow *w):Layer(w) {
 	}
 
 	_next = new WormLayer(w);
-
 	GameState::textures["towers"] = new sf::Texture();
 	GameState::textures["towers"]->loadFromFile("graphics/towers.png");
 
@@ -271,6 +270,10 @@ void TowerLayer::parseEvent(sf::Event &event) {
 	}
 }
 
+void TowerLayer::update(){
+	if( _next != 0)
+		_next->update();
+}
 
 void TowerLayer::draw() {
 	if(_next != 0) {

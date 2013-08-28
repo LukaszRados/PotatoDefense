@@ -12,7 +12,7 @@ public:
 	virtual ~Layer();
 	virtual void parseEvent(sf::Event &event);
 	virtual void draw();
-
+	virtual void update();
 protected:
 	Layer* _next = 0;
 	sf::RenderWindow *_window = 0;

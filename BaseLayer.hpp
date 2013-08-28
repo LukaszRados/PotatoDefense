@@ -17,7 +17,7 @@ public:
 	virtual ~BaseLayer();
 	virtual void parseEvent(sf::Event &event);
 	virtual void draw();
-
+	virtual void update();
 private:
 
 };

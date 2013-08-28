@@ -8,7 +8,10 @@ Worm::Worm(int type){
 	_dir=sf::Vector2<float>(1,0);
 
 	// putting worm at entrance
-	_pos=sf::Vector2<float>(Board::height/2*40+20,20);
+	_pos=sf::Vector2<float>(20,Board::height/2*40+20);
+	_lastX=0;
+	_lastY=Board::height/2;
+	_sprite.setPosition(_pos-sf::Vector2<float>(10,10));
 	switch(type){
 	case 1:
 		_max_health=_health=100;
@@ -33,60 +36,98 @@ bool Worm::dmg(int attack){
 
 void Worm::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	sf::Sprite tmp=_sprite;
-	tmp.setPosition(_pos-sf::Vector2<float>(20,20));
-	target.draw(tmp);
+
+	target.draw(_sprite);
 }
 
 
-bool Worm::go(int time){
-//	std::srand((unsigned int)std::time(NULL));
-//	//updating direction
-//	if((_pos.x/20) % 2 && (_pos.y/20) % 2){
-//		int x=_pos.x/40;
-//		int y=_pos.y/40; // changing _pos to Board coords
+bool Worm::go(int time, std::vector<std::vector<int> > path){
+	int x=((int)_pos.x)/40;
+	int y=((int)_pos.y)/40;
+//	if((_lastX != x || _lastY != y) && path[y][x]==-1){
+//		_dir=-_dir;
+//		_lastX=x;
+//		_lastY=y;
+//	} else
+	if(len(_pos-sf::Vector2f(x*40+20,y*40+20)) < 3){
+		if(_lastX != x || _lastY != y){
+			_lastX=x;
+			_lastY=y;
+
+			//if(x>10)
+			{
+				std::cout << "x: " << x << " y: " << y << " dist: " << path[y][x] << std::endl;
+			}
+
+//			if(path[y][x]==-1){
 //
-//		int dist=WormLayer::_path[y][x]; //current distance to exit
-//		int next=0;
-//
-//		if(x>0 && WormLayer::_path[y][x-1]<dist){
-//			next=WormLayer::_path[y][x-1]; //go to the left
-//			_dir=sf::Vector2<int>(-1,0);
-//		}
-//
-//		if(WormLayer::_path[y][x+1]<dist){ //go to the right
-//			 if(next && next==WormLayer::_path[y][x+1] && std::rand() % 2){
-//				 _dir=sf::Vector2<int>(1,0);
-//			 } else {
-//				 _dir=sf::Vector2<int>(1,0);
-//				 next=WormLayer::_path[y][x+1];
-//			 }
-//		}
-//		if(WormLayer::_path[y-1][x]<dist){ //go to the top
-//			 if(next && next==WormLayer::_path[y-1][x] && std::rand() % 2){
-//				 _dir=sf::Vector2<int>(0,-1);
-//			 } else {
-//				 _dir=sf::Vector2<int>(0,-1);
-//				 next=WormLayer::_path[y-1][x];
-//			 }
-//		}
-//		if(WormLayer::_path[y+1][x]<dist){ //go to the bottom
-//			 if(next && next==WormLayer::_path[y+1][x] && std::rand() % 2){
-//				 _dir=sf::Vector2<int>(0,1);
-//			 } else {
-//				 _dir=sf::Vector2<int>(0,1);
-//				 next=WormLayer::_path[y+1][x];
-//			 }
-//		}
-//		//without else after each case, so the worm could change its mind where to go :)
-//	}
-//	// end of updating direction
-//
-//	sf::Vector2f tmp((float)_dir.x,(float)_dir.y);
-//	tmp*=_v*time;
-//	_pos+=sf::Vector2i((int)tmp.x,(int)tmp.y);
-//
-//	return WormLayer::_path[_pos.y/40][_pos.y/40]==1;
+//			}
+			int dist = path[y][x]; // current distance from exit
+
+			bool next=false;
+
+			if(x > 0 && path[y][x-1] > 0 && path[y][x-1] < dist){
+				_dir=_pos-sf::Vector2f(-1,0);   //((x-1)*40+20,(y)*40+20);
+				next=true;
+			}
+
+
+			std::srand((unsigned int)std::time(NULL));
+
+			if(path[y][x+1] > 0 && path[y][x+1] < dist){
+				if(next){
+					if(rand() % 2)
+						_dir=sf::Vector2f(1,0);//((x+1)*40+20,(y)*40+20)-_pos;
+				} else {
+					_dir=sf::Vector2f(1,0);//((x+1)*40+20,(y)*40+20)-_pos;
+					next=true;
+				}
+			}
+
+
+			if(path[y-1][x] > 0 && path[y-1][x] < dist){
+				if(next){
+					if(rand() % 2)
+						_dir=sf::Vector2f(0,-1);//((x)*40+20,(y-1)*40+20)-_pos;
+				} else {
+					_dir=sf::Vector2f(0,-1);//((x)*40+20,(y-1)*40+20)-_pos;
+					next=true;
+				}
+			}
+
+
+
+			if(path[y+1][x] > 0 && path[y+1][x] < dist){
+				if(next){
+					if(rand() % 2)
+						_dir=sf::Vector2f(0,1);//((x)*40+20,(y+1)*40+20)-_pos;
+				} else {
+					_dir=sf::Vector2f(0,1);//((x)*40+20,(y+1)*40+20)-_pos;
+					next=true;
+				}
+			}
+
+			//_dir/=len(_dir);
+		}
+
+	}
+
+
+
+	//std::cout << "_dir: " << _dir.x << " " << _dir.y << std::endl;
+	// moving the worm
+	sf::Vector2f tmp(_dir);
+	tmp.x*=_v*time/20;
+	tmp.y*=_v*time/20;
+
+	_pos+=tmp;
+
+	_sprite.setPosition(_pos-sf::Vector2<float>(10,10));
+//	std::cout << x << " " << y << std::endl;
+
+
+
+	return path[y][x]==1;
 }
 
 void Worm::loadTexture(){
@@ -96,3 +137,4 @@ void Worm::loadTexture(){
 sf::Sprite Worm::getSprite(int type){
 	return sf::Sprite(_texture);
 }
+

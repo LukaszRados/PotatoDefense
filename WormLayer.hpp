@@ -5,7 +5,8 @@
 #include "BgLayer.hpp"
 #include "Worm.hpp"
 #include <list>
-
+#include <vector>
+#include <cmath>
 
 /**
  * Warstwa do obslugi robakow. Szuka im sciezki, animuje je oraz decyduje kiedy wchodza nastepne
@@ -17,16 +18,28 @@ public:
 	virtual ~WormLayer();
 	virtual void parseEvent(sf::Event &event);
 	virtual void draw();
+	virtual void update();
+
 	void setPath(std::vector<std::vector<int> >);
 
 	bool pathExists(std::vector<std::vector<int> >);
 	// wg tej sciezki beda chodzic robaki
 	static std::vector<std::vector<int> > _path;
 	static std::list<Worm> worms;
+
+	// array for queueing enemies array[wave][second]=type of enemy
+	// 0- no enemy in this second
+	// -1 - end of wave
+
+	static std::vector<std::vector<int> > enemies;
 private:
+
+
 	const int _dens=3; // stala okresla gestosc siatki po ktorej chodza stonki
 	// Board::height okresla rozmiar planszy
 	const int _s = Board::height; //s jak size
+
+	bool moreEnemies; // tells whether to add new worms
 
 
 	sf::Clock _time;

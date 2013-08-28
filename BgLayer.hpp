@@ -9,6 +9,7 @@ public:
 	BgLayer(sf::RenderWindow *w);
 	virtual void parseEvent(sf::Event &event);
 	virtual void draw();
+	virtual void update();
 };
 
 #endif /* BGLAYER_HPP_ */

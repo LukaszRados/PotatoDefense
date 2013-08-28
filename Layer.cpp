@@ -26,3 +26,7 @@ void Layer::parseEvent(sf::Event &event) {
 void Layer::draw() {
 
 }
+
+void Layer::update(){
+
+}

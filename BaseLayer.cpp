@@ -1,7 +1,7 @@
 #include "BaseLayer.hpp"
 
 BaseLayer::BaseLayer(sf::RenderWindow *w):Layer(w) {
-	_next = new TowerLayer(w);
+
 
 	Wall *wall = new Wall;
 
@@ -24,6 +24,7 @@ BaseLayer::BaseLayer(sf::RenderWindow *w):Layer(w) {
 	Board::board[7][0] = new Wall(2);
 	Board::board[7][14] = new Wall(3);
 
+	_next = new TowerLayer(w);
 	_toDraw.push_back(wall);
 }
 
@@ -54,4 +55,9 @@ void BaseLayer::draw() {
 	if(_next != 0) {
 		_next->draw();
 	}
+}
+
+void BaseLayer::update(){
+	if(_next != 0 )
+		_next->update();
 }

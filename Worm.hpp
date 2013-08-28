@@ -24,7 +24,7 @@ public:
 	 *  dziekie temu bedzie latwo dostosowac predkosc
 	 *  @return false - jesli ciagle idzie | true - jesli przeszla plansze
 	 */
-	bool go(int);
+	bool go(int,std::vector<std::vector<int> >);
 
 
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -57,6 +57,8 @@ private:
 
 	sf::Vector2<float> _dir;
 	sf::Vector2<float> _pos;
+	int _lastX;
+	int _lastY;
 	int _health=0;
 	bool _alive=true; //mozliwe ze zbedne
 
@@ -68,6 +70,11 @@ private:
 	int _type;
 	bool _flying;
 	int _max_health;
+
+
+	static float len(sf::Vector2<float> a){
+			return sqrt(a.x*a.x+a.y*a.y);
+		}
 };
 
 

@@ -12,6 +12,10 @@ void BgLayer::parseEvent(sf::Event &event) {
 	}
 }
 
+void BgLayer::update(){
+	if( _next != 0 )
+		_next->update();
+}
 void BgLayer::draw() {
 	if(_next != 0) {
 		_next->draw();

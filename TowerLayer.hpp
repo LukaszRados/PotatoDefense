@@ -16,7 +16,7 @@ public:
 	TowerLayer(sf::RenderWindow *w);
 	virtual void parseEvent(sf::Event &event);
 	virtual void draw();
-
+	virtual void update();
 private:
 	std::vector<TowerBuilder*> _builders;
 	Dialog* _dialog = 0;
