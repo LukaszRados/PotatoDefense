@@ -2,11 +2,10 @@
 #define WORM_HPP_
 
 #include "Board.hpp"
+#include "GameState.hpp"
 #include <SFML/Graphics.hpp>
 #include <ctime>
 #include <cstdlib>
-
-
 
 class Worm : public sf::Drawable {
 public:
@@ -31,8 +30,6 @@ public:
 
 	virtual ~Worm(){}
 
-	// wczytanie textury, zeby bylo raz
-	static void loadTexture();
 //getery (pisze tu bo by bylo duzo roboty :)
 	int getValue(){
 		return _value;
@@ -49,12 +46,19 @@ public:
 	static bool isDead(const Worm & worm){
 		return !worm._alive;
 	}
+
+	void setSprite(sf::Sprite s) {
+		_sprite = s;
+	}
+
+	int getType() const {
+		return _type;
+	}
 	// frienship for accessing private members
 	friend class WormLayer;
 private:
-	static sf::Texture _texture; //tekstura gdzie będą wszystkie sprite'y, zeby tylko raz ladowac z dysku
+	static int _iter; // sluzy do animacji robakow (tzn. przelaczania klatek)
 	sf::Sprite getSprite(int type); //wycina z tekstury odpowiedni dla typu robaka fragment
-
 	sf::Vector2<float> _dir;
 	sf::Vector2<float> _pos;
 	int _lastX;

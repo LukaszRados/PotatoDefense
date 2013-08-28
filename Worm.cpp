@@ -1,6 +1,6 @@
 #include "Worm.hpp"
 
-sf::Texture Worm::_texture;
+int Worm::_iter = 0;
 
 Worm::Worm(int type){
 	_sprite=getSprite(type);
@@ -14,6 +14,8 @@ Worm::Worm(int type){
 	_sprite.setPosition(_pos-sf::Vector2<float>(10,10));
 	switch(type){
 	case 1:
+	case 2:
+	case 3:
 		_max_health=_health=100;
 		_value=100;
 		_v=0.5;
@@ -136,11 +138,12 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 	return path[y][x]==1;
 }
 
-void Worm::loadTexture(){
-	_texture.loadFromFile("graphics/bug.png");
-}
-
 sf::Sprite Worm::getSprite(int type){
-	return sf::Sprite(_texture);
+	sf::Sprite tmp;
+	int offset = (Worm::_iter % 10 < 5 ? 0 : 1);
+	tmp.setTexture(*(GameState::textures["bugs"]));
+	std::cout << type << std::endl;
+	tmp.setTextureRect(sf::IntRect((type - 1) * 40, offset * 40, 40, 40));
+	return tmp;
 }
 

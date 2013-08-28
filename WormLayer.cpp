@@ -3,7 +3,7 @@
  std::vector<std::vector<int> > WormLayer::_path;
  std::list<Worm> WormLayer::worms;
 std::vector<std::vector<int> > WormLayer::enemies={
-		{1,0,1,0,1,0,1,0,1,0,1,1,1,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
+		{1,0,2,0,3,0,1,0,1,0,3,2,1,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
 };
 
 bool WormLayer::isFree(int x, int y){
@@ -19,13 +19,14 @@ bool WormLayer::isFree(int x, int y){
 
 WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	_next= new BgLayer(w);
-	Worm::loadTexture();
 	_time.restart();
 	GameState::waveTime.restart();
 	moreEnemies=true;
 
 	setPath(Board::getBoardAsInts());
 
+	GameState::textures["bugs"] = new sf::Texture();
+	GameState::textures["bugs"]->loadFromFile("graphics/worms.png");
 }
 
 void WormLayer::parseEvent(sf::Event &event){
@@ -40,8 +41,15 @@ void WormLayer::parseEvent(sf::Event &event){
 void WormLayer::draw(){
 	_next->draw();
 
+	++Worm::_iter;
+
 	//rysowanie robakow
 	for(auto & i:worms){
+		sf::Sprite spr = i.getSprite(i.getType());
+		spr.setPosition(i.getPos());
+		spr.setRotation(90);
+		i.setSprite(spr);
+
 		_window->draw(i);
 	}
 }

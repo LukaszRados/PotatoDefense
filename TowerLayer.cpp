@@ -83,7 +83,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 			auto tmp=Board::getBoardAsInts();
 			tmp[y][x]=1;
 
-			if(Board::board[y][x] == 0 && ((WormLayer*)_next)->pathExists(tmp)) {
+			if(Board::board[y][x] == 0 && ((WormLayer*)_next)->pathExists(tmp) && WormLayer::isFree(x,y)) {
 				TowerBuilder *b = (TowerBuilder*)Board::buffer;
 
 				if(GameState::money > b->getCost(0)) {
@@ -254,20 +254,16 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		if(Board::buffer == 0 || Board::buffer->getName() != "towerBuilder") {
 			_shadow.setPosition(-100, -100);
 		}
-		else if(Board::buffer != 0 && Board::buffer->getName() == "towerBuilder" && pathExists) {
+		else if(Board::buffer != 0 && Board::buffer->getName() == "towerBuilder" && pathExists && WormLayer::isFree(x,y)) {
 			_shadow.setTextureRect(sf::IntRect(Board::buffer->getSprite().left, 120, 40, 40));
 		}
-		else if(!pathExists) {
+		else if(!pathExists || !WormLayer::isFree(x,y)) {
 			GameState::info = "This place is not avaible.";
 			_shadow.setPosition(-100, -100);
 		}
 
-		if(!pathExists) {
+		if(!pathExists || !WormLayer::isFree(x,y)) {
 			_active.setOutlineColor(sf::Color(255, 0, 0, 125));
-		}
-
-		if(!WormLayer::isFree(x,y)){
-			std::cout << x << " " << y << " is occupied!" << std::endl;
 		}
 		break;
 	}
