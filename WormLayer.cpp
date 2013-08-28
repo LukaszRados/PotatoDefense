@@ -3,7 +3,7 @@
  std::vector<std::vector<int> > WormLayer::_path;
  std::list<Worm> WormLayer::worms;
 std::vector<std::vector<int> > WormLayer::enemies={
-		{1,0,1,0,1,0,1,0,1,0,1,-1,1,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
+		{1,0,1,0,1,0,1,0,1,0,1,1,1,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
 };
 
 
@@ -48,7 +48,7 @@ void WormLayer::update(){
 //	std:: cout <<enemies[GameState::wave-1][(int)GameState::waveTime.getElapsedTime().asSeconds()] << std::endl;
 
 	if(moreEnemies){
-		int i =(int)(GameState::waveTime.getElapsedTime().asSeconds()*2);
+		int i =(int)(GameState::waveTime.getElapsedTime().asSeconds());
 
 		//std::cout << "more enemies index: "<< i  << std::endl;
 

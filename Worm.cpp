@@ -36,7 +36,25 @@ bool Worm::dmg(int attack){
 
 void Worm::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+	int w=25;
+	int h=3;
 
+	sf::Vector2f bar_pos(_pos.x-w/2,_pos.y-15);
+
+	sf::RectangleShape wholeHealth(sf::Vector2f(w,h));
+	wholeHealth.setFillColor(sf::Color(255,0,0));
+	wholeHealth.setPosition(bar_pos);
+
+	int hp=((float)_health/(float)_max_health*(float)w);
+
+
+
+	sf::RectangleShape health(sf::Vector2f(hp,h));
+	health.setFillColor(sf::Color(0,255,0));
+	health.setPosition(bar_pos);
+
+	target.draw(wholeHealth);
+	target.draw(health);
 	target.draw(_sprite);
 }
 
@@ -49,7 +67,12 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 //		_lastX=x;
 //		_lastY=y;
 //	} else
-	if(len(_pos-sf::Vector2f(x*40+20,y*40+20)) < 3){
+	if(_lastX==x && _lastY==y){
+		//_dir=
+	}
+
+
+	if(len(_pos-sf::Vector2f(x*40+20,y*40+20)) < 1){
 		if(_lastX != x || _lastY != y){
 			_lastX=x;
 			_lastY=y;
@@ -67,7 +90,7 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 			bool next=false;
 
 			if(x > 0 && path[y][x-1] > 0 && path[y][x-1] < dist){
-				_dir=_pos-sf::Vector2f(-1,0);   //((x-1)*40+20,(y)*40+20);
+				_dir=sf::Vector2f((x-1)*40+20,(y)*40+20)-_pos;
 				next=true;
 			}
 
@@ -77,9 +100,9 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 			if(path[y][x+1] > 0 && path[y][x+1] < dist){
 				if(next){
 					if(rand() % 2)
-						_dir=sf::Vector2f(1,0);//((x+1)*40+20,(y)*40+20)-_pos;
+						_dir=sf::Vector2f((x+1)*40+20,(y)*40+20)-_pos;
 				} else {
-					_dir=sf::Vector2f(1,0);//((x+1)*40+20,(y)*40+20)-_pos;
+					_dir=sf::Vector2f((x+1)*40+20,(y)*40+20)-_pos;
 					next=true;
 				}
 			}
@@ -88,9 +111,9 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 			if(path[y-1][x] > 0 && path[y-1][x] < dist){
 				if(next){
 					if(rand() % 2)
-						_dir=sf::Vector2f(0,-1);//((x)*40+20,(y-1)*40+20)-_pos;
+						_dir=sf::Vector2f((x)*40+20,(y-1)*40+20)-_pos;
 				} else {
-					_dir=sf::Vector2f(0,-1);//((x)*40+20,(y-1)*40+20)-_pos;
+					_dir=sf::Vector2f((x)*40+20,(y-1)*40+20)-_pos;
 					next=true;
 				}
 			}
@@ -100,14 +123,14 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 			if(path[y+1][x] > 0 && path[y+1][x] < dist){
 				if(next){
 					if(rand() % 2)
-						_dir=sf::Vector2f(0,1);//((x)*40+20,(y+1)*40+20)-_pos;
+						_dir=sf::Vector2f((x)*40+20,(y+1)*40+20)-_pos;
 				} else {
-					_dir=sf::Vector2f(0,1);//((x)*40+20,(y+1)*40+20)-_pos;
+					_dir=sf::Vector2f((x)*40+20,(y+1)*40+20)-_pos;
 					next=true;
 				}
 			}
 
-			//_dir/=len(_dir);
+			_dir/=len(_dir);
 		}
 
 	}
