@@ -33,9 +33,6 @@ void WormLayer::parseEvent(sf::Event &event){
 	if(_next!=nullptr){
 		_next->parseEvent(event);
 	}
-
-
-
 }
 
 void WormLayer::draw(){
@@ -47,7 +44,6 @@ void WormLayer::draw(){
 	for(auto & i:worms){
 		sf::Sprite spr = i.getSprite(i.getType());
 		spr.setPosition(i.getPos());
-		spr.setRotation(90);
 		i.setSprite(spr);
 
 		_window->draw(i);

@@ -42,7 +42,7 @@ void Worm::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	int w=25;
 	int h=3;
 
-	sf::Vector2f bar_pos(_pos.x-w/2,_pos.y-15);
+	sf::Vector2f bar_pos(_pos.x-w/2,_pos.y-20);
 
 	sf::RectangleShape wholeHealth(sf::Vector2f(w,h));
 	wholeHealth.setFillColor(sf::Color(255,0,0));
@@ -141,9 +141,27 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 sf::Sprite Worm::getSprite(int type){
 	sf::Sprite tmp;
 	int offset = (Worm::_iter % 10 < 5 ? 0 : 1);
+
 	tmp.setTexture(*(GameState::textures["bugs"]));
-	std::cout << type << std::endl;
 	tmp.setTextureRect(sf::IntRect((type - 1) * 40, offset * 40, 40, 40));
+
+	tmp.setOrigin(20, 20);
+	int x = (int)(_dir.x + 0.5);
+	int y = (int)(_dir.y + 0.5);
+
+	if(x == 1 && y == 0) {
+		tmp.setRotation(90);
+	}
+	else if(x == 0 && y == 0) {
+		tmp.setRotation(0);
+	}
+	else if(x == 0 && y == 1) {
+		tmp.setRotation(180);
+	}
+	else {
+		tmp.setRotation(270);
+	}
+
 	return tmp;
 }
 
