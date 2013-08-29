@@ -9,7 +9,6 @@ int main() {
 	Board::init();
 	Layer *layer = new BaseLayer(Board::window);
 
-	//for(int i = 0; i < 15; i++){
 	while(Board::window->isOpen()) {
 		Board::window->clear();
 

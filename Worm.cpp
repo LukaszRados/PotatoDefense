@@ -149,6 +149,11 @@ sf::Sprite Worm::getSprite(int type){
 	int x = (int)(_dir.x + 0.5);
 	int y = (int)(_dir.y + 0.5);
 
+	// Jest problem z obrotem powrotnym ;)
+	// tj. jak robak idzie w lewo
+
+	std::cout << atan(_dir.x / _dir.y) * 180 / 3.14 << std::endl;
+
 	if(x == 1 && y == 0) {
 		tmp.setRotation(90);
 	}

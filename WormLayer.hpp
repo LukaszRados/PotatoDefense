@@ -46,12 +46,6 @@ private:
 
 	sf::Clock _time;
 
-
-
-
-
-
-
 	// metoda do przerabiania siatki wiez na siatke robakow - niepotrzebna
 	//std::vector<std::vector<int> > getBoard(std::vector<std::vector<int> >);
 	//std::vector<std::vector<int> > _board;
