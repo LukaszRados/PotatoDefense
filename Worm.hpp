@@ -57,7 +57,6 @@ public:
 	// frienship for accessing private members
 	friend class WormLayer;
 private:
-	static int _iter; // sluzy do animacji robakow (tzn. przelaczania klatek)
 	sf::Sprite getSprite(int type); //wycina z tekstury odpowiedni dla typu robaka fragment
 	sf::Vector2<float> _dir;
 	sf::Vector2<float> _pos;
@@ -65,6 +64,8 @@ private:
 	int _lastY;
 	int _health=0;
 	bool _alive=true; //mozliwe ze zbedne
+	sf::Clock _time; // czas potrzebny do animacji robakow (klatek)
+	int _rotate; // trzyma obrot sprite'a [0,1,2,3]
 
 
 // consty

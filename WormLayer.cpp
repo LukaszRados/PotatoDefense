@@ -3,7 +3,7 @@
  std::vector<std::vector<int> > WormLayer::_path;
  std::list<Worm> WormLayer::worms;
 std::vector<std::vector<int> > WormLayer::enemies={
-		{1,0,2,0,3,0,1,0,1,0,3,2,1,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
+		{1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
 };
 
 bool WormLayer::isFree(int x, int y){
@@ -38,8 +38,6 @@ void WormLayer::parseEvent(sf::Event &event){
 void WormLayer::draw(){
 	_next->draw();
 
-	++Worm::_iter;
-
 	//rysowanie robakow
 	for(auto & i:worms){
 		sf::Sprite spr = i.getSprite(i.getType());
@@ -59,8 +57,6 @@ void WormLayer::update(){
 
 	if(moreEnemies){
 		int i =(int)(GameState::waveTime.getElapsedTime().asSeconds());
-
-
 
 		int nextWorm=enemies[GameState::wave-1][i];
 		enemies[GameState::wave-1][i]=0; // for not adding same worm more than once

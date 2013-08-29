@@ -1,11 +1,10 @@
 #include "Worm.hpp"
 
-int Worm::_iter = 0;
-
 Worm::Worm(int type){
 	_sprite=getSprite(type);
 	_type=type;
 	_dir=sf::Vector2<float>(1,0);
+	_rotate = 1;
 
 	// putting worm at entrance
 	_pos=sf::Vector2<float>(20,Board::height/2*40+20);
@@ -16,6 +15,10 @@ Worm::Worm(int type){
 	case 1:
 	case 2:
 	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
 		_max_health=_health=100;
 		_value=100;
 		_v=0.5;
@@ -24,6 +27,7 @@ Worm::Worm(int type){
 	default:
 		break;
 	}
+	_time.restart();
 }
 
 bool Worm::dmg(int attack){
@@ -42,7 +46,7 @@ void Worm::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	int w=25;
 	int h=3;
 
-	sf::Vector2f bar_pos(_pos.x-w/2,_pos.y-20);
+	sf::Vector2f bar_pos(_pos.x-w/2,_pos.y-15);
 
 	sf::RectangleShape wholeHealth(sf::Vector2f(w,h));
 	wholeHealth.setFillColor(sf::Color(255,0,0));
@@ -118,6 +122,9 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 			}
 
 			_dir/=len(_dir);
+
+			// new rotate here
+			// atan(_dir.y / _dir.x) * 180 / 3.14
 		}
 
 	}
@@ -140,32 +147,13 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 
 sf::Sprite Worm::getSprite(int type){
 	sf::Sprite tmp;
-	int offset = (Worm::_iter % 10 < 5 ? 0 : 1);
+	int t = ((int)(GameState::waveTime.getElapsedTime().asMilliseconds()) / 200) % 2;
 
 	tmp.setTexture(*(GameState::textures["bugs"]));
-	tmp.setTextureRect(sf::IntRect((type - 1) * 40, offset * 40, 40, 40));
+	tmp.setTextureRect(sf::IntRect((type - 1) * 40, t * 40, 40, 40));
 
 	tmp.setOrigin(20, 20);
-	int x = (int)(_dir.x + 0.5);
-	int y = (int)(_dir.y + 0.5);
-
-	// Jest problem z obrotem powrotnym ;)
-	// tj. jak robak idzie w lewo
-
-	std::cout << atan(_dir.x / _dir.y) * 180 / 3.14 << std::endl;
-
-	if(x == 1 && y == 0) {
-		tmp.setRotation(90);
-	}
-	else if(x == 0 && y == 0) {
-		tmp.setRotation(0);
-	}
-	else if(x == 0 && y == 1) {
-		tmp.setRotation(180);
-	}
-	else {
-		tmp.setRotation(270);
-	}
+	tmp.setRotation(_rotate * 90);
 
 	return tmp;
 }
