@@ -272,6 +272,8 @@ void TowerLayer::parseEvent(sf::Event &event) {
 void TowerLayer::update(){
 	if( _next != 0)
 		_next->update();
+
+
 }
 
 void TowerLayer::draw() {
