@@ -26,8 +26,9 @@ Clickable* TowerBuilder::secondClick(int x, int y) {
 	Tower *tmp;
 
 	switch(_towerNumber) {
+	// switching numbers of towers 0 and 2 so its from left to right
 	case 0:
-		tmp = new Tower(0);
+		tmp = new Tower(1);
 		break;
 
 	case 1:

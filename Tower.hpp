@@ -19,7 +19,6 @@ public:
 	int getNumber() const;
 	void levelUp();
 	virtual std::string getDesc() const;
-
 protected:
 	int _level = 1;
 	int _no;
@@ -28,6 +27,10 @@ protected:
 	int _reloadTime;
 	sf::Clock _time;
 	bool _firstShot;
+	int _antiAir;
+	void setStats(int,int);
+
+	static int  _stats[3][3][4];
 };
 
 

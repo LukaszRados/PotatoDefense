@@ -61,7 +61,7 @@ Worm::Worm(int type){
 }
 
 bool Worm::dmg(int attack){
-	std::cout << "dmg " << attack << std::endl << _health << " ";
+//	std::cout << "dmg " << attack << std::endl << _health << " ";
 
 	_health-=attack;
 
@@ -179,8 +179,6 @@ bool Worm::go(float time, std::vector<std::vector<int> > path){
 	sf::Vector2f tmp(_dir);
 	tmp.x*=_v*time;
 	tmp.y*=_v*time;
-
-	std::cout << "v: " << _v << " " << tmp.x << " " << tmp.y << std::endl;
 
 	_pos+=tmp;
 

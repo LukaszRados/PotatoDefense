@@ -1,7 +1,7 @@
 #include "GameState.hpp"
 
 int GameState::lifes = 20;
-int GameState::money = 10000;
+int GameState::money = 1000;
 int GameState::wave = 1;
 std::string GameState::info = "[ESC] Exit";
 

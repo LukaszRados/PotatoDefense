@@ -1,14 +1,49 @@
 #include "Tower.hpp"
 
+int Tower::_stats [3][3][4]= {
+		// { range, damage, reloadTime, anti-air(0/1)}
+		{ //tower 1 -universal since 2nd level
+				{50, 1,500,0}, // level 1
+				{100, 4, 350, 2}, // level 2
+				{100, 10, 280, 2} //level 3
+		},
+		{ //tower 2 - anti air
+				{100,4,800,1}, //level 1
+				{130, 8, 600, 1}, //level 2
+				{100, 15, 400, 1} // level 3
+		},
+		{ //tower 3 - shooting ground
+				{50,3, 900,0}, //level 1
+				{100,8,800,0}, // level 2
+				{120, 20, 450, 0} // level 3
+		}
+};
+
+void Tower::setStats(int tower, int level){
+	_range=_stats[tower][level-1][0];
+	_damage=_stats[tower][level-1][1];
+	_reloadTime=_stats[tower][level-1][2];
+	_antiAir=_stats[tower][level-1][3];
+
+
+	std::cout << "stats set ["<<tower<<"][" << level-1 << "]: range " << _range << std::endl <<
+			" damage: " << _damage << " reloadTime " << _reloadTime << " antiAir " << _antiAir << std::endl;
+}
+
+
 Tower::Tower():Tower(0) {
 
 }
 
 Tower::Tower(int no):_no(no) {
-	_firstShot=true;
-	_range = 50;
-	_damage = 10;
-	_reloadTime = 1000;
+//	_firstShot=true;
+//	_range = 50;
+//	_damage = 10;
+//	_reloadTime = 1000;
+
+	std::cout << "wieza x: " << _x << " y: " << _y << " no: " << _no << std::endl;
+
+	setStats(no,1);
 	_sprite = sf::IntRect(_no * 40, 0, 40, 40);
 }
 
@@ -20,18 +55,18 @@ void Tower::shoot(std::list<Worm> & enemies) {
 	if(_firstShot || _time.getElapsedTime().asMilliseconds() >= _reloadTime){
 		_firstShot=false;
 		_time.restart();
-std::cout << "poof!" << std::endl;
+
 		std::vector<Worm *> inRange;
 		for(auto & i : enemies){
-			if(i.distance(_x,_y) < _range){
+			if(i.distance(_x,_y) < _range && (i.isFlying()==(bool)_antiAir || _antiAir==2)){
 				inRange.push_back(&i);
 			}
 		}
-std::cout << "w zasiegu " << inRange.size() << std::endl;
+
 		if(inRange.size()){
 			Worm * target=inRange[0];
 
-			std::cout << target << std::endl;
+
 
 			for(int i=0;i<inRange.size();i++){
 				if(inRange[i]->getDist() < target->getDist())
@@ -59,7 +94,7 @@ int Tower::getNumber() const {
 }
 
 void Tower::levelUp() {
-	++_level;
+	setStats(_no,++_level);
 	_sprite = sf::IntRect(_no * 40, (_level - 1) * 40, 40, 40);
 }
 
