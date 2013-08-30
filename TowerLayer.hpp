@@ -19,6 +19,7 @@ public:
 	virtual void update();
 private:
 	std::vector<TowerBuilder*> _builders;
+//	std::vector<Tower*> _towers;
 	Dialog* _dialog = 0;
 	sf::RectangleShape _active;
 	sf::Sprite _shadow;
