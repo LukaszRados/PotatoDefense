@@ -5,9 +5,10 @@ Tower::Tower():Tower(0) {
 }
 
 Tower::Tower(int no):_no(no) {
-	_range = 20;
+	_firstShot=true;
+	_range = 50;
 	_damage = 10;
-	_reloadTime = 5;
+	_reloadTime = 1000;
 	_sprite = sf::IntRect(_no * 40, 0, 40, 40);
 }
 
@@ -15,7 +16,33 @@ Tower::~Tower() {
 
 }
 
-void Tower::shoot(int **enemies) {
+void Tower::shoot(std::list<Worm> & enemies) {
+	if(_firstShot || _time.getElapsedTime().asMilliseconds() >= _reloadTime){
+		_firstShot=false;
+		_time.restart();
+std::cout << "poof!" << std::endl;
+		std::vector<Worm *> inRange;
+		for(auto & i : enemies){
+			if(i.distance(_x,_y) < _range){
+				inRange.push_back(&i);
+			}
+		}
+std::cout << "w zasiegu " << inRange.size() << std::endl;
+		if(inRange.size()){
+			Worm * target=inRange[0];
+
+			std::cout << target << std::endl;
+
+			for(int i=0;i<inRange.size();i++){
+				if(inRange[i]->getDist() < target->getDist())
+					target=inRange[i];
+			}
+
+			if(!target->dmg(_damage)){
+				GameState::money+=target->getValue();
+			}
+		}
+	}
 
 }
 

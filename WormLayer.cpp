@@ -36,7 +36,9 @@ void WormLayer::parseEvent(sf::Event &event){
 }
 
 void WormLayer::draw(){
-	_next->draw();
+	if(_next != 0) {
+			_next->draw();
+		}
 
 	//rysowanie robakow
 	for(auto & i:worms){
@@ -46,6 +48,7 @@ void WormLayer::draw(){
 
 		_window->draw(i);
 	}
+
 }
 
 void WormLayer::update(){
@@ -68,11 +71,11 @@ void WormLayer::update(){
 	}
 
 
-
+	worms.remove_if(Worm::isDead);
 
 	for(auto & worm : worms){
 		//printPath(_path);
-		if(worm._alive && worm.go(_time.getElapsedTime().asMilliseconds(), _path)){
+		if(worm._alive && worm.go(_time.getElapsedTime().asSeconds()*20, _path)){
 			GameState::lifes--;
 			worm.dmg(worm._health);
 		}

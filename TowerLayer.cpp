@@ -91,6 +91,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 					Tower* t = (Tower*)b->secondClick(x, y);
 
 					Board::board[y][x] = t;
+					_towers.push_back(t);
 
 					_toDraw.push_back(t);
 
@@ -148,6 +149,8 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 
 					//delete Board::board[y - 1][x];	// uzycie tego delete powoduje segmentation fault
+					_towers.remove((Tower*)Board::board[y-1][x]);
+
 					Board::board[y - 1][x] = 0;
 
 					// zeby przeliczylo po sprzedaniu
@@ -273,6 +276,10 @@ void TowerLayer::update(){
 	if( _next != 0)
 		_next->update();
 
+	for(auto i : _towers){
+		i->shoot(WormLayer::worms);
+	}
+
 
 }
 
@@ -330,4 +337,6 @@ void TowerLayer::draw() {
 
 	_window->draw(_active);
 	_window->draw(_shadow);
+
+
 }

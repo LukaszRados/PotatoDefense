@@ -2,15 +2,18 @@
 #define TOWER_HPP_
 
 #include "Clickable.hpp"
-#include <SFML/Graphics.hpp>
 #include "ToString.hpp"
+#include "Worm.hpp"
+
+#include <SFML/Graphics.hpp>
+#include <list>
 
 class Tower : public Clickable {
 public:
 	Tower();
 	Tower(int);
 	virtual ~Tower();
-	virtual void shoot(int**);
+	virtual void shoot(std::list<Worm> &);
 	virtual std::string getName() const;
 	int getLevel() const;
 	int getNumber() const;
@@ -23,6 +26,8 @@ protected:
 	int _range;
 	int _damage;
 	int _reloadTime;
+	sf::Clock _time;
+	bool _firstShot;
 };
 
 

@@ -17,9 +17,7 @@ void BgLayer::update(){
 		_next->update();
 }
 void BgLayer::draw() {
-	if(_next != 0) {
-		_next->draw();
-	}
+
 
 //	sf::Texture sprites = ;
 
@@ -62,4 +60,7 @@ void BgLayer::draw() {
 	text.setPosition(650,10);
 	_window->draw(text);
 
+	if(_next != 0) {
+		_next->draw();
+	}
 }

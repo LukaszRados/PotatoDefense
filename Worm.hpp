@@ -3,6 +3,7 @@
 
 #include "Board.hpp"
 #include "GameState.hpp"
+
 #include <SFML/Graphics.hpp>
 #include <ctime>
 #include <cstdlib>
@@ -23,8 +24,8 @@ public:
 	 *  dziekie temu bedzie latwo dostosowac predkosc
 	 *  @return false - jesli ciagle idzie | true - jesli przeszla plansze
 	 */
-	bool go(int,std::vector<std::vector<int> >);
-
+	bool go(float,std::vector<std::vector<int> >);
+	float distance(int, int);
 
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
@@ -54,6 +55,10 @@ public:
 	int getType() const {
 		return _type;
 	}
+
+	int getDist(){
+		return _dist;
+	}
 	// frienship for accessing private members
 	friend class WormLayer;
 private:
@@ -66,7 +71,7 @@ private:
 	bool _alive=true; //mozliwe ze zbedne
 	sf::Clock _time; // czas potrzebny do animacji robakow (klatek)
 	int _rotate; // trzyma obrot sprite'a [0,1,2,3]
-
+	int _dist; // current distance form exit
 
 // consty
 	sf::Sprite _sprite;
@@ -76,10 +81,10 @@ private:
 	bool _flying;
 	int _max_health;
 
+	float len(sf::Vector2<float> a){
+				return sqrt(a.x*a.x+a.y*a.y);
+			}
 
-	static float len(sf::Vector2<float> a){
-			return sqrt(a.x*a.x+a.y*a.y);
-		}
 };
 
 
