@@ -18,7 +18,8 @@ public:
 	int getLevel() const;
 	int getNumber() const;
 	void levelUp();
-	virtual std::string getDesc() const;
+	virtual std::string getDesc(int) const;
+	static int _prices[3][3];
 protected:
 	int _level = 1;
 	int _no;

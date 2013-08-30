@@ -47,7 +47,7 @@ Clickable* TowerBuilder::secondClick(int x, int y) {
 }
 
 int TowerBuilder::getCost(int lvl) const {
-	return _cost[_towerNumber][lvl];
+	return Tower::_prices[_towerNumber][lvl];
 }
 
 std::string TowerBuilder::getName() const {
@@ -57,12 +57,12 @@ std::string TowerBuilder::getName() const {
 int TowerBuilder::getSellingCost(int lvl) const {
 	int cost = 0;
 	for(int i = 0; i < lvl; ++i) {
-		cost += _cost[_towerNumber][i];
+		cost += Tower::_prices[_towerNumber][i];
 	}
 	return cost * 0.8;
 }
 
 std::string TowerBuilder::getDesc() const {
-	return "Cost:\t\t $" + toString(_cost[_towerNumber][0]) + "\n" + Tower(_towerNumber).getDesc();
+	return "Cost:\t\t $" + toString(Tower::_prices[_towerNumber][0]) + "\n" + Tower(_towerNumber).getDesc(0);
 }
 

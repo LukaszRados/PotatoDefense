@@ -19,6 +19,18 @@ int Tower::_stats [3][3][4]= {
 		}
 };
 
+// Towers costs
+// in 'murican dollars of course :)
+int Tower::_prices[3][3] = {
+		// tower 1
+		{75, 100, 150},
+		// tower 2
+		{90, 130, 180},
+		// tower 3
+		{110, 150, 200}
+};
+
+
 void Tower::setStats(int tower, int level){
 	_range=_stats[tower][level-1][0];
 	_damage=_stats[tower][level-1][1];
@@ -101,6 +113,13 @@ void Tower::levelUp() {
 /**
  * Returns information that should be displayed after hover
  */
-std::string Tower::getDesc() const {
-	return "Range:\t\t 20 \nReload:\t\t2s";
+
+std::string Tower::getDesc(int lvl) const {
+	std::string desc[3] = {
+		"Shooting only ground\nor both at level 2 & 3",
+		"Shooting only air",
+		"Shooting both ground and air"
+	};
+	std::cout << _no << std::endl;
+	return "Range:\t\t " + toString(_stats[_no][0][0]) + " \nReload:\t\t2s\nInfo:\n" + desc[_no];
 }

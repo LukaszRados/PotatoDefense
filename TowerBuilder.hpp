@@ -21,11 +21,6 @@ public:
 
 protected:
 	int _towerNumber = 0;
-	int _cost[3][3] = {
-			{75, 100, 150},
-			{90, 130, 180},
-			{110, 150, 200}
-	};
 };
 
 

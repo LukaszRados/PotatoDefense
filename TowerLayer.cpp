@@ -314,6 +314,14 @@ void TowerLayer::draw() {
 	}
 
 	// dialog, draw dialog!
+
+	_window->draw(_active);
+	_window->draw(_shadow);
+
+	if(_next != 0) {
+		_next->draw();
+	}
+
 	if(_dialog != 0) {
 		int x = _dialog->getX();
 		int y = _dialog->getY();
@@ -330,13 +338,6 @@ void TowerLayer::draw() {
 		sprite.setPosition((x - 1) * Board::fieldW, (y + 1) * Board::fieldH);
 
 		_window->draw(sprite);
-	}
-
-	_window->draw(_active);
-	_window->draw(_shadow);
-
-	if(_next != 0) {
-		_next->draw();
 	}
 
 	// here be dragons. and shots drawing
