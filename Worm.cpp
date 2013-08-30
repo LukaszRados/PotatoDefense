@@ -123,8 +123,17 @@ bool Worm::go(int time, std::vector<std::vector<int> > path){
 
 			_dir/=len(_dir);
 
-			// new rotate here
+
 			// atan(_dir.y / _dir.x) * 180 / 3.14
+			if(abs(_dir.x) <= 0.04 && _dir.y > 0.8){
+				_rotate=2;
+			} else if (abs(_dir.x) <= 0.04 && _dir.y < -0.8){
+				_rotate=0;
+			}else if (abs(_dir.y) <= 0.04 && _dir.x < -0.8){
+				_rotate=3;
+			}else if (abs(_dir.y) <= 0.04 && _dir.x > 0.8){
+				_rotate=1;
+			}
 		}
 
 	}
