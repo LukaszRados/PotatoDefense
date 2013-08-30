@@ -2,7 +2,7 @@
 #define BASELAYER_HPP_
 
 #include "Layer.hpp"
-#include "TowerLayer.hpp"
+#include "BgLayer.hpp"
 #include "Wall.hpp"
 #include <iostream>
 

@@ -4,6 +4,8 @@ BgLayer::BgLayer(sf::RenderWindow *w):Layer(w) {
 	GameState::textures["bg"] = new sf::Texture();
 	GameState::textures["bg"]->loadFromFile("graphics/bg.png");
 	GameState::globalTime.restart();
+
+	_next=new TowerLayer(w);
 }
 
 void BgLayer::parseEvent(sf::Event &event) {

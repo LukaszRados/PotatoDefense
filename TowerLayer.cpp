@@ -284,9 +284,6 @@ void TowerLayer::update(){
 }
 
 void TowerLayer::draw() {
-	if(_next != 0) {
-		_next->draw();
-	}
 
 	int tx, ty;
 
@@ -338,5 +335,10 @@ void TowerLayer::draw() {
 	_window->draw(_active);
 	_window->draw(_shadow);
 
+	if(_next != 0) {
+		_next->draw();
+	}
+
+	// here be dragons. and shots drawing
 
 }

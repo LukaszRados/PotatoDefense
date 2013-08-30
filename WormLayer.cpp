@@ -18,7 +18,6 @@ bool WormLayer::isFree(int x, int y){
 }
 
 WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
-	_next= new BgLayer(w);
 	_time.restart();
 	GameState::waveTime.restart();
 	moreEnemies=true;

@@ -2,7 +2,6 @@
 #define WORMLAYER_HPP_
 
 #include "Layer.hpp"
-#include "BgLayer.hpp"
 #include "Worm.hpp"
 #include <list>
 #include <vector>

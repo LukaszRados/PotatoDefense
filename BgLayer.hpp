@@ -3,6 +3,7 @@
 
 #include "Layer.hpp"
 #include "ToString.hpp"
+#include "TowerLayer.hpp"
 
 class BgLayer : public Layer {
 public:
