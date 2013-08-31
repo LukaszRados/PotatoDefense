@@ -213,7 +213,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		for(auto i : _towers) {
 			if(i->getX() == x && i->getY() == y) {
 				Tower *active = (Tower*)i;
-				GameState::info = active->getDesc(active->getLevel());
+				GameState::info = active->getDesc(active->getLevel() - 1);
 				break;
 			}
 		}
