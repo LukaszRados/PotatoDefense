@@ -17,7 +17,7 @@ public:
 	Tower* putTower();
 	virtual std::string getName() const;
 	virtual std::string getDesc() const;
-
+	int getTowerNumber() const;
 
 protected:
 	int _towerNumber = 0;

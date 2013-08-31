@@ -1,35 +1,41 @@
 #include "Tower.hpp"
 
-int Tower::_stats [3][3][4]= {
-		// { range, damage, reloadTime, anti-air(0/1)}
+int Tower::_stats [3][3][5]= {
+		// { range, damage, reloadTime, anti-air(0/1), price ($)}
 		{ //tower 1 -universal since 2nd level
-				{50, 1,500,0}, // level 1
-				{100, 4, 350, 2}, // level 2
-				{100, 10, 280, 2} //level 3
+				{50,	1,	500,	0,	75}, // level 1
+				{100,	4,	350,	2,	100}, // level 2
+				{100,	10,	280,	2,	150} //level 3
 		},
 		{ //tower 2 - anti air
-				{100,4,800,1}, //level 1
-				{130, 8, 600, 1}, //level 2
-				{100, 15, 400, 1} // level 3
+				{100,	4,	800,	1,	90}, //level 1
+				{130,	8,	600,	1,	130}, //level 2
+				{160,	15,	400,	1,	180} // level 3
 		},
 		{ //tower 3 - shooting ground
-				{50,3, 900,0}, //level 1
-				{100,8,800,0}, // level 2
-				{120, 20, 450, 0} // level 3
+				{50,	3,	900,	0,	110}, //level 1
+				{100,	8,	800,	0,	150}, // level 2
+				{120,	20,	450,	0,	200} // level 3
 		}
 };
 
-// Towers costs
-// in 'murican dollars of course :)
-int Tower::_prices[3][3] = {
-		// tower 1
-		{75, 100, 150},
-		// tower 2
-		{90, 130, 180},
-		// tower 3
-		{110, 150, 200}
+std::string Tower::_desc[3][3] = {
+		{
+				"Shoots only walking enemies\nor both at levels 2 & 3",
+				"Now it shoots also flying enemies.",
+				"Shoots both types of enemies\nDamage increased 2.5 times!"
+		},
+		{
+				"Shoots only flying enemies",
+				"Shoots only flying enemies.\nDamage increased twice",
+				"Shoots only flying enemies.\nDamage increased again!"
+		},
+		{
+				"Shoots only walking enemies",
+				"Shoots only walking enemies.\nDamage increased almost 3 times!",
+				"Shoots only walking enemies.\nSuper-powerful!"
+		},
 };
-
 
 void Tower::setStats(int tower, int level){
 	_range=_stats[tower][level-1][0];
@@ -105,6 +111,10 @@ int Tower::getNumber() const {
 	return _no;
 }
 
+int Tower::getRange() const {
+	return _stats[_no][_level - 1][0];
+}
+
 void Tower::levelUp() {
 	setStats(_no,++_level);
 	_sprite = sf::IntRect(_no * 40, (_level - 1) * 40, 40, 40);
@@ -115,11 +125,6 @@ void Tower::levelUp() {
  */
 
 std::string Tower::getDesc(int lvl) const {
-	std::string desc[3] = {
-		"Shooting only ground\nor both at level 2 & 3",
-		"Shooting only air",
-		"Shooting both ground and air"
-	};
 	std::cout << _no << std::endl;
-	return "Range:\t\t " + toString(_stats[_no][0][0]) + " \nReload:\t\t2s\nInfo:\n" + desc[_no];
+	return "Range:\t\t " + toString(_stats[_no][0][0]) + " \nReload:\t\t2s\nInfo:\n" + _desc[_no][lvl];
 }

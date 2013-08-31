@@ -40,7 +40,15 @@ void Board::init() {
 	fieldW = 40;
 	fieldH = 40;
 
-	window = new sf::RenderWindow(sf::VideoMode(width * fieldW, height * fieldH), "Potato Defense"); // sf::Style::Fullscreen
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 8;
+
+	window = new sf::RenderWindow(sf::VideoMode(width * fieldW, height * fieldH), "Potato Defense", sf::Style::Default, settings); // sf::Style::Fullscreen
+
+	sf::Image icon;
+	icon.loadFromFile("graphics/icon.png");
+
+	window->setIcon(32, 32, icon.getPixelsPtr());
 	buffer = 0;
 
 	for(int i = 0; i < Board::height; ++i) {

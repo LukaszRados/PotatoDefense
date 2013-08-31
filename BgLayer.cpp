@@ -3,6 +3,9 @@
 BgLayer::BgLayer(sf::RenderWindow *w):Layer(w) {
 	GameState::textures["bg"] = new sf::Texture();
 	GameState::textures["bg"]->loadFromFile("graphics/bg.png");
+
+	GameState::textures["panel"] = new sf::Texture();
+	GameState::textures["panel"]->loadFromFile("graphics/panel.png");
 	GameState::globalTime.restart();
 
 	_next=new TowerLayer(w);
@@ -19,15 +22,16 @@ void BgLayer::update(){
 		_next->update();
 }
 void BgLayer::draw() {
-
-
-//	sf::Texture sprites = ;
-
 	sf::Sprite sprite;
 	sprite.setTexture(*(GameState::textures["bg"]));
-	sprite.setTextureRect(sf::IntRect(0, 0, 800, 600));
+	sprite.setTextureRect(sf::IntRect(0, 0, 600, 600));
 	sprite.setPosition(0, 0);
 
+	_window->draw(sprite);
+
+	sprite.setTexture(*(GameState::textures["panel"]));
+	sprite.setTextureRect(sf::IntRect(0, 0, 200, 600));
+	sprite.setPosition(600, 0);
 	_window->draw(sprite);
 
 	sf::Font font;

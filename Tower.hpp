@@ -17,9 +17,11 @@ public:
 	virtual std::string getName() const;
 	int getLevel() const;
 	int getNumber() const;
+	int getRange() const;
 	void levelUp();
 	virtual std::string getDesc(int) const;
-	static int _prices[3][3];
+	static int  _stats[3][3][5];
+	static std::string _desc[3][3];
 protected:
 	int _level = 1;
 	int _no;
@@ -30,8 +32,6 @@ protected:
 	bool _firstShot;
 	int _antiAir;
 	void setStats(int,int);
-
-	static int  _stats[3][3][4];
 };
 
 

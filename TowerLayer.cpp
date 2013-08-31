@@ -29,6 +29,13 @@ TowerLayer::TowerLayer(sf::RenderWindow *w):Layer(w) {
 	_shadow = sf::Sprite();
 	_shadow.setTexture(*(GameState::textures["towers"]));
 	_shadow.setTextureRect(sf::IntRect(0, 120, 40, 40));
+
+	_range = sf::CircleShape();
+	_range.setPosition(-100,-100);
+	_range.setRadius(0);
+	_range.setFillColor(sf::Color(0, 155, 255, 100));
+	_range.setOutlineColor(sf::Color(0, 155, 255, 180));
+	_range.setOutlineThickness(2);
 }
 
 void TowerLayer::parseEvent(sf::Event &event) {
@@ -37,7 +44,6 @@ void TowerLayer::parseEvent(sf::Event &event) {
 	}
 
 	int x, y;
-
 
 	switch(event.type) {
 	case sf::Event::MouseButtonPressed:
@@ -55,6 +61,9 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		x = event.mouseButton.x / 40;
 		y = event.mouseButton.y / 40;
 
+		_range.setPosition(-100,-100);
+		_range.setRadius(0);
+
 		if(Board::buffer == 0 && _dialog == 0) {
 			for(auto i : _builders) {
 				if(i->getX() == x && i->getY() == y) {
@@ -69,10 +78,14 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 			for(auto i : _toDraw) {
 				if(i != 0 && i->getX() == x && i->getY() == y) {
-					std::cout << "I dare you, I double dare you!" << std::endl;
-
 					Board::buffer = i;
-					_dialog = new Dialog(((Tower*)i)->getLevel() < 3, x, y);
+					Tower* tmp = (Tower*)i;
+
+					_dialog = new Dialog(tmp->getLevel() < 3, x, y);
+
+					int r = tmp->getRange();
+					_range.setRadius(r);
+					_range.setPosition(x * 40 - r + 20, y * 40 - r + 20);
 
 					return;
 				}
@@ -96,12 +109,10 @@ void TowerLayer::parseEvent(sf::Event &event) {
 					_toDraw.push_back(t);
 
 					GameState::money -= b->getCost(0);
-					std::cout << "Yep, you got: $" << GameState::money << std::endl;
 					GameState::info = "New tower built ($ " + toString(b->getCost(0)) + ").";
 					((WormLayer*)_next)->setPath(Board::getBoardAsInts());
 				}
 				else {
-					std::cout << "Not enough money, sorry" << std::endl;
 					GameState::info = "Not enough money ($ " + toString(b->getCost(0)) + " required).";
 				}
 
@@ -116,17 +127,13 @@ void TowerLayer::parseEvent(sf::Event &event) {
 			int level = tmp->getLevel();
 			int number = tmp->getNumber();
 
-
-
 			if(y == tmp->getY() + 1) {
 				if(x < tmp->getX()) {
 					if(level >= 3) {
-						std::cout << "No more leveling, man!" << std::endl;
 						GameState::info = "Max. level reached.";
 						Board::buffer = 0;
 					}
 					else {
-						std::cout << "Level it up for god's sake!" << std::endl;
 						int nextLevelCost = TowerBuilder(number).getCost(level);
 
 						if(GameState::money >= nextLevelCost) {
@@ -136,14 +143,12 @@ void TowerLayer::parseEvent(sf::Event &event) {
 						}
 						else {
 							GameState::info = "Not enough money \n($ " + toString(nextLevelCost) + " required).";
-							std::cout << "Sorry, bro, no money." << std::endl;
 						}
 						Board::buffer = 0;
 
 					}
 				}
 				else if(x == tmp->getX()) {
-					std::cout << "Sell it, sell this shit!" << std::endl;
 					int levelCost = TowerBuilder(number).getSellingCost(level);
 					GameState::money += levelCost;
 
@@ -165,7 +170,6 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 					_toDraw.erase(_toDraw.begin() + off);
 
-					std::cout << "Yep, you got: $" << GameState::money << std::endl;
 					GameState::info = "Tower sold ($ " + toString(levelCost) + ").";
 					Board::buffer = 0;
 				}
@@ -192,12 +196,25 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		_active.setPosition(-100, -100);
 		_shadow.setPosition(-100, -100);
 
+		if(Board::buffer == 0 || Board::buffer->getName() != "tower") {
+			_range.setPosition(-100, -100);
+			_range.setRadius(0);
+		}
+
 		GameState::info = "";
 
 		for(auto i : _builders) {
 			if(i->getX() == x && i->getY() == y) {
 				GameState::info = ((TowerBuilder*)i)->getDesc();
 				return;
+			}
+		}
+
+		for(auto i : _towers) {
+			if(i->getX() == x && i->getY() == y) {
+				Tower *active = (Tower*)i;
+				GameState::info = active->getDesc(active->getLevel());
+				break;
 			}
 		}
 
@@ -228,7 +245,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 						GameState::info = "Tower reached max. level";
 					}
 					else {
-						GameState::info = "Upgrading to level " + toString(tmp->getLevel() + 1) + "\ncosts $ " + toString(tb.getCost(tmp->getLevel()));
+						GameState::info = "Upgrading to level " + toString(tmp->getLevel() + 1) + "\ncosts $ " + toString(tb.getCost(tmp->getLevel())) + "\n" + tmp->getDesc(tmp->getLevel());
 					}
 					break;
 
@@ -249,6 +266,8 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		if(Board::board[y][x]) {
 			_active.setOutlineColor(sf::Color(255, 0, 0, 125));
 			_shadow.setPosition(-100, -100);
+			_range.setPosition(-100, -100);
+			_range.setRadius(0);
 		}
 		else {
 			_active.setOutlineColor(sf::Color(255, 255, 255, 100));
@@ -256,17 +275,31 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 		if(Board::buffer == 0 || Board::buffer->getName() != "towerBuilder") {
 			_shadow.setPosition(-100, -100);
+			_range.setPosition(-100, -100);
+			_range.setRadius(0);
 		}
 		else if(Board::buffer != 0 && Board::buffer->getName() == "towerBuilder" && pathExists && WormLayer::isFree(x,y)) {
 			_shadow.setTextureRect(sf::IntRect(Board::buffer->getSprite().left, 120, 40, 40));
+
+			if(!Board::board[y][x]) {
+				TowerBuilder *tb = (TowerBuilder*)Board::buffer;
+				int range = Tower::_stats[tb->getTowerNumber()][0][0];
+
+				_range.setRadius(range);
+				_range.setPosition(x * 40 - range + 20, y * 40 - range + 20);
+			}
 		}
 		else if(!pathExists || !WormLayer::isFree(x,y)) {
 			GameState::info = "This place is not avaible.";
 			_shadow.setPosition(-100, -100);
+			_range.setPosition(-100, -100);
+			_range.setRadius(0);
 		}
 
 		if(!pathExists || !WormLayer::isFree(x,y)) {
 			_active.setOutlineColor(sf::Color(255, 0, 0, 125));
+			_range.setPosition(-100, -100);
+			_range.setRadius(0);
 		}
 		break;
 	}
@@ -279,13 +312,12 @@ void TowerLayer::update(){
 	for(auto i : _towers){
 		i->shoot(WormLayer::worms);
 	}
-
-
 }
 
 void TowerLayer::draw() {
-
 	int tx, ty;
+
+	_window->draw(_range);		// rysujemy jako pierwsze, zeby nic nie przykrywalo
 
 	for(auto i : _builders) {
 		tx = i->getX();
