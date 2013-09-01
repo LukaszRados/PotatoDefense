@@ -38,6 +38,12 @@ TowerLayer::TowerLayer(sf::RenderWindow *w):Layer(w) {
 	_range.setOutlineThickness(2);
 }
 
+TowerLayer::~TowerLayer() {
+	if(_next != 0) {
+		delete _next;
+	}
+}
+
 void TowerLayer::parseEvent(sf::Event &event) {
 	if(_next != 0) {
 		_next->parseEvent(event);
@@ -160,7 +166,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 					// zeby przeliczylo po sprzedaniu
 					((WormLayer*)_next)->setPath(Board::getBoardAsInts());
-					int off = 0;
+					unsigned int off = 0;
 					while(off < _toDraw.size()) {
 						if(_toDraw[off] != 0 && _toDraw[off]->getX() == x && _toDraw[off]->getY() == y - 1) {
 							break;
@@ -190,8 +196,8 @@ void TowerLayer::parseEvent(sf::Event &event) {
 //*********************** End of case ButtonPressed ***************************************************//
 
 	case sf::Event::MouseMoved:
-		int x = event.mouseMove.x / 40;
-		int y = event.mouseMove.y / 40;
+		x = event.mouseMove.x / 40;
+		y = event.mouseMove.y / 40;
 
 		_active.setPosition(-100, -100);
 		_shadow.setPosition(-100, -100);
@@ -302,6 +308,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 			_range.setRadius(0);
 		}
 		break;
+
 	}
 }
 
@@ -357,7 +364,6 @@ void TowerLayer::draw() {
 	if(_dialog != 0) {
 		int x = _dialog->getX();
 		int y = _dialog->getY();
-		bool opt = _dialog->getOptions();
 
 		sf::Sprite sprite;
 		sprite.setTexture(*(GameState::textures["dialog"]));

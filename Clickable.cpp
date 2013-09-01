@@ -8,19 +8,19 @@ Clickable::~Clickable() {
 
 }
 
-void Clickable::setX(unsigned int x) {
+void Clickable::setX(int x) {
 	_x = x;
 }
 
-void Clickable::setY(unsigned int y) {
+void Clickable::setY(int y) {
 	_y = y;
 }
 
-unsigned int Clickable::getX() const {
+int Clickable::getX() const {
 	return _x;
 }
 
-unsigned int Clickable::getY() const {
+int Clickable::getY() const {
 	return _y;
 }
 

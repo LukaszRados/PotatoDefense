@@ -3,11 +3,11 @@
 
 #include "GameState.hpp"
 #include "Layer.hpp"
-#include "BaseLayer.hpp"
+#include "MenuLayer.hpp"
 
 int main() {
 	Board::init();
-	Layer *layer = new BaseLayer(Board::window);
+	Layer *layer = new MenuLayer(Board::window);
 
 	while(Board::window->isOpen()) {
 		Board::window->clear();
@@ -21,9 +21,10 @@ int main() {
 
 		layer->draw();
 		layer->update();
-		Board::window->setTitle("Potato Defense");
 		Board::window->display();
 	}
+
+	delete layer;
 
 	Board::deinit();
 

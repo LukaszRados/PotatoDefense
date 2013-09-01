@@ -12,3 +12,5 @@ std::map<std::string, sf::Texture*> GameState::textures = std::map<std::string, 
 
 sf::Clock GameState::globalTime;
 sf::Clock GameState::waveTime;
+
+States GameState::state = MainMenu;

@@ -11,6 +11,12 @@ BgLayer::BgLayer(sf::RenderWindow *w):Layer(w) {
 	_next=new TowerLayer(w);
 }
 
+BgLayer::~BgLayer() {
+	if(_next != 0) {
+		delete _next;
+	}
+}
+
 void BgLayer::parseEvent(sf::Event &event) {
 	if(_next != 0) {
 		_next->parseEvent(event);

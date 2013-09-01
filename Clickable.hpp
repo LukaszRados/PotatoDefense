@@ -8,10 +8,10 @@ class Clickable {
 public:
 	Clickable();
 	virtual ~Clickable();
-	virtual void setX(unsigned int);
-	virtual void setY(unsigned int);
-	virtual unsigned int getX() const;
-	virtual unsigned int getY() const;
+	virtual void setX(int);
+	virtual void setY(int);
+	virtual int getX() const;
+	virtual int getY() const;
 	virtual sf::IntRect getSprite() const;
 	virtual std::string getName() const = 0;
 	virtual std::string getDesc() const;
