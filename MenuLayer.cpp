@@ -92,8 +92,6 @@ void MenuLayer::parseEvent(sf::Event &event) {
 						GameState::sounds["menu"]->setVolume(50);
 						GameState::sounds["menu"]->setLoop(false);
 						GameState::sounds["menu"]->play();
-						//GameState::sounds["menu"]->stop();
-						// play some 'Tick' music here ;)
 					}
 				}
 			}

@@ -2,9 +2,7 @@
 
  std::vector<std::vector<int> > WormLayer::_path;
  std::list<Worm> WormLayer::worms;
-std::vector<std::vector<int> > WormLayer::enemies = {
-	{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
-};
+std::vector<std::vector<int> > WormLayer::enemies;
 
 bool WormLayer::isFree(int x, int y){
 	for(auto i : worms){
@@ -26,12 +24,18 @@ WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 
 	GameState::textures["bugs"] = new sf::Texture();
 	GameState::textures["bugs"]->loadFromFile("graphics/worms.png");
+
+	enemies = {
+		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
+	};
 }
 
 WormLayer::~WormLayer() {
 	if(_next != 0) {
 		delete _next;
 	}
+
+	worms.clear();
 }
 
 void WormLayer::parseEvent(sf::Event &event){
