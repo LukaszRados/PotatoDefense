@@ -23,6 +23,8 @@ struct GameState {
 	static sf::Clock globalTime;
 	static sf::Clock waveTime;
 	static States state;
+
+	static void reset();
 };
 
 #endif /* GAMESTATE_HPP_ */

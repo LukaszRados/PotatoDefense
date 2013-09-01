@@ -42,6 +42,26 @@ TowerLayer::~TowerLayer() {
 	if(_next != 0) {
 		delete _next;
 	}
+
+	for(int i = 0; i < Board::height; ++i) {
+		for(int j = 0; j < Board::width; ++j) {
+			if(Board::board[i][j] != 0) {
+				Board::board[i][j] = 0;
+			}
+		}
+	}
+
+	for(auto i = _builders.begin(); i < _builders.end(); ++i) {
+		delete *i;
+	}
+
+	for(auto i = _towers.begin(); i != _towers.end(); ++i) {
+		if(*i != 0) {
+			delete *i;
+		}
+	}
+
+	Board::buffer = 0;
 }
 
 void TowerLayer::parseEvent(sf::Event &event) {

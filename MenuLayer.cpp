@@ -9,6 +9,12 @@ MenuLayer::MenuLayer(sf::RenderWindow *w):Layer(w) {
 
 	GameState::textures["pause"] = new sf::Texture();
 	GameState::textures["pause"]->loadFromFile("graphics/pause.png");
+
+	GameState::textures["gameover"] = new sf::Texture();
+	GameState::textures["gameover"]->loadFromFile("graphics/gameover.png");
+
+	GameState::state = States::MainMenu;
+	GameState::reset();
 }
 
 MenuLayer::~MenuLayer() {
@@ -56,6 +62,11 @@ void MenuLayer::parseEvent(sf::Event &event) {
 		}
 		else if(GameState::state == States::Paused) {
 			GameState::state = States::Game;
+		}
+		else if(GameState::state == States::GameOver) {
+			GameState::state = States::MainMenu;
+			delete _next;
+			_next = 0;
 		}
 		break;
 
@@ -147,7 +158,21 @@ void MenuLayer::draw() {
 		break;
 
 	case GameOver:
-		// draw 'GameOver' screen
+		if(_next != 0) {
+			_next->draw();
+
+			sf::RectangleShape bg = sf::RectangleShape();
+			bg.setFillColor(sf::Color(255, 255, 255, 150));
+			bg.setSize(sf::Vector2f(800, 600));
+			bg.setPosition(0, 0);
+			_window->draw(bg);
+
+			_sprite.setTexture(*(GameState::textures["gameover"]));
+			_sprite.setTextureRect(sf::IntRect(0, 0, 350, 120));
+			_sprite.setPosition(225, 240);
+			_window->draw(_sprite);
+		}
+
 		break;
 
 	case HowToPlay:
@@ -160,6 +185,11 @@ void MenuLayer::draw() {
 }
 
 void MenuLayer::update() {
+	if(GameState::lifes <= 0) {
+		GameState::state = States::GameOver;
+		GameState::reset();
+	}
+
 	if(_next != 0) {
 		_next->update();
 	}

@@ -2,6 +2,7 @@
 
 BaseLayer::BaseLayer(sf::RenderWindow *w):Layer(w) {
 	Wall *wall = new Wall;
+	GameState::reset();
 
 	for(int i = 0; i < Board::width; ++i) {
 		Board::board[0][i] = wall;

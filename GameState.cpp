@@ -1,9 +1,9 @@
 #include "GameState.hpp"
 
-int GameState::lifes = 20;
-int GameState::money = 10000;
-int GameState::wave = 1;
-std::string GameState::info = "[ESC] Exit";
+int GameState::lifes;
+int GameState::money;
+int GameState::wave;
+std::string GameState::info;
 
 /**
  * Map of all used textures
@@ -14,3 +14,10 @@ sf::Clock GameState::globalTime;
 sf::Clock GameState::waveTime;
 
 States GameState::state = MainMenu;
+
+void GameState::reset() {
+	lifes = 1;
+	money = 10000;
+	wave = 1;
+	info = "";
+}

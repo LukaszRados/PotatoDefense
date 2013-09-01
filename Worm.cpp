@@ -15,7 +15,7 @@ Worm::Worm(int type){
 	case 1:
 		_max_health=_health=100;
 			_value=100;
-			_v=1;
+			_v=1 * 3;
 			_flying=false;
 			break;
 	case 2:
