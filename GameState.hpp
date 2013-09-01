@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 enum States {
 	MainMenu	= 0,
@@ -20,6 +21,7 @@ struct GameState {
 	static int wave;
 	static std::string info;
 	static std::map<std::string, sf::Texture*> textures;
+	static std::map<std::string, sf::Music*> sounds;
 	static sf::Clock globalTime;
 	static sf::Clock waveTime;
 	static States state;

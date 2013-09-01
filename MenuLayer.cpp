@@ -13,6 +13,9 @@ MenuLayer::MenuLayer(sf::RenderWindow *w):Layer(w) {
 	GameState::textures["gameover"] = new sf::Texture();
 	GameState::textures["gameover"]->loadFromFile("graphics/gameover.png");
 
+	GameState::sounds["menu"] = new sf::Music();
+	GameState::sounds["menu"]->openFromFile("music/menu.ogg");
+
 	GameState::state = States::MainMenu;
 	GameState::reset();
 }
@@ -67,6 +70,7 @@ void MenuLayer::parseEvent(sf::Event &event) {
 			GameState::state = States::MainMenu;
 			delete _next;
 			_next = 0;
+			GameState::reset();
 		}
 		break;
 
@@ -85,6 +89,10 @@ void MenuLayer::parseEvent(sf::Event &event) {
 					if(_menu[i].state == 1 && !_menu[i].active) {
 						_menu[i].active = true;
 						active = i;
+						GameState::sounds["menu"]->setVolume(50);
+						GameState::sounds["menu"]->setLoop(false);
+						GameState::sounds["menu"]->play();
+						//GameState::sounds["menu"]->stop();
 						// play some 'Tick' music here ;)
 					}
 				}
@@ -187,7 +195,6 @@ void MenuLayer::draw() {
 void MenuLayer::update() {
 	if(GameState::lifes <= 0) {
 		GameState::state = States::GameOver;
-		GameState::reset();
 	}
 
 	if(_next != 0) {

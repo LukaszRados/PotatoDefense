@@ -86,7 +86,7 @@ void WormLayer::update(){
 	for(auto & worm : worms){
 		//printPath(_path);
 		if(worm._alive && worm.go(_time.getElapsedTime().asSeconds()*20, _path)){
-			if(GameState::lifes > 0) GameState::lifes--;
+			if(GameState::lifes >= 0) GameState::lifes--;
 			worm.dmg(worm._health);
 		}
 

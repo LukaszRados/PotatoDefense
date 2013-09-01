@@ -9,6 +9,8 @@ std::string GameState::info;
  * Map of all used textures
  */
 std::map<std::string, sf::Texture*> GameState::textures = std::map<std::string, sf::Texture*>();
+/** And music */
+std::map<std::string, sf::Music*> GameState::sounds = std::map<std::string, sf::Music*>();
 
 sf::Clock GameState::globalTime;
 sf::Clock GameState::waveTime;
