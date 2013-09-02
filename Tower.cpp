@@ -70,31 +70,41 @@ Tower::~Tower() {
 }
 
 void Tower::shoot(std::list<Worm> & enemies) {
-	if(_firstShot || _time.getElapsedTime().asMilliseconds() >= _reloadTime){
-		_firstShot=false;
-		_time.restart();
-
-		std::vector<Worm *> inRange;
-		for(auto & i : enemies){
-			if(i.distance(_x,_y) < _range && (i.isFlying()==(bool)_antiAir || _antiAir==2)){
-				inRange.push_back(&i);
-			}
+	if(GameState::state==Game){
+		if(_time.isPaused()){
+			_time.start();
 		}
 
-		if(inRange.size()){
-			Worm * target=inRange[0];
+		if(_firstShot || _time.getElapsedTime().asMilliseconds() >= _reloadTime){
+			_firstShot=false;
+			_time.restart();
 
-
-
-			for(unsigned int i=0;i<inRange.size();i++){
-				if(inRange[i]->getDist() < target->getDist())
-					target=inRange[i];
+			std::vector<Worm *> inRange;
+			for(auto & i : enemies){
+				if(i.distance(_x,_y) < _range && (i.isFlying()==(bool)_antiAir || _antiAir==2)){
+					inRange.push_back(&i);
+				}
 			}
 
-			if(!target->dmg(_damage)){
-				GameState::money+=target->getValue();
+			if(inRange.size()){
+				Worm * target=inRange[0];
+
+
+
+				for(unsigned int i=0;i<inRange.size();i++){
+					if(inRange[i]->getDist() < target->getDist())
+						target=inRange[i];
+				}
+
+				if(!target->dmg(_damage)){
+					GameState::money+=target->getValue();
+				}
 			}
 		}
+	} else if(GameState::state==Paused || GameState::state==GameOver){
+		if(!_time.isPaused()){
+				_time.pause();
+			}
 	}
 
 }

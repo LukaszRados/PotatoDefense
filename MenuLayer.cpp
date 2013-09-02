@@ -37,9 +37,11 @@ void MenuLayer::parseEvent(sf::Event &event) {
 		else if(event.key.code == sf::Keyboard::P) {
 			if(GameState::state == States::Game) {
 				GameState::state = States::Paused;
+				GameState::pause();
 			}
 			else if(GameState::state == States::Paused) {
 				GameState::state = States::Game;
+				GameState::unpause();
 			}
 		}
 		break;
@@ -167,6 +169,8 @@ void MenuLayer::draw() {
 		if(_next != 0) {
 			_next->draw();
 
+
+			GameState::pause();
 			sf::RectangleShape bg = sf::RectangleShape();
 			bg.setFillColor(sf::Color(255, 255, 255, 150));
 			bg.setSize(sf::Vector2f(800, 600));

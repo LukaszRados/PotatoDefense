@@ -3,6 +3,7 @@
 
 #include "Layer.hpp"
 #include "Worm.hpp"
+#include "PausableClock.hpp"
 #include <list>
 #include <vector>
 #include <cmath>
@@ -43,7 +44,7 @@ private:
 	bool moreEnemies; // tells whether to add new worms
 
 
-	sf::Clock _time;
+	PausableClock _time; // for animating worms' movement
 
 	// metoda do przerabiania siatki wiez na siatke robakow - niepotrzebna
 	//std::vector<std::vector<int> > getBoard(std::vector<std::vector<int> >);

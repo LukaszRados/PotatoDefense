@@ -4,6 +4,7 @@
 #include "Clickable.hpp"
 #include "ToString.hpp"
 #include "Worm.hpp"
+#include "PausableClock.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <list>
@@ -28,7 +29,7 @@ protected:
 	int _range;
 	int _damage;
 	int _reloadTime;
-	sf::Clock _time;
+	PausableClock _time;
 	bool _firstShot;
 	int _antiAir;
 	void setStats(int,int);

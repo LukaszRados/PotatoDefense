@@ -25,8 +25,11 @@ WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	GameState::textures["bugs"] = new sf::Texture();
 	GameState::textures["bugs"]->loadFromFile("graphics/worms.png");
 
-	enemies = {
-		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
+	enemies = {															// 30 sec
+		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,
+		 1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,
+		 7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,
+		 1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
 	};
 }
 
@@ -64,42 +67,55 @@ void WormLayer::update(){
 	if( _next != 0 )
 		_next->update();
 
-	if(GameState::state == States::Paused) {
-		// tutaj nalezy zastopowac wszystkie timery
-	}
-	else {
-		// timery moga dzialac - gra jest w toku
-	}
-
-	// adding new worms
-	if(moreEnemies){
-		int i =(int)(GameState::waveTime.getElapsedTime().asSeconds());
-
-		int nextWorm=enemies[GameState::wave-1][i];
-		enemies[GameState::wave-1][i]=0; // for not adding same worm more than once
-		if(nextWorm>0){
-			worms.push_back(Worm(nextWorm));
-		} else if(nextWorm==-1){
-			moreEnemies=false;
-		}
-	}
+	switch(GameState::state){
+	case Paused:
+		_time.pause();
+		break;
 
 
-	worms.remove_if(Worm::isDead);
+	case Game:
+			//*********** Restart timers *****************//
 
-	for(auto & worm : worms){
-		//printPath(_path);
-		if(worm._alive && worm.go(_time.getElapsedTime().asSeconds()*20, _path)){
-			if(GameState::lifes >= 0) GameState::lifes--;
-			worm.dmg(worm._health);
+			if(_time.isPaused())
+				_time.start();
+
+
+			//*********************************************//
+		// adding new worms
+		if(moreEnemies){
+			int i =(int)(GameState::waveTime.getElapsedTime().asSeconds());
+
+			int nextWorm=enemies[GameState::wave-1][i];
+			enemies[GameState::wave-1][i]=0; // for not adding same worm more than once
+			if(nextWorm>0){
+				worms.push_back(Worm(nextWorm));
+			} else if(nextWorm==-1){
+				moreEnemies=false;
+			}
 		}
 
-	}
+
+		worms.remove_if(Worm::isDead);
+
+		for(auto & worm : worms){
+			//printPath(_path);
+			if(worm._alive && worm.go(_time.getElapsedTime().asSeconds()*20, _path)){
+				if(GameState::lifes >= 0) GameState::lifes--;
+				worm.dmg(worm._health);
+			}
+
+		}
 
 
-	worms.remove_if(Worm::isDead); // forget the dead
-	//to estimate time since last move
-	_time.restart();
+		worms.remove_if(Worm::isDead); // forget the dead
+		//to estimate time since last move
+		_time.restart();
+		break;
+	default:
+		break;
+	} // end switch
+
+
 }
 
 void WormLayer::printPath(std::vector<std::vector<int> >  path){

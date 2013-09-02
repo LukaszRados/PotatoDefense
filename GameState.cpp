@@ -12,8 +12,8 @@ std::map<std::string, sf::Texture*> GameState::textures = std::map<std::string, 
 /** And music */
 std::map<std::string, sf::Music*> GameState::sounds = std::map<std::string, sf::Music*>();
 
-sf::Clock GameState::globalTime;
-sf::Clock GameState::waveTime;
+PausableClock GameState::globalTime;
+PausableClock GameState::waveTime;
 
 States GameState::state = MainMenu;
 
@@ -22,4 +22,16 @@ void GameState::reset() {
 	money = 10000;
 	wave = 1;
 	info = "";
+}
+
+void GameState::pause(){
+	GameState::globalTime.pause();
+	GameState::waveTime.pause();
+}
+
+void GameState::unpause(){
+	if(GameState::globalTime.isPaused())
+		GameState::globalTime.start();
+	if(GameState::waveTime.isPaused())
+		GameState::waveTime.start();
 }
