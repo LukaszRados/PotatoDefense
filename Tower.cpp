@@ -3,7 +3,7 @@
 int Tower::_stats [3][3][5]= {
 		// { range, damage, reloadTime, anti-air(0/1/2), price ($)}
 		{ //tower 1 -universal since 2nd level
-				{50,	1,	500,	0,	75}, // level 1
+				{60,	2,	500,	0,	75}, // level 1
 				{100,	4,	350,	2,	100}, // level 2
 				{100,	10,	280,	2,	150} //level 3
 		},
@@ -49,7 +49,7 @@ Tower::Tower():Tower(0) {
 
 }
 
-Tower::Tower(int no):_no(no) {
+Tower::Tower(int no):_no(no), _target(nullptr) {
 	setStats(no,1);
 	_sprite = sf::IntRect(_no * 40, 0, 40, 40);
 }
@@ -76,18 +76,21 @@ void Tower::shoot(std::list<Worm> & enemies) {
 			}
 
 			if(inRange.size()){
-				Worm * target=inRange[0];
+				_target=inRange[0];
 
 
 
 				for(unsigned int i=0;i<inRange.size();i++){
-					if(inRange[i]->getDist() < target->getDist())
-						target=inRange[i];
+					if(inRange[i]->getDist() < _target->getDist())
+						_target=inRange[i];
 				}
 
-				if(!target->dmg(_damage)){
-					GameState::money+=target->getValue();
+				if(!_target->dmg(_damage)){
+					GameState::money+=_target->getValue();
+					_target=nullptr;
 				}
+			} else {
+				_target=nullptr;
 			}
 		}
 	} else if(GameState::state==Paused || GameState::state==GameOver){
@@ -129,4 +132,8 @@ void Tower::levelUp() {
 
 std::string Tower::getDesc(int lvl) const {
 	return "Range:\t\t " + toString(_stats[_no][0][0]) + " \nReload:\t\t2s\nInfo:\n" + _desc[_no][lvl];
+}
+
+sf::Vector2f Tower::getPosition(){
+	return sf::Vector2f(_x*40+20,_y*40+20);
 }

@@ -21,9 +21,12 @@ public:
 	int getRange() const;
 	int getRange(int) const;
 	void levelUp();
+	sf::Vector2f getPosition();
 	virtual std::string getDesc(int) const;
 	static int  _stats[3][3][5];
 	static std::string _desc[3][3];
+
+	friend class TowerLayer;
 protected:
 	int _level = 1;
 	int _no;
@@ -32,6 +35,7 @@ protected:
 	int _reloadTime;
 	PausableClock _time;
 	bool _firstShot;
+	Worm * _target;
 	int _antiAir;
 	void setStats(int,int);
 };

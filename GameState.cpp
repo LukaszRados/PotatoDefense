@@ -17,8 +17,8 @@ PausableClock GameState::waveTime;
 
 States GameState::state = MainMenu;
 
-const int GameState::maxWaves=3;
-const int GameState::secondsBetweenWaves=4;
+const int GameState::maxWaves=1;
+const int GameState::secondsBetweenWaves=5;
 
 void GameState::reset() {
 	lifes = 1;

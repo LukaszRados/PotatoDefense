@@ -414,6 +414,21 @@ void TowerLayer::draw() {
 		_window->draw(sprite);
 	}
 
-	// here be dragons. and shots drawing
 
+	sf::Time shotDuration = sf::seconds(0.125f);
+	for(auto  i : _towers){
+		if(i->_time.getElapsedTime() <= shotDuration && !i->_firstShot && i->_target){
+			float len = i->_target->distance(i->_x,i->_y);
+			if(len <= i->_range){
+				sf::RectangleShape line(sf::Vector2f(i->_damage/5+1,-len));
+				line.setFillColor(sf::Color::Red); // rozne kolory jeszcze
+				line.setPosition(i->getPosition().x,i->getPosition().y-(i->_damage/5+1)/2);
+				float angle=atan2(i->getPosition().y-i->_target->getPos().y,i->getPosition().x-i->_target->getPos().x)*180/3.1415f-90;
+				line.setOrigin(0,-(i->_damage/5+1)/2);
+				line.setRotation(angle);
+
+				_window->draw(line);
+			}
+		}
+	}
 }

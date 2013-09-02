@@ -6,6 +6,7 @@
 #include "ToString.hpp"
 #include "GameState.hpp"
 
+
 #include <iostream>
 
 class MenuLayer : public Layer {
@@ -40,9 +41,9 @@ private:
 
 	std::vector<Tip> _tips = {
 		{660, 500, "Click here to build new tower"},
-		{300, 340, "Use towers to extend path"},
+		{300, 340, "Use towers to create labyrinth"},
 		{220, 220, "Click on existing tower to see options"},
-		{180, 260, "Develop towers to increase damage and range"},
+		{180, 260, "Upgrade towers to increase damage and range"},
 		{490, 260, "Don't let bugs eat your vegetables!"},
 		{-20, 260, "Some bugs can fly! \nYou need special towers to destroy them!"},
 		{730, 20, "Remember - you are a poor farmer..."},

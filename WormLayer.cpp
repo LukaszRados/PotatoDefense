@@ -8,7 +8,7 @@ bool WormLayer::isFree(int x, int y){
 	for(auto i : worms){
 		int _x=int(i._pos.x) / 40;
 		int _y=int(i._pos.y) / 40;
-		if(_x==x && _y==y)
+		if(_x==x && _y==y && !i.isFlying())
 			return false;
 	}
 
@@ -171,11 +171,11 @@ void WormLayer::update(){
 				if(GameState::lifes > 0) GameState::lifes--;
 				worm.dmg(worm._health);
 			}
-
+			worms.remove_if(Worm::isDead); // forget the dead
 		}
 
 
-		worms.remove_if(Worm::isDead); // forget the dead
+
 		//to estimate time since last move
 		_time.restart();
 		break;
