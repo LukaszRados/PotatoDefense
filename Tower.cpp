@@ -1,7 +1,7 @@
 #include "Tower.hpp"
 
 int Tower::_stats [3][3][5]= {
-		// { range, damage, reloadTime, anti-air(0/1), price ($)}
+		// { range, damage, reloadTime, anti-air(0/1/2), price ($)}
 		{ //tower 1 -universal since 2nd level
 				{50,	1,	500,	0,	75}, // level 1
 				{100,	4,	350,	2,	100}, // level 2
