@@ -1,9 +1,8 @@
 #include "BaseLayer.hpp"
 
 BaseLayer::BaseLayer(sf::RenderWindow *w):Layer(w) {
-
-
 	Wall *wall = new Wall;
+	GameState::reset();
 
 	for(int i = 0; i < Board::width; ++i) {
 		Board::board[0][i] = wall;
@@ -29,25 +28,14 @@ BaseLayer::BaseLayer(sf::RenderWindow *w):Layer(w) {
 }
 
 BaseLayer::~BaseLayer() {
-
+	if(_next != 0) {
+		delete _next;
+	}
 }
 
 void BaseLayer::parseEvent(sf::Event &event) {
 	if(_next != 0) {
 		_next->parseEvent(event);
-	}
-
-	switch(event.type) {
-	case sf::Event::Closed:
-		_window->close();
-		break;
-
-	case sf::Event::KeyPressed:
-		if(event.key.code == sf::Keyboard::Escape) {
-			_window->close();
-		}
-		break;
-
 	}
 }
 

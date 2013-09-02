@@ -1,0 +1,1 @@
+All libs (*.dll) should be in root directory.

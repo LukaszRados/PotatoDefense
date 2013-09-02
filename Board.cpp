@@ -49,6 +49,7 @@ void Board::init() {
 	icon.loadFromFile("graphics/icon.png");
 
 	window->setIcon(32, 32, icon.getPixelsPtr());
+	window->setTitle("Potato Defense");
 	buffer = 0;
 
 	for(int i = 0; i < Board::height; ++i) {
@@ -63,6 +64,7 @@ void Board::deinit() {
 	if(Board::window != 0) {
 		delete Board::window;
 	}
+
 }
 
 /**
@@ -72,10 +74,10 @@ void Board::deinit() {
 std::vector<std::vector<int>> Board::getBoardAsInts() {
 	std::vector<std::vector<int>> tmp;
 
-	for(int i = 0; i < Board::board.size(); ++i) {
+	for(unsigned int i = 0; i < Board::board.size(); ++i) {
 		tmp.push_back(std::vector<int>());
 
-		for(int j = 0; j < Board::board[i].size(); ++j) {
+		for(unsigned int j = 0; j < Board::board[i].size(); ++j) {
 			if(!Board::board[i][j]) tmp[i].push_back(0);
 			else if(Board::board[i][j]->getName() == "wall") tmp[i].push_back(((Wall*)Board::board[i][j])->getNumber());
 			else tmp[i].push_back(1);

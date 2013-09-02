@@ -7,6 +7,7 @@
 
 #include "Clickable.hpp"
 #include "Wall.hpp"
+#include "GameState.hpp"
 
 class Board {
 public:

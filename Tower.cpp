@@ -86,7 +86,7 @@ void Tower::shoot(std::list<Worm> & enemies) {
 
 
 
-			for(int i=0;i<inRange.size();i++){
+			for(unsigned int i=0;i<inRange.size();i++){
 				if(inRange[i]->getDist() < target->getDist())
 					target=inRange[i];
 			}
