@@ -42,10 +42,6 @@ void Tower::setStats(int tower, int level){
 	_damage=_stats[tower][level-1][1];
 	_reloadTime=_stats[tower][level-1][2];
 	_antiAir=_stats[tower][level-1][3];
-
-
-	std::cout << "stats set ["<<tower<<"][" << level-1 << "]: range " << _range << std::endl <<
-			" damage: " << _damage << " reloadTime " << _reloadTime << " antiAir " << _antiAir << std::endl;
 }
 
 
@@ -54,13 +50,6 @@ Tower::Tower():Tower(0) {
 }
 
 Tower::Tower(int no):_no(no) {
-//	_firstShot=true;
-//	_range = 50;
-//	_damage = 10;
-//	_reloadTime = 1000;
-
-	std::cout << "wieza x: " << _x << " y: " << _y << " no: " << _no << std::endl;
-
 	setStats(no,1);
 	_sprite = sf::IntRect(_no * 40, 0, 40, 40);
 }
@@ -122,7 +111,11 @@ int Tower::getNumber() const {
 }
 
 int Tower::getRange() const {
-	return _stats[_no][_level - 1][0];
+	return getRange(1);
+}
+
+int Tower::getRange(int lvl) const {
+	return _stats[_no][lvl - 1][0];
 }
 
 void Tower::levelUp() {
@@ -135,6 +128,5 @@ void Tower::levelUp() {
  */
 
 std::string Tower::getDesc(int lvl) const {
-	std::cout << _no << std::endl;
 	return "Range:\t\t " + toString(_stats[_no][0][0]) + " \nReload:\t\t2s\nInfo:\n" + _desc[_no][lvl];
 }

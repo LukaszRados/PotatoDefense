@@ -42,7 +42,6 @@ void BgLayer::draw() {
 
 	sf::Font font;
 	font.loadFromFile("graphics/ptsans.ttf");
-
 	sf::Text text("$ " + toString(GameState::money), font);
 	text.setCharacterSize(15);
 	text.setColor(sf::Color::White);

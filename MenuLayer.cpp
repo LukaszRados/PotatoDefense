@@ -13,6 +13,12 @@ MenuLayer::MenuLayer(sf::RenderWindow *w):Layer(w) {
 	GameState::textures["gameover"] = new sf::Texture();
 	GameState::textures["gameover"]->loadFromFile("graphics/gameover.png");
 
+	GameState::textures["victory"] = new sf::Texture();
+	GameState::textures["victory"]->loadFromFile("graphics/victory.png");
+
+	GameState::textures["howToPlay"] = new sf::Texture();
+	GameState::textures["howToPlay"]->loadFromFile("graphics/howToPlay.png");
+
 	GameState::sounds["menu"] = new sf::Music();
 	GameState::sounds["menu"]->openFromFile("music/menu.ogg");
 
@@ -63,7 +69,11 @@ void MenuLayer::parseEvent(sf::Event &event) {
 			}
 		}
 		else if(GameState::state == States::HowToPlay) {
-			GameState::state = States::MainMenu;
+			if(++tip >= _tips.size()) {
+				GameState::state = States::MainMenu;
+				tip = 0;
+				return;
+			}
 		}
 		else if(GameState::state == States::Paused) {
 			GameState::state = States::Game;
@@ -186,11 +196,50 @@ void MenuLayer::draw() {
 		break;
 
 	case Win:
+		if(_next != 0) {
+			_next->draw();
 
+			GameState::pause();
+			sf::RectangleShape bg = sf::RectangleShape();
+			bg.setFillColor(sf::Color(255, 255, 255, 150));
+			bg.setSize(sf::Vector2f(800, 600));
+			bg.setPosition(0, 0);
+			_window->draw(bg);
+
+			_sprite.setTexture(*(GameState::textures["victory"]));
+			_sprite.setTextureRect(sf::IntRect(0, 0, 260, 120));
+			_sprite.setPosition(270, 240);
+
+			_window->draw(_sprite);
+		}
 		break;
 
 	case HowToPlay:
-		// draw 'HowToPlay' screen
+		if(tip < _tips.size()) {
+			sf::Sprite bg;
+			bg.setTexture(*(GameState::textures["howToPlay"]));
+			bg.setPosition(0, 0);
+			bg.setTextureRect(sf::IntRect(0, 0, 800, 600));
+			_window->draw(bg);
+
+			sf::CircleShape circle;
+			circle.setPosition(_tips[tip].x, _tips[tip].y);
+			circle.setRadius(40);
+			circle.setOutlineColor(sf::Color(255, 255, 0, 255));
+			circle.setOutlineThickness(4);
+			circle.setFillColor(sf::Color::Transparent);
+			_window->draw(circle);
+
+			sf::Font font;
+			font.loadFromFile("graphics/ptsans.ttf");
+
+			sf::Text text(_tips[tip].text, font);
+			text.setCharacterSize(20);
+			text.setColor(sf::Color::Yellow);
+			text.setPosition(550 - text.getGlobalBounds().width, 550 - text.getGlobalBounds().height);
+			_window->draw(text);
+
+		}
 		break;
 
 	case Exit:

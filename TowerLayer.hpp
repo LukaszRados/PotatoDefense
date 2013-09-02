@@ -24,7 +24,7 @@ private:
 	Dialog* _dialog = 0;
 	sf::RectangleShape _active;
 	sf::Sprite _shadow;
-	sf::CircleShape _range;
+	std::vector<sf::CircleShape> _ranges;
 };
 
 

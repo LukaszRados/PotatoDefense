@@ -25,17 +25,25 @@ TowerLayer::TowerLayer(sf::RenderWindow *w):Layer(w) {
 	_active.setOutlineColor(sf::Color(255, 255, 255, 100));
 	_active.setOutlineThickness(1);
 	_active.setFillColor(sf::Color::Transparent);
+	_active.setPosition(-100, -100);
 
 	_shadow = sf::Sprite();
 	_shadow.setTexture(*(GameState::textures["towers"]));
 	_shadow.setTextureRect(sf::IntRect(0, 120, 40, 40));
+	_shadow.setPosition(-100, -100);
 
-	_range = sf::CircleShape();
-	_range.setPosition(-100,-100);
-	_range.setRadius(0);
-	_range.setFillColor(sf::Color(0, 155, 255, 100));
-	_range.setOutlineColor(sf::Color(0, 155, 255, 180));
-	_range.setOutlineThickness(2);
+	_ranges = {
+		sf::CircleShape(),
+		sf::CircleShape()
+	};
+
+	for(auto i = _ranges.begin(); i < _ranges.end(); ++i) {
+		i->setPosition(-100,-100);
+		i->setRadius(0);
+		i->setFillColor(sf::Color(0, 155, 255, 100));
+		i->setOutlineColor(sf::Color(0, 155, 255, 180));
+		i->setOutlineThickness(2);
+	}
 }
 
 TowerLayer::~TowerLayer() {
@@ -87,8 +95,8 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		x = event.mouseButton.x / 40;
 		y = event.mouseButton.y / 40;
 
-		_range.setPosition(-100,-100);
-		_range.setRadius(0);
+		_ranges[0].setPosition(-100,-100);
+		_ranges[0].setRadius(0);
 
 		if(Board::buffer == 0 && _dialog == 0) {
 			for(auto i : _builders) {
@@ -109,9 +117,9 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 					_dialog = new Dialog(tmp->getLevel() < 3, x, y);
 
-					int r = tmp->getRange();
-					_range.setRadius(r);
-					_range.setPosition(x * 40 - r + 20, y * 40 - r + 20);
+					int r = tmp->getRange(tmp->getLevel());
+					_ranges[0].setRadius(r);
+					_ranges[0].setPosition(x * 40 - r + 20, y * 40 - r + 20);
 
 					return;
 				}
@@ -222,9 +230,12 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		_active.setPosition(-100, -100);
 		_shadow.setPosition(-100, -100);
 
+		_ranges[1].setPosition(-100, -100);
+		_ranges[1].setRadius(0);
+
 		if(Board::buffer == 0 || Board::buffer->getName() != "tower") {
-			_range.setPosition(-100, -100);
-			_range.setRadius(0);
+			_ranges[0].setPosition(-100, -100);
+			_ranges[0].setRadius(0);
 		}
 
 		GameState::info = "";
@@ -271,7 +282,11 @@ void TowerLayer::parseEvent(sf::Event &event) {
 						GameState::info = "Tower reached max. level";
 					}
 					else {
-						GameState::info = "Upgrading to level " + toString(tmp->getLevel() + 1) + "\ncosts $ " + toString(tb.getCost(tmp->getLevel())) + "\n" + tmp->getDesc(tmp->getLevel());
+						int lvl = tmp->getLevel();
+						int r = tmp->getRange(lvl + 1);
+						GameState::info = "Upgrading to level " + toString(lvl + 1) + "\ncosts $ " + toString(tb.getCost(lvl)) + "\n" + tmp->getDesc(lvl);
+						_ranges[1].setRadius(r);
+						_ranges[1].setPosition(tmp->getX() * 40 - r + 20, tmp->getY() * 40 - r + 20);
 					}
 					break;
 
@@ -292,8 +307,8 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		if(Board::board[y][x]) {
 			_active.setOutlineColor(sf::Color(255, 0, 0, 125));
 			_shadow.setPosition(-100, -100);
-			_range.setPosition(-100, -100);
-			_range.setRadius(0);
+			_ranges[0].setPosition(-100, -100);
+			_ranges[0].setRadius(0);
 		}
 		else {
 			_active.setOutlineColor(sf::Color(255, 255, 255, 100));
@@ -301,8 +316,8 @@ void TowerLayer::parseEvent(sf::Event &event) {
 
 		if(Board::buffer == 0 || Board::buffer->getName() != "towerBuilder") {
 			_shadow.setPosition(-100, -100);
-			_range.setPosition(-100, -100);
-			_range.setRadius(0);
+			_ranges[0].setPosition(-100, -100);
+			_ranges[0].setRadius(0);
 		}
 		else if(Board::buffer != 0 && Board::buffer->getName() == "towerBuilder" && pathExists && WormLayer::isFree(x,y)) {
 			_shadow.setTextureRect(sf::IntRect(Board::buffer->getSprite().left, 120, 40, 40));
@@ -311,21 +326,21 @@ void TowerLayer::parseEvent(sf::Event &event) {
 				TowerBuilder *tb = (TowerBuilder*)Board::buffer;
 				int range = Tower::_stats[tb->getTowerNumber()][0][0];
 
-				_range.setRadius(range);
-				_range.setPosition(x * 40 - range + 20, y * 40 - range + 20);
+				_ranges[0].setRadius(range);
+				_ranges[0].setPosition(x * 40 - range + 20, y * 40 - range + 20);
 			}
 		}
 		else if(!pathExists || !WormLayer::isFree(x,y)) {
 			GameState::info = "This place is not avaible.";
 			_shadow.setPosition(-100, -100);
-			_range.setPosition(-100, -100);
-			_range.setRadius(0);
+			_ranges[0].setPosition(-100, -100);
+			_ranges[0].setRadius(0);
 		}
 
 		if(!pathExists || !WormLayer::isFree(x,y)) {
 			_active.setOutlineColor(sf::Color(255, 0, 0, 125));
-			_range.setPosition(-100, -100);
-			_range.setRadius(0);
+			_ranges[0].setPosition(-100, -100);
+			_ranges[0].setRadius(0);
 		}
 		break;
 
@@ -344,7 +359,8 @@ void TowerLayer::update(){
 void TowerLayer::draw() {
 	int tx, ty;
 
-	_window->draw(_range);		// rysujemy jako pierwsze, zeby nic nie przykrywalo
+	_window->draw(_ranges[1]);		// ew. nowy zasieg wiezyczki
+	_window->draw(_ranges[0]);		// rysujemy jako pierwsze, zeby nic nie przykrywalo
 
 	for(auto i : _builders) {
 		tx = i->getX();

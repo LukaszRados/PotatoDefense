@@ -19,6 +19,7 @@ public:
 	int getLevel() const;
 	int getNumber() const;
 	int getRange() const;
+	int getRange(int) const;
 	void levelUp();
 	virtual std::string getDesc(int) const;
 	static int  _stats[3][3][5];

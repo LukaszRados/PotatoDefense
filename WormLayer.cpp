@@ -25,8 +25,13 @@ WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	GameState::textures["bugs"] = new sf::Texture();
 	GameState::textures["bugs"]->loadFromFile("graphics/worms.png");
 
+	GameState::textures["nextIn"] = new sf::Texture();
+	GameState::textures["nextIn"]->loadFromFile("graphics/nextIn.png");
 
-	enemies = {															// 30 sec
+	GameState::textures["nextNo"] = new sf::Texture();
+	GameState::textures["nextNo"]->loadFromFile("graphics/nextNo.png");
+
+	enemies = {		// 30 sec
 		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,
 		 1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,
 		 7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,
@@ -85,15 +90,20 @@ void WormLayer::draw(){
 
 
 	if(!_moreEnemies && worms.empty() &&
-			(int)_time.getElapsedTime().asSeconds() < GameState::secondsBetweenWaves){
+			(int)_time.getElapsedTime().asSeconds() <= GameState::secondsBetweenWaves && GameState::wave < GameState::maxWaves){
 			sf::Font font;
 			font.loadFromFile("graphics/ptsans.ttf");
 
-			sf::Text text("Next wave in "+toString(GameState::secondsBetweenWaves-(int)_time.getElapsedTime().asSeconds()), font);
-			text.setCharacterSize(30);
-			text.setColor(sf::Color::Yellow);
-			text.setPosition(400 - (text.getLocalBounds().width + 10), 300-text.getLocalBounds().height);
-			_window->draw(text);
+			sf::Sprite sprite;
+			sprite.setTexture(*(GameState::textures["nextIn"]));
+			sprite.setTextureRect(sf::IntRect(0, 0, 200, 55));
+			sprite.setPosition(200, 240);
+			_window->draw(sprite);
+
+			sprite.setTexture(*(GameState::textures["nextNo"]));
+			sprite.setTextureRect(sf::IntRect((GameState::secondsBetweenWaves-(int)_time.getElapsedTime().asSeconds()) * 100, 0, 100, 100));
+			sprite.setPosition(250, 280);
+			_window->draw(sprite);
 	}
 
 }
@@ -110,16 +120,13 @@ void WormLayer::update(){
 
 	case Game:
 			//*********** Restart timers *****************//
-
 			if(_time.isPaused())
 				_time.start();
-
 
 			//*********************************************//
 		// adding new worms
 		if(_moreEnemies){
 			int i =(int)(GameState::waveTime.getElapsedTime().asSeconds());
-
 			int nextWorm=enemies[GameState::wave-1][i];
 			enemies[GameState::wave-1][i]=0; // for not adding same worm more than once
 			if(nextWorm>0){
@@ -146,9 +153,11 @@ void WormLayer::update(){
 				int seconds=(int)_time.getElapsedTime().asSeconds();
 				if(seconds >= GameState::secondsBetweenWaves){
 					GameState::wave++;
+					GameState::waveTime.restart();
 					_time.restart();
 					_moreEnemies=true;
 					_waveOn=true;
+					worms.clear();
 
 				}
 
