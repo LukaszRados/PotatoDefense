@@ -12,14 +12,17 @@ enum States {
 	Game		= 1,
 	Paused		= 2,
 	GameOver	= 3,
-	HowToPlay	= 4,
-	Exit		= 5
+	Win			= 4,
+	HowToPlay	= 5,
+	Exit		= 6
 };
 
 struct GameState {
 	static int lifes;
 	static int money;
 	static int wave;
+	static const int maxWaves;
+	static const int secondsBetweenWaves;
 	static std::string info;
 	static std::map<std::string, sf::Texture*> textures;
 	static std::map<std::string, sf::Music*> sounds;

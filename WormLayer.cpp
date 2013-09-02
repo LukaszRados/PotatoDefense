@@ -18,18 +18,40 @@ bool WormLayer::isFree(int x, int y){
 WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	_time.restart();
 	GameState::waveTime.restart();
-	moreEnemies=true;
-
+	_moreEnemies=true;
+	_waveOn=true;
 	setPath(Board::getBoardAsInts());
 
 	GameState::textures["bugs"] = new sf::Texture();
 	GameState::textures["bugs"]->loadFromFile("graphics/worms.png");
 
+
 	enemies = {															// 30 sec
 		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,
 		 1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,
 		 7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,
-		 1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 1
+		  1,0,1,0,1,1,1,1,1,1,1,1,1,-1}, //wave 1
+
+		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,
+		 1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,
+		 7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,
+		 1,0,1,0,1,1,1,1,1,1,1,1,1,-1}, //wave 2
+
+		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,
+		 1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,
+		 7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,
+		 1,0,1,0,1,1,1,1,1,1,1,1,1,-1}, //wave 3
+
+		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,
+		 1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,
+		 7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,
+		 1,0,1,0,1,1,1,1,1,1,1,1,1,-1}, //wave 4
+
+		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,
+		 1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,
+		 7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,
+		 1,0,1,0,1,1,1,1,1,1,1,1,1,-1} //wave 5
+
 	};
 }
 
@@ -61,6 +83,13 @@ void WormLayer::draw(){
 		_window->draw(i);
 	}
 
+
+	if(!_moreEnemies && worms.empty() &&
+			(int)_time.getElapsedTime().asSeconds() < GameState::secondsBetweenWaves){
+		std::cout << "Nex wave in " << GameState::secondsBetweenWaves - (int)_time.getElapsedTime().asSeconds() << std::endl;
+		//to zamienic na graficzke
+	}
+
 }
 
 void WormLayer::update(){
@@ -82,7 +111,7 @@ void WormLayer::update(){
 
 			//*********************************************//
 		// adding new worms
-		if(moreEnemies){
+		if(_moreEnemies){
 			int i =(int)(GameState::waveTime.getElapsedTime().asSeconds());
 
 			int nextWorm=enemies[GameState::wave-1][i];
@@ -90,17 +119,41 @@ void WormLayer::update(){
 			if(nextWorm>0){
 				worms.push_back(Worm(nextWorm));
 			} else if(nextWorm==-1){
-				moreEnemies=false;
+				_moreEnemies=false;
 			}
 		}
 
 
 		worms.remove_if(Worm::isDead);
 
+		if(!_moreEnemies && worms.empty()){
+			if(_waveOn){
+				_waveOn=false;
+				_time.restart();
+			} else {
+
+				if(GameState::wave==GameState::maxWaves){
+					GameState::state=Win;
+					return;
+				}
+
+				int seconds=(int)_time.getElapsedTime().asSeconds();
+				if(seconds >= GameState::secondsBetweenWaves){
+					GameState::wave++;
+					_time.restart();
+					_moreEnemies=true;
+					_waveOn=true;
+
+				}
+
+			}
+
+			return; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		}
 		for(auto & worm : worms){
 			//printPath(_path);
 			if(worm._alive && worm.go(_time.getElapsedTime().asSeconds()*20, _path)){
-				if(GameState::lifes >= 0) GameState::lifes--;
+				if(GameState::lifes > 0) GameState::lifes--;
 				worm.dmg(worm._health);
 			}
 

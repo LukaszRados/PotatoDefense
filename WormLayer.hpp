@@ -41,8 +41,8 @@ private:
 	// Board::height okresla rozmiar planszy
 	const int _s = Board::height; //s jak size
 
-	bool moreEnemies; // tells whether to add new worms
-
+	bool _moreEnemies; // tells whether to add new worms
+	bool _waveOn; //true if wave is on, false between waves
 
 	PausableClock _time; // for animating worms' movement
 
