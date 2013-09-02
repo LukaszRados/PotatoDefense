@@ -15,11 +15,6 @@ TowerLayer::TowerLayer(sf::RenderWindow *w):Layer(w) {
 	}
 
 	_next = new WormLayer(w);
-	GameState::textures["towers"] = new sf::Texture();
-	GameState::textures["towers"]->loadFromFile("graphics/towers.png");
-
-	GameState::textures["dialog"] = new sf::Texture();
-	GameState::textures["dialog"]->loadFromFile("graphics/dialog.png");
 
 	_active = sf::RectangleShape(sf::Vector2f(40, 40));
 	_active.setOutlineColor(sf::Color(255, 255, 255, 100));
