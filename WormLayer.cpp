@@ -86,8 +86,14 @@ void WormLayer::draw(){
 
 	if(!_moreEnemies && worms.empty() &&
 			(int)_time.getElapsedTime().asSeconds() < GameState::secondsBetweenWaves){
-		std::cout << "Nex wave in " << GameState::secondsBetweenWaves - (int)_time.getElapsedTime().asSeconds() << std::endl;
-		//to zamienic na graficzke
+			sf::Font font;
+			font.loadFromFile("graphics/ptsans.ttf");
+
+			sf::Text text("Next wave in "+toString(GameState::secondsBetweenWaves-(int)_time.getElapsedTime().asSeconds()), font);
+			text.setCharacterSize(30);
+			text.setColor(sf::Color::Yellow);
+			text.setPosition(400 - (text.getLocalBounds().width + 10), 300-text.getLocalBounds().height);
+			_window->draw(text);
 	}
 
 }

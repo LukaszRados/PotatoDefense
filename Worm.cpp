@@ -102,77 +102,87 @@ bool Worm::go(float time, std::vector<std::vector<int> > path){
 	int y=((int)_pos.y)/40;
 
 	if(!_flying){
+		// in case when tower is put directly in front of worm
+		if((_lastX != x || _lastY != y) && path[y][x]==-1){
+			_dir=sf::Vector2f((_lastX)*40+20,(_lastY)*40+20)-_pos;
+			_dist=path[_lastY][_lastY];
 
-
-
-
+			_lastX=x;
+			_lastY=y;
+		} else
 		if(len(_pos-sf::Vector2f(x*40+20,y*40+20)) < 1){
 			if(_lastX != x || _lastY != y){
+
 				_lastX=x;
 				_lastY=y;
 
-				_dist = path[y][x]; // current distance from exit
 
-				bool next=false;
+					_dist = path[y][x]; // current distance from exit
 
-				if(x > 0 && path[y][x-1] > 0 && path[y][x-1] < _dist){
-					_dir=sf::Vector2f((x-1)*40+20,(y)*40+20)-_pos;
-					next=true;
-				}
+					bool next=false;
+
+					if(x > 0 && path[y][x-1] > 0 && path[y][x-1] < _dist){
+						_dir=sf::Vector2f((x-1)*40+20,(y)*40+20)-_pos;
+						next=true;
+					}
 
 
-				std::srand((unsigned int)std::time(NULL));
+					std::srand((unsigned int)std::time(NULL));
 
-				if(path[y][x+1] > 0 && path[y][x+1] < _dist){
-					if(next){
-						if(rand() % 2)
+					if(path[y][x+1] > 0 && path[y][x+1] < _dist){
+						if(next){
+							if(rand() % 2)
+								_dir=sf::Vector2f((x+1)*40+20,(y)*40+20)-_pos;
+						} else {
 							_dir=sf::Vector2f((x+1)*40+20,(y)*40+20)-_pos;
-					} else {
-						_dir=sf::Vector2f((x+1)*40+20,(y)*40+20)-_pos;
-						next=true;
+							next=true;
+						}
 					}
-				}
 
 
-				if(path[y-1][x] > 0 && path[y-1][x] < _dist){
-					if(next){
-						if(rand() % 2)
+					if(path[y-1][x] > 0 && path[y-1][x] < _dist){
+						if(next){
+							if(rand() % 2)
+								_dir=sf::Vector2f((x)*40+20,(y-1)*40+20)-_pos;
+						} else {
 							_dir=sf::Vector2f((x)*40+20,(y-1)*40+20)-_pos;
-					} else {
-						_dir=sf::Vector2f((x)*40+20,(y-1)*40+20)-_pos;
-						next=true;
+							next=true;
+						}
 					}
-				}
 
 
 
-				if(path[y+1][x] > 0 && path[y+1][x] < _dist){
-					if(next){
-						if(rand() % 2)
+					if(path[y+1][x] > 0 && path[y+1][x] < _dist){
+						if(next){
+							if(rand() % 2)
+								_dir=sf::Vector2f((x)*40+20,(y+1)*40+20)-_pos;
+						} else {
 							_dir=sf::Vector2f((x)*40+20,(y+1)*40+20)-_pos;
-					} else {
-						_dir=sf::Vector2f((x)*40+20,(y+1)*40+20)-_pos;
-						next=true;
+							next=true;
+						}
 					}
 				}
 
-				_dir/=len(_dir);
 
 
-				// atan(_dir.y / _dir.x) * 180 / 3.14
-				if(abs(_dir.x) <= 0.04 && _dir.y > 0.8){
-					_rotate=2;
-				} else if (abs(_dir.x) <= 0.04 && _dir.y < -0.8){
-					_rotate=0;
-				}else if (abs(_dir.y) <= 0.04 && _dir.x < -0.8){
-					_rotate=3;
-				}else if (abs(_dir.y) <= 0.04 && _dir.x > 0.8){
-					_rotate=1;
-				}
-			}
 
 		}
 
+		_dir/=len(_dir);
+
+
+	}
+
+
+	// atan(_dir.y / _dir.x) * 180 / 3.14
+	if(abs(_dir.x) <= 0.04 && _dir.y > 0.8){
+		_rotate=2;
+	} else if (abs(_dir.x) <= 0.04 && _dir.y < -0.8){
+		_rotate=0;
+	}else if (abs(_dir.y) <= 0.04 && _dir.x < -0.8){
+		_rotate=3;
+	}else if (abs(_dir.y) <= 0.04 && _dir.x > 0.8){
+		_rotate=1;
 	}
 
 	// moving the worm

@@ -68,7 +68,7 @@ void MenuLayer::parseEvent(sf::Event &event) {
 		else if(GameState::state == States::Paused) {
 			GameState::state = States::Game;
 		}
-		else if(GameState::state == States::GameOver) {
+		else if(GameState::state == States::GameOver || GameState::state==Win) {
 			GameState::state = States::MainMenu;
 			delete _next;
 			_next = 0;
@@ -182,6 +182,10 @@ void MenuLayer::draw() {
 			_sprite.setPosition(225, 240);
 			_window->draw(_sprite);
 		}
+
+		break;
+
+	case Win:
 
 		break;
 
