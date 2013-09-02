@@ -1,11 +1,6 @@
 #include "BgLayer.hpp"
 
 BgLayer::BgLayer(sf::RenderWindow *w):Layer(w) {
-	GameState::textures["bg"] = new sf::Texture();
-	GameState::textures["bg"]->loadFromFile("graphics/bg.png");
-
-	GameState::textures["panel"] = new sf::Texture();
-	GameState::textures["panel"]->loadFromFile("graphics/panel.png");
 	GameState::globalTime.restart();
 
 	_next=new TowerLayer(w);

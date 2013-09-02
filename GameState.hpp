@@ -33,6 +33,8 @@ struct GameState {
 	static void reset();
 	static void pause();
 	static void unpause();
+	static void init();
+	static void deinit();
 };
 
 #endif /* GAMESTATE_HPP_ */

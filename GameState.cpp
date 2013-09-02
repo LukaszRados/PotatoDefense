@@ -38,3 +38,58 @@ void GameState::unpause(){
 	if(GameState::waveTime.isPaused())
 		GameState::waveTime.start();
 }
+
+void GameState::init() {
+	textures["bugs"] = new sf::Texture();
+	textures["bugs"]->loadFromFile("graphics/worms.png");
+
+	textures["nextIn"] = new sf::Texture();
+	textures["nextIn"]->loadFromFile("graphics/nextIn.png");
+
+	textures["nextNo"] = new sf::Texture();
+	textures["nextNo"]->loadFromFile("graphics/nextNo.png");
+
+	textures["towers"] = new sf::Texture();
+	textures["towers"]->loadFromFile("graphics/towers.png");
+
+	textures["dialog"] = new sf::Texture();
+	textures["dialog"]->loadFromFile("graphics/dialog.png");
+
+	textures["splash"] = new sf::Texture();
+	textures["splash"]->loadFromFile("graphics/splash.png");
+
+	textures["menu"] = new sf::Texture();
+	textures["menu"]->loadFromFile("graphics/menu.png");
+
+	textures["pause"] = new sf::Texture();
+	textures["pause"]->loadFromFile("graphics/pause.png");
+
+	textures["gameover"] = new sf::Texture();
+	textures["gameover"]->loadFromFile("graphics/gameover.png");
+
+	textures["victory"] = new sf::Texture();
+	textures["victory"]->loadFromFile("graphics/victory.png");
+
+	textures["howToPlay"] = new sf::Texture();
+	textures["howToPlay"]->loadFromFile("graphics/howToPlay.png");
+
+	textures["bg"] = new sf::Texture();
+	textures["bg"]->loadFromFile("graphics/bg.png");
+
+	textures["panel"] = new sf::Texture();
+	textures["panel"]->loadFromFile("graphics/panel.png");
+
+	sounds["menu"] = new sf::Music();
+	sounds["menu"]->openFromFile("music/menu.ogg");
+}
+
+void GameState::deinit() {
+//	for(auto i : textures) {
+//		if(i.second != nullptr) {
+//			delete i.second;
+//			i.second = 0;
+//		}
+//	}
+
+	delete sounds["menu"];
+}

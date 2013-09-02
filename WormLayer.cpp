@@ -22,15 +22,6 @@ WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	_waveOn=true;
 	setPath(Board::getBoardAsInts());
 
-	GameState::textures["bugs"] = new sf::Texture();
-	GameState::textures["bugs"]->loadFromFile("graphics/worms.png");
-
-	GameState::textures["nextIn"] = new sf::Texture();
-	GameState::textures["nextIn"]->loadFromFile("graphics/nextIn.png");
-
-	GameState::textures["nextNo"] = new sf::Texture();
-	GameState::textures["nextNo"]->loadFromFile("graphics/nextNo.png");
-
 	enemies = {		// 30 sec
 		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,
 		 1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,

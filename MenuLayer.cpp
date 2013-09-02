@@ -1,27 +1,6 @@
 #include "MenuLayer.hpp"
 
 MenuLayer::MenuLayer(sf::RenderWindow *w):Layer(w) {
-	GameState::textures["splash"] = new sf::Texture();
-	GameState::textures["splash"]->loadFromFile("graphics/splash.png");
-
-	GameState::textures["menu"] = new sf::Texture();
-	GameState::textures["menu"]->loadFromFile("graphics/menu.png");
-
-	GameState::textures["pause"] = new sf::Texture();
-	GameState::textures["pause"]->loadFromFile("graphics/pause.png");
-
-	GameState::textures["gameover"] = new sf::Texture();
-	GameState::textures["gameover"]->loadFromFile("graphics/gameover.png");
-
-	GameState::textures["victory"] = new sf::Texture();
-	GameState::textures["victory"]->loadFromFile("graphics/victory.png");
-
-	GameState::textures["howToPlay"] = new sf::Texture();
-	GameState::textures["howToPlay"]->loadFromFile("graphics/howToPlay.png");
-
-	GameState::sounds["menu"] = new sf::Music();
-	GameState::sounds["menu"]->openFromFile("music/menu.ogg");
-
 	GameState::state = States::MainMenu;
 	GameState::reset();
 }

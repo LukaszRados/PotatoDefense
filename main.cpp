@@ -8,6 +8,7 @@
 int main() {
 	Board::init();
 	Layer *layer = new MenuLayer(Board::window);
+	GameState::init();
 
 	while(Board::window->isOpen()) {
 		Board::window->clear();
@@ -18,15 +19,14 @@ int main() {
 			layer->parseEvent(event);
 		}
 
-
 		layer->draw();
 		layer->update();
 		Board::window->display();
 	}
 
 	delete layer;
-
 	Board::deinit();
+	GameState::deinit();
 
     return 0;
 }
