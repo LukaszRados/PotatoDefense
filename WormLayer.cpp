@@ -21,6 +21,10 @@ WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	_moreEnemies=true;
 	_waveOn=true;
 	setPath(Board::getBoardAsInts());
+	if(GameState::music) {
+		GameState::sounds["gong"]->setVolume(75);
+		GameState::sounds["gong"]->play();
+	}
 
 	enemies = {		// 30 sec
 		{0,3,0,1,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,-1,
@@ -146,6 +150,9 @@ void WormLayer::update(){
 				if(seconds >= GameState::secondsBetweenWaves){
 					GameState::wave++;
 					GameState::waveTime.restart();
+					if(GameState::music) {
+						GameState::sounds["gong"]->play();
+					}
 					_time.restart();
 					_moreEnemies=true;
 					_waveOn=true;

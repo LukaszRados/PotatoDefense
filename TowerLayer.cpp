@@ -93,16 +93,15 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		x = event.mouseButton.x / 40;
 		y = event.mouseButton.y / 40;
 
-//		std::cout << x << "  " << y << std::endl;
-
-
-
 		_ranges[0].setPosition(-100,-100);
 		_ranges[0].setRadius(0);
 
 		if(x==19 && y==0){
 			GameState::state=GameOver;
 			return;
+		}
+		else if(x == 18 && y == 0) {
+			GameState::toggleMusic();
 		}
 
 		if(Board::buffer == 0 && _dialog == 0) {
@@ -265,7 +264,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		if(x==19 && y==0){
 			GameState::info = "Click here to exit";
 		} else if(x==18 && y==0){
-			GameState::info = "Click here to save game\n(only between waves)";
+			GameState::info = "Mute on/off";
 		} else 	if(x > 14) {
 			GameState::info = "";
 			return;
@@ -437,19 +436,23 @@ void TowerLayer::draw() {
 
 				switch(i->_no){
 				case 0:
-					line.setFillColor(sf::Color::Red);
+					line.setFillColor(sf::Color(255, 0, 0, 200));
 					break;
 				case 1:
-					line.setFillColor(sf::Color::Green);
+					line.setFillColor(sf::Color(0, 255, 0, 200));
 					break;
 				case 2:
-					line.setFillColor(sf::Color::Blue);
+					line.setFillColor(sf::Color(0, 0, 255, 200));
 					break;
+				}
+
+				if(i->_sound.getStatus() != sf::Sound::Playing) {
+					i->_sound.play();
 				}
 
 				line.setPosition(i->getPosition().x,i->getPosition().y-(i->_damage/5+1)/2);
 				float angle=atan2(i->getPosition().y-i->_target->getPos().y,i->getPosition().x-i->_target->getPos().x)*180/3.1415f-90;
-				line.setOrigin(0,-(i->_damage/5+1)/2);
+				line.setOrigin(0,-(i->_damage/5)/2);
 				line.setRotation(angle);
 
 				_window->draw(line);

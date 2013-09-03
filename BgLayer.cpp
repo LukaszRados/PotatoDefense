@@ -35,6 +35,11 @@ void BgLayer::draw() {
 	sprite.setPosition(600, 0);
 	_window->draw(sprite);
 
+	sprite.setTexture(*(GameState::textures["volume"]));
+	sprite.setTextureRect(sf::IntRect(0, (GameState::music ? 0 : 1) * 40, 40, 40));
+	sprite.setPosition(720, 0);
+	_window->draw(sprite);
+
 	sf::Font font;
 	font.loadFromFile("graphics/ptsans.ttf");
 	sf::Text text("$ " + toString(GameState::money), font);

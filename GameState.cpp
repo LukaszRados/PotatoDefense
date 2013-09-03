@@ -20,8 +20,10 @@ States GameState::state = MainMenu;
 const int GameState::maxWaves=2;
 const int GameState::secondsBetweenWaves=5;
 
+bool GameState::music = true;
+
 void GameState::reset() {
-	lifes = 1;
+	lifes = 20;
 	money = 10000;
 	wave = 1;
 	info = "";
@@ -37,6 +39,16 @@ void GameState::unpause(){
 		GameState::globalTime.start();
 	if(GameState::waveTime.isPaused())
 		GameState::waveTime.start();
+}
+
+void GameState::toggleMusic() {
+	GameState::music = !GameState::music;
+	if(GameState::music) {
+		GameState::sounds["forest"]->play();
+	}
+	else {
+		GameState::sounds["forest"]->stop();
+	}
 }
 
 void GameState::init() {
@@ -73,6 +85,9 @@ void GameState::init() {
 	textures["howToPlay"] = new sf::Texture();
 	textures["howToPlay"]->loadFromFile("graphics/howToPlay.png");
 
+	textures["volume"] = new sf::Texture();
+	textures["volume"]->loadFromFile("graphics/volume.png");
+
 	textures["bg"] = new sf::Texture();
 	textures["bg"]->loadFromFile("graphics/bg.png");
 
@@ -81,20 +96,26 @@ void GameState::init() {
 
 	sounds["menu"] = new sf::Music();
 	sounds["menu"]->openFromFile("music/menu.ogg");
+
+	sounds["gong"] = new sf::Music();
+	sounds["gong"]->openFromFile("music/gong.ogg");
+
+	sounds["forest"] = new sf::Music();
+	sounds["forest"]->openFromFile("music/forest.ogg");
 }
 
 void GameState::deinit() {
-	for(auto & i : textures) {
-		if(i.second != nullptr) {
-			delete i.second;
-			i.second = 0;
-		}
-	}
+//	for(auto & i : textures) {
+//		if(i.second != nullptr) {
+//			delete i.second;
+//			i.second = 0;
+//		}
+//	}
 
-	for(auto & i : sounds){
-		if(i.second != nullptr){
-			delete i.second;
-			i.second=nullptr;
-		}
-	}
+//	for(auto & i : sounds){
+//		if(i.second != nullptr){
+//			delete i.second;
+//			i.second=nullptr;
+//		}
+//	}
 }

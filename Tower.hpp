@@ -38,6 +38,7 @@ protected:
 	Worm * _target;
 	int _antiAir;
 	void setStats(int,int);
+	sf::Sound _sound;
 };
 
 

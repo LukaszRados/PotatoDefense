@@ -1,11 +1,15 @@
 #include "MenuLayer.hpp"
 
 MenuLayer::MenuLayer(sf::RenderWindow *w):Layer(w) {
+	GameState::sounds["forest"]->setLoop(true);
+	GameState::sounds["forest"]->setVolume(30);
+	GameState::sounds["forest"]->play();
 	GameState::state = States::MainMenu;
 	GameState::reset();
 }
 
 MenuLayer::~MenuLayer() {
+	GameState::sounds["forest"]->stop();
 	if(_next != nullptr){
 		delete _next;
 		_next=nullptr;
@@ -49,6 +53,10 @@ void MenuLayer::parseEvent(sf::Event &event) {
 			if(GameState::state == States::Game) {
 				_next = new BaseLayer(_window);
 			}
+
+			if(x >= 760 && y >= 560) {
+				GameState::toggleMusic();
+			}
 		}
 		else if(GameState::state == States::HowToPlay) {
 			if(++tip >= _tips.size()) {
@@ -83,9 +91,9 @@ void MenuLayer::parseEvent(sf::Event &event) {
 					if(_menu[i].state == 1 && !_menu[i].active) {
 						_menu[i].active = true;
 						active = i;
-						GameState::sounds["menu"]->setVolume(50);
-						GameState::sounds["menu"]->setLoop(false);
-						GameState::sounds["menu"]->play();
+						if(GameState::music) {
+							GameState::sounds["menu"]->play();
+						}
 					}
 				}
 			}
@@ -132,6 +140,11 @@ void MenuLayer::draw() {
 			_sprite.setPosition(300, 280 + i.no * 60);
 			_window->draw(_sprite);
 		}
+
+		_sprite.setTexture(*(GameState::textures["volume"]));
+		_sprite.setTextureRect(sf::IntRect(0, (GameState::music ? 0 : 1) * 40, 40, 40));
+		_sprite.setPosition(760, 560);
+		_window->draw(_sprite);
 		break;
 
 	case Game:
