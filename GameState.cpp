@@ -17,7 +17,7 @@ PausableClock GameState::waveTime;
 
 States GameState::state = MainMenu;
 
-const int GameState::maxWaves=1;
+const int GameState::maxWaves=2;
 const int GameState::secondsBetweenWaves=5;
 
 void GameState::reset() {
@@ -84,12 +84,17 @@ void GameState::init() {
 }
 
 void GameState::deinit() {
-//	for(auto i : textures) {
-//		if(i.second != nullptr) {
-//			delete i.second;
-//			i.second = 0;
-//		}
-//	}
+	for(auto & i : textures) {
+		if(i.second != nullptr) {
+			delete i.second;
+			i.second = 0;
+		}
+	}
 
-	delete sounds["menu"];
+	for(auto & i : sounds){
+		if(i.second != nullptr){
+			delete i.second;
+			i.second=nullptr;
+		}
+	}
 }

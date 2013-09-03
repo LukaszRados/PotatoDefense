@@ -65,6 +65,7 @@ TowerLayer::~TowerLayer() {
 	}
 
 	Board::buffer = 0;
+
 }
 
 void TowerLayer::parseEvent(sf::Event &event) {
@@ -73,6 +74,8 @@ void TowerLayer::parseEvent(sf::Event &event) {
 	}
 
 	int x, y;
+
+
 
 	switch(event.type) {
 	case sf::Event::MouseButtonPressed:
@@ -90,8 +93,17 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		x = event.mouseButton.x / 40;
 		y = event.mouseButton.y / 40;
 
+//		std::cout << x << "  " << y << std::endl;
+
+
+
 		_ranges[0].setPosition(-100,-100);
 		_ranges[0].setRadius(0);
+
+		if(x==19 && y==0){
+			GameState::state=GameOver;
+			return;
+		}
 
 		if(Board::buffer == 0 && _dialog == 0) {
 			for(auto i : _builders) {
@@ -250,10 +262,16 @@ void TowerLayer::parseEvent(sf::Event &event) {
 			}
 		}
 
-		if(x > 14) {
+		if(x==19 && y==0){
+			GameState::info = "Click here to exit";
+		} else if(x==18 && y==0){
+			GameState::info = "Click here to save game\n(only between waves)";
+		} else 	if(x > 14) {
 			GameState::info = "";
 			return;
 		}
+
+
 
 		auto tmp=Board::getBoardAsInts();
 		tmp[y][x]=1;
@@ -416,7 +434,19 @@ void TowerLayer::draw() {
 			float len = i->_target->distance(i->_x,i->_y);
 			if(len <= i->_range){
 				sf::RectangleShape line(sf::Vector2f(i->_damage/5+1,-len));
-				line.setFillColor(sf::Color::Red); // rozne kolory jeszcze
+
+				switch(i->_no){
+				case 0:
+					line.setFillColor(sf::Color::Red);
+					break;
+				case 1:
+					line.setFillColor(sf::Color::Green);
+					break;
+				case 2:
+					line.setFillColor(sf::Color::Blue);
+					break;
+				}
+
 				line.setPosition(i->getPosition().x,i->getPosition().y-(i->_damage/5+1)/2);
 				float angle=atan2(i->getPosition().y-i->_target->getPos().y,i->getPosition().x-i->_target->getPos().x)*180/3.1415f-90;
 				line.setOrigin(0,-(i->_damage/5+1)/2);

@@ -23,12 +23,12 @@ WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	setPath(Board::getBoardAsInts());
 
 	enemies = {		// 30 sec
-		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,
+		{0,3,0,1,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,-1,
 		 1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,
 		 7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,
 		  1,0,1,0,1,1,1,1,1,1,1,1,1,-1}, //wave 1
 
-		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,1,
+		{0,1,0,2,0,3,0,4,0,5,0,6,0,7,-1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,-1,
 		 1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,
 		 7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,
 		 1,0,1,0,1,1,1,1,1,1,1,1,1,-1}, //wave 2
@@ -57,6 +57,7 @@ WormLayer::~WormLayer() {
 	}
 
 	worms.clear();
+
 }
 
 void WormLayer::parseEvent(sf::Event &event){
@@ -162,15 +163,16 @@ void WormLayer::update(){
 				if(GameState::lifes > 0) GameState::lifes--;
 				worm.dmg(worm._health);
 			}
-			worms.remove_if(Worm::isDead); // forget the dead
-		}
 
+		}
+//		worms.remove_if(Worm::isDead); // forget the dead
 
 
 		//to estimate time since last move
 		_time.restart();
 		break;
-	default:
+	case Win:
+	case GameOver:
 		break;
 	} // end switch
 

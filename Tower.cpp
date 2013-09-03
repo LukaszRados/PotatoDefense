@@ -87,7 +87,7 @@ void Tower::shoot(std::list<Worm> & enemies) {
 
 				if(!_target->dmg(_damage)){
 					GameState::money+=_target->getValue();
-					_target=nullptr;
+//					_target=nullptr;
 				}
 			} else {
 				_target=nullptr;

@@ -6,7 +6,10 @@ MenuLayer::MenuLayer(sf::RenderWindow *w):Layer(w) {
 }
 
 MenuLayer::~MenuLayer() {
-
+	if(_next != nullptr){
+		delete _next;
+		_next=nullptr;
+	}
 }
 
 void MenuLayer::parseEvent(sf::Event &event) {
