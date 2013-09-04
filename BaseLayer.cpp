@@ -1,6 +1,6 @@
 #include "BaseLayer.hpp"
 
-BaseLayer::BaseLayer(sf::RenderWindow *w):Layer(w) {
+BaseLayer::BaseLayer(sf::RenderWindow *w, std::string filename):Layer(w) {
 	Wall *wall = new Wall;
 	GameState::reset();
 
@@ -23,7 +23,7 @@ BaseLayer::BaseLayer(sf::RenderWindow *w):Layer(w) {
 	Board::board[7][0] = new Wall(2);
 	Board::board[7][14] = new Wall(3);
 
-	_next = new BgLayer(w);
+	_next = new BgLayer(w,filename);
 	_toDraw.push_back(wall);
 }
 

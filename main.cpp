@@ -7,8 +7,8 @@
 
 int main() {
 	Board::init();
-	Layer *layer = new MenuLayer(Board::window);
 	GameState::init();
+	Layer *layer = new MenuLayer(Board::window);
 
 	while(Board::window->isOpen()) {
 		Board::window->clear();

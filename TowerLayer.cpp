@@ -1,6 +1,6 @@
 #include "TowerLayer.hpp"
 
-TowerLayer::TowerLayer(sf::RenderWindow *w):Layer(w) {
+TowerLayer::TowerLayer(sf::RenderWindow *w, std::string filename):Layer(w) {
 	int tx, ty;
 
 	for(int i = 0; i < 3; ++i) {
@@ -14,7 +14,7 @@ TowerLayer::TowerLayer(sf::RenderWindow *w):Layer(w) {
 		_builders.push_back(tmp);
 	}
 
-	_next = new WormLayer(w);
+
 
 	_active = sf::RectangleShape(sf::Vector2f(40, 40));
 	_active.setOutlineColor(sf::Color(255, 255, 255, 100));
@@ -39,6 +39,31 @@ TowerLayer::TowerLayer(sf::RenderWindow *w):Layer(w) {
 		i->setOutlineColor(sf::Color(0, 155, 255, 180));
 		i->setOutlineThickness(2);
 	}
+
+	if(filename != ""){
+		std::ifstream save;
+		save.open(filename.c_str(),std::ifstream::in | std::ifstream::binary);
+		if(!save){
+			std::cout << "Autosave could not be loaded" << std::endl;
+		} else {
+			save >> GameState::money >> GameState::lifes >> GameState::wave;
+			float time;
+			save >> time;
+			GameState::loadedTime=sf::seconds(time);
+			Tower t;
+			while(t.load(save)){
+				Tower * p=new Tower(t);
+				p->setStats(p->_no,p->_level);
+				p->_sprite = sf::IntRect(p->_no * 40, (p->_level - 1) * 40, 40, 40);
+
+				_towers.push_back(p);
+				Board::board[t._y][t._x]=p;
+				_toDraw.push_back(p);
+			}
+		}
+	}
+
+	_next = new WormLayer(w);
 }
 
 TowerLayer::~TowerLayer() {
@@ -93,16 +118,15 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		x = event.mouseButton.x / 40;
 		y = event.mouseButton.y / 40;
 
-//		std::cout << x << "  " << y << std::endl;
-
-
-
 		_ranges[0].setPosition(-100,-100);
 		_ranges[0].setRadius(0);
 
 		if(x==19 && y==0){
 			GameState::state=GameOver;
 			return;
+		}
+		else if(x == 18 && y == 0) {
+			GameState::toggleMusic();
 		}
 
 		if(Board::buffer == 0 && _dialog == 0) {
@@ -265,7 +289,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 		if(x==19 && y==0){
 			GameState::info = "Click here to exit";
 		} else if(x==18 && y==0){
-			GameState::info = "Click here to save game\n(only between waves)";
+			GameState::info = "Mute on/off";
 		} else 	if(x > 14) {
 			GameState::info = "";
 			return;
@@ -437,19 +461,23 @@ void TowerLayer::draw() {
 
 				switch(i->_no){
 				case 0:
-					line.setFillColor(sf::Color::Red);
+					line.setFillColor(sf::Color(255, 0, 0, 200));
 					break;
 				case 1:
-					line.setFillColor(sf::Color::Green);
+					line.setFillColor(sf::Color(0, 255, 0, 200));
 					break;
 				case 2:
-					line.setFillColor(sf::Color::Blue);
+					line.setFillColor(sf::Color(0, 0, 255, 200));
 					break;
+				}
+
+				if(i->_sound.getStatus() != sf::Sound::Playing) {
+					i->_sound.play();
 				}
 
 				line.setPosition(i->getPosition().x,i->getPosition().y-(i->_damage/5+1)/2);
 				float angle=atan2(i->getPosition().y-i->_target->getPos().y,i->getPosition().x-i->_target->getPos().x)*180/3.1415f-90;
-				line.setOrigin(0,-(i->_damage/5+1)/2);
+				line.setOrigin(0,-(i->_damage/5)/2);
 				line.setRotation(angle);
 
 				_window->draw(line);

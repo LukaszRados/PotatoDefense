@@ -33,7 +33,7 @@ private:
 	};
 
 	MenuPosition _menu[4] = {
-		{0, 0, false, States::MainMenu},
+		{0, 0, false, States::Load},
 		{1, 1, false, States::Game},
 		{2, 1, false, States::HowToPlay},
 		{3, 1, false, States::Exit}

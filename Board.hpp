@@ -3,7 +3,8 @@
 
 #include <vector>
 #include <list>
-#include <ostream>
+#include <iostream>
+#include <fstream>
 #include <SFML/Graphics.hpp>
 
 #include "Clickable.hpp"

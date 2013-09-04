@@ -52,6 +52,9 @@ Tower::Tower():Tower(0) {
 Tower::Tower(int no):_no(no), _target(nullptr) {
 	setStats(no,1);
 	_sprite = sf::IntRect(_no * 40, 0, 40, 40);
+//	_sound.setBuffer(*(GameState::sounds["laser" + toString(_no + 1)]));
+//	_sound.setVolume(50);
+//	_sound.setLoop(false);
 }
 
 Tower::~Tower() {
@@ -141,6 +144,7 @@ sf::Vector2f Tower::getPosition(){
 void Tower::save(std::ostream & out) const {
 	out << _x << " "<< _y << " " << _no << " " << _level;
 }
-void Tower::load(std::istream & in) {
+bool Tower::load(std::istream & in) {
 	in >> _x >> _y >> _no >> _level;
+	return in;
 }

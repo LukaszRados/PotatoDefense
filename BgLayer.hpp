@@ -7,7 +7,7 @@
 
 class BgLayer : public Layer {
 public:
-	BgLayer(sf::RenderWindow *w);
+	BgLayer(sf::RenderWindow *w,std::string);
 	virtual ~BgLayer();
 	virtual void parseEvent(sf::Event &event);
 	virtual void draw();

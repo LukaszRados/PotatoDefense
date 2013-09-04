@@ -87,7 +87,6 @@ std::vector<std::vector<int>> Board::getBoardAsInts() {
 }
 
 void Board::save(){
-	std::cout << "Board::save " << std::endl;
 	std::ofstream file;
 	file.open("autosave.pd", std::ofstream::binary);
 	if(!file){

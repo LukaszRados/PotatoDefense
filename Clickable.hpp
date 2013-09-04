@@ -17,7 +17,7 @@ public:
 	virtual std::string getName() const = 0;
 	virtual std::string getDesc() const;
 	virtual void save(std::ostream &) const;
-	virtual void load(std::istream &);
+	virtual bool load(std::istream &);
 protected:
 	unsigned int _x = 0;
 	unsigned int _y = 0;

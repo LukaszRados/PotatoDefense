@@ -14,7 +14,7 @@
 
 class TowerLayer : public Layer {
 public:
-	TowerLayer(sf::RenderWindow *w);
+	TowerLayer(sf::RenderWindow *w,std::string);
 	virtual ~TowerLayer();
 	virtual void parseEvent(sf::Event &event);
 	virtual void draw();

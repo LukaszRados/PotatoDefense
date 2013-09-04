@@ -5,6 +5,7 @@
 #include "BgLayer.hpp"
 #include "Wall.hpp"
 #include <iostream>
+#include <string>
 
 /**
  * Klasa BaseLayer nie zajmuje sie rysowaniem,
@@ -13,7 +14,7 @@
 
 class BaseLayer : public Layer {
 public:
-	BaseLayer(sf::RenderWindow *w);
+	BaseLayer(sf::RenderWindow *w, std::string="");
 	virtual ~BaseLayer();
 	virtual void parseEvent(sf::Event &event);
 	virtual void draw();

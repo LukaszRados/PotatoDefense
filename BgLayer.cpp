@@ -1,9 +1,9 @@
 #include "BgLayer.hpp"
 
-BgLayer::BgLayer(sf::RenderWindow *w):Layer(w) {
+BgLayer::BgLayer(sf::RenderWindow *w, std::string filename):Layer(w) {
 	GameState::globalTime.restart();
 
-	_next=new TowerLayer(w);
+	_next=new TowerLayer(w,filename);
 }
 
 BgLayer::~BgLayer() {
@@ -35,6 +35,11 @@ void BgLayer::draw() {
 	sprite.setPosition(600, 0);
 	_window->draw(sprite);
 
+	sprite.setTexture(*(GameState::textures["volume"]));
+	sprite.setTextureRect(sf::IntRect(0, (GameState::music ? 0 : 1) * 40, 40, 40));
+	sprite.setPosition(720, 0);
+	_window->draw(sprite);
+
 	sf::Font font;
 	font.loadFromFile("graphics/ptsans.ttf");
 	sf::Text text("$ " + toString(GameState::money), font);
@@ -59,7 +64,7 @@ void BgLayer::draw() {
 
 	_window->draw(text);
 
-	int seconds = (int)GameState::globalTime.getElapsedTime().asSeconds();
+	int seconds = (int)(GameState::globalTime.getElapsedTime()+GameState::loadedTime).asSeconds();
 	std::string time=toString(seconds/60)+":"+(seconds % 60 < 10 ? "0" : "")+toString(seconds % 60);
 
 	text.setString(time);
