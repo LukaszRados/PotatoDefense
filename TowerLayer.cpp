@@ -164,7 +164,7 @@ void TowerLayer::parseEvent(sf::Event &event) {
 			if(Board::board[y][x] == 0 && ((WormLayer*)_next)->pathExists(tmp) && WormLayer::isFree(x,y)) {
 				TowerBuilder *b = (TowerBuilder*)Board::buffer;
 
-				if(GameState::money > b->getCost(0)) {
+				if(GameState::money >= b->getCost(0)) {
 
 					Tower* t = (Tower*)b->secondClick(x, y);
 

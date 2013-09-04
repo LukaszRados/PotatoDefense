@@ -80,6 +80,7 @@ private:
 	int _type;
 	bool _flying;
 	int _max_health;
+	int _lifes;
 
 	float len(sf::Vector2<float> a){
 				return sqrt(a.x*a.x+a.y*a.y);

@@ -18,14 +18,14 @@ sf::Time GameState::loadedTime;
 
 States GameState::state = MainMenu;
 
-const int GameState::maxWaves=2;
+const int GameState::maxWaves=7;
 const int GameState::secondsBetweenWaves=5;
 
 bool GameState::music = true;
 
 void GameState::reset() {
 	lifes = 20;
-	money = 10000;
+	money = 100;
 	wave = 1;
 	info = "";
 	loadedTime=sf::seconds(0);

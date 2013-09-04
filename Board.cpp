@@ -42,7 +42,7 @@ void Board::init() {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
-	window = new sf::RenderWindow(sf::VideoMode(width * fieldW, height * fieldH), "Potato Defense", sf::Style::Default, settings); // sf::Style::Fullscreen
+	window = new sf::RenderWindow(sf::VideoMode(width * fieldW, height * fieldH), "Potato Defense", sf::Style::Fullscreen, settings); // sf::Style::Fullscreen
 
 	sf::Image icon;
 	icon.loadFromFile("graphics/icon.png");

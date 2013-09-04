@@ -13,47 +13,63 @@ Worm::Worm(int type){
 	_sprite.setPosition(_pos-sf::Vector2<float>(10,10));
 	switch(type){
 	case 1:
-		_max_health=_health=100;
-			_value=100;
+		_max_health=_health=30;
+			_value=10;
+			_lifes=1;
 			_v=1;
 			_flying=false;
 			break;
 	case 2:
-		_max_health=_health=200;
-			_value=150;
+		_max_health=_health=300;
+			_value=50;
+			_lifes=2;
 			_v=1;
 			_flying=false;
 			break;
 	case 3:
 		_max_health=_health=80;
-			_value=120;
+			_value=40;
 			_v=1.5;
+			_lifes=1;
 			_flying=true;
 			break;
 	case 4:
-		_max_health=_health=120;
-			_value=200;
+		_max_health=_health=200;
+			_value=80;
 			_v=1.2;
+			_lifes=2;
 			_flying=true;
 			break;
 	case 5:
-		_max_health=_health=100;
-			_value=300;
-			_v=2;
+		_max_health=_health=80;
+			_value=50;
+			_v=3;
 			_flying=false;
+			_lifes=1;
 			break;
 	case 6:
-		_max_health=_health=1000;
-			_value=500;
+		_max_health=_health=2000;
+			_value=100;
 			_v=0.8;
+			_lifes=5;
 			_flying=false;
 			break;
 	case 7:
 		_max_health=_health=500;
-		_value=400;
-		_v=0.5;
+		_value=100;
+		_lifes=5;
+		_v=1;
 		_flying=false;
 		break;
+	case 8:
+		_max_health=_health=20000;
+		_value=0;
+		_v=0.8;
+		_lifes=20;
+		_flying=false;
+		_sprite=getSprite(7);
+		break;
+
 	default:
 		break;
 	}
