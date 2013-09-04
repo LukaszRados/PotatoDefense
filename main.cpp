@@ -19,8 +19,9 @@ int main() {
 			layer->parseEvent(event);
 		}
 
-		layer->draw();
 		layer->update();
+		layer->draw();
+
 		Board::window->display();
 	}
 

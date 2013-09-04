@@ -14,3 +14,7 @@ int Dialog::getY() const {
 bool Dialog::getOptions() const {
 	return _options;
 }
+
+void Dialog::setOptions(bool opt) {
+	_options = opt;
+}

@@ -9,6 +9,7 @@ public:
 	int getX() const;
 	int getY() const;
 	bool getOptions() const;
+	void setOptions(bool);
 private:
 	bool _options;
 	int _x;

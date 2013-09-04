@@ -391,6 +391,18 @@ void TowerLayer::update(){
 	for(auto i : _towers){
 		i->shoot(WormLayer::worms);
 	}
+
+	if(_dialog != 0) {
+		Tower* tmp = (Tower*)Board::buffer;
+		TowerBuilder tb = TowerBuilder(tmp->getNumber());
+		if(tb.getCost(tmp->getLevel()) > GameState::money || tmp->getLevel() == 3) {
+			_dialog->setOptions(false);
+		}
+		else {
+			_dialog->setOptions(true);
+		}
+
+	}
 }
 
 void TowerLayer::draw() {
