@@ -23,7 +23,7 @@ WormLayer::WormLayer(sf::RenderWindow *w):Layer(w){
 	setPath(Board::getBoardAsInts());
 
 	enemies = {		// 30 sec
-		{0,3,0,1,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,-1,
+		{0,3,0,-1,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,1,1,1,1,1,-1,
 		 1,1,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,7,1,0,2,0,3,0,4,0,5,0,6,0,
 		 7,1,0,2,0,3,0,4,0,5,0,6,0,7,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0,
 		  1,0,1,0,1,1,1,1,1,1,1,1,1,-1}, //wave 1
@@ -123,6 +123,7 @@ void WormLayer::update(){
 			enemies[GameState::wave-1][i]=0; // for not adding same worm more than once
 			if(nextWorm>0){
 				worms.push_back(Worm(nextWorm));
+
 			} else if(nextWorm==-1){
 				_moreEnemies=false;
 			}
@@ -150,7 +151,7 @@ void WormLayer::update(){
 					_moreEnemies=true;
 					_waveOn=true;
 					worms.clear();
-
+					Board::save();
 				}
 
 			}

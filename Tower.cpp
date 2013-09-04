@@ -137,3 +137,10 @@ std::string Tower::getDesc(int lvl) const {
 sf::Vector2f Tower::getPosition(){
 	return sf::Vector2f(_x*40+20,_y*40+20);
 }
+
+void Tower::save(std::ostream & out) const {
+	out << _x << " "<< _y << " " << _no << " " << _level;
+}
+void Tower::load(std::istream & in) {
+	in >> _x >> _y >> _no >> _level;
+}

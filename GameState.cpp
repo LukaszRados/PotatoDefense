@@ -14,6 +14,7 @@ std::map<std::string, sf::Music*> GameState::sounds = std::map<std::string, sf::
 
 PausableClock GameState::globalTime;
 PausableClock GameState::waveTime;
+sf::Time GameState::loadedTime;
 
 States GameState::state = MainMenu;
 
@@ -98,3 +99,4 @@ void GameState::deinit() {
 		}
 	}
 }
+

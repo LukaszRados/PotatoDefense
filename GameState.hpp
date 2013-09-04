@@ -5,6 +5,8 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <fstream>
+#include <iostream>
 #include "PausableClock.hpp"
 
 enum States {
@@ -27,6 +29,7 @@ struct GameState {
 	static std::map<std::string, sf::Texture*> textures;
 	static std::map<std::string, sf::Music*> sounds;
 	static PausableClock globalTime;
+	static sf::Time loadedTime;
 	static PausableClock waveTime;
 	static States state;
 
@@ -35,6 +38,7 @@ struct GameState {
 	static void unpause();
 	static void init();
 	static void deinit();
+	static void save();
 };
 
 #endif /* GAMESTATE_HPP_ */

@@ -4,7 +4,6 @@
  * Board - contains towers, tower builders, entrance and exit (pointers)
  */
 std::vector<std::vector<Clickable*>> Board::board;
-
 /**
  * Pointer to rendered window
  */
@@ -85,4 +84,27 @@ std::vector<std::vector<int>> Board::getBoardAsInts() {
 	}
 
 	return tmp;
+}
+
+void Board::save(){
+	std::cout << "Board::save " << std::endl;
+	std::ofstream file;
+	file.open("autosave.pd", std::ofstream::binary);
+	if(!file){
+		std::cout << "Autosave could not be created!" << std::endl;
+	} else {
+		file << GameState::money << " " << GameState::lifes << " " << GameState::wave << " ";
+		file << GameState::globalTime.getElapsedTime().asSeconds() << " ";
+
+
+		for(int y=0;y<Board::height;y++)
+			for(int x=0;x<Board::height;x++){
+				if(Board::board[y][x]!=nullptr && Board::board[y][x]->getName()=="tower"){
+					Board::board[y][x]->save(file);
+					file <<" ";
+				}
+			}
+
+		file.close();
+	}
 }

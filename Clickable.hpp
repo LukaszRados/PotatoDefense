@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <iostream>
 
 class Clickable {
 public:
@@ -15,7 +16,8 @@ public:
 	virtual sf::IntRect getSprite() const;
 	virtual std::string getName() const = 0;
 	virtual std::string getDesc() const;
-
+	virtual void save(std::ostream &) const;
+	virtual void load(std::istream &);
 protected:
 	unsigned int _x = 0;
 	unsigned int _y = 0;

@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <list>
+#include <iostream>
 
 class Tower : public Clickable {
 public:
@@ -16,6 +17,8 @@ public:
 	virtual ~Tower();
 	virtual void shoot(std::list<Worm> &);
 	virtual std::string getName() const;
+	virtual void save(std::ostream &) const;
+	virtual void load(std::istream &);
 	int getLevel() const;
 	int getNumber() const;
 	int getRange() const;

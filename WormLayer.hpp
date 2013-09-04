@@ -4,6 +4,7 @@
 #include "Layer.hpp"
 #include "Worm.hpp"
 #include "PausableClock.hpp"
+#include "Board.hpp"
 #include <list>
 #include <vector>
 #include <cmath>

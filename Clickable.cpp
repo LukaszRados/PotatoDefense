@@ -31,3 +31,11 @@ sf::IntRect Clickable::getSprite() const {
 std::string Clickable::getDesc() const {
 	return _desc;
 }
+
+void Clickable::save(std::ostream & a) const {
+
+}
+
+void Clickable::load(std::istream & a) {
+
+}

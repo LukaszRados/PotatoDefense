@@ -2,12 +2,14 @@
 #define BOARD_HPP_
 
 #include <vector>
-#include <iostream>
+#include <list>
+#include <ostream>
 #include <SFML/Graphics.hpp>
 
 #include "Clickable.hpp"
 #include "Wall.hpp"
 #include "GameState.hpp"
+
 
 class Board {
 public:
@@ -22,7 +24,7 @@ public:
 	static int height;
 	static int fieldW;
 	static int fieldH;
-
+	static void save();
 };
 
 #endif /* BOARD_HPP_ */
