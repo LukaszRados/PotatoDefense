@@ -79,8 +79,10 @@ Worm::Worm(int type){
 bool Worm::dmg(int attack){
 	_health-=attack;
 
-	if(_health <= 0) //smierc
+	if(_health <= 0){ //smierc
 		_alive=false;
+		_health=0;
+	}
 
 	return _alive;
 }
