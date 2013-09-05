@@ -40,9 +40,7 @@ void BgLayer::draw() {
 	sprite.setPosition(720, 0);
 	_window->draw(sprite);
 
-	sf::Font font;
-	font.loadFromFile("graphics/ptsans.ttf");
-	sf::Text text("$ " + toString(GameState::money), font);
+	sf::Text text("$ " + toString(GameState::money), *GameState::fonts["ptsans"]);
 	text.setCharacterSize(15);
 	text.setColor(sf::Color::White);
 	text.setPosition(800 - (text.getLocalBounds().width + 10), 50);

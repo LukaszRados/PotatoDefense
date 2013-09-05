@@ -28,6 +28,7 @@ struct GameState {
 	static std::string info;
 	static std::map<std::string, sf::Texture*> textures;
 	static std::map<std::string, sf::Music*> sounds;
+	static std::map<std::string, sf::Font*> fonts;
 	static PausableClock globalTime;
 	static sf::Time loadedTime;
 	static PausableClock waveTime;

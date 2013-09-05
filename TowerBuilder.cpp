@@ -63,7 +63,7 @@ int TowerBuilder::getSellingCost(int lvl) const {
 	for(int i = 0; i < lvl; ++i) {
 		cost += Tower::_stats[_towerNumber][i][4];
 	}
-	return cost * 0.8;
+	return (float)cost * 0.6;
 }
 
 std::string TowerBuilder::getDesc() const {

@@ -49,7 +49,7 @@ Worm::Worm(int type){
 			break;
 	case 6:
 		_max_health=_health=2000;
-			_value=100;
+			_value=180;
 			_v=0.8;
 			_lifes=5;
 			_flying=false;
@@ -77,8 +77,6 @@ Worm::Worm(int type){
 }
 
 bool Worm::dmg(int attack){
-//	std::cout << "dmg " << attack << std::endl << _health << " ";
-
 	_health-=attack;
 
 	if(_health <= 0) //smierc
@@ -187,6 +185,8 @@ bool Worm::go(float time, std::vector<std::vector<int> > path){
 		_dir/=len(_dir);
 
 
+	} else {
+		_dist=Board::height-x;
 	}
 
 

@@ -12,6 +12,8 @@ std::map<std::string, sf::Texture*> GameState::textures = std::map<std::string, 
 /** And music */
 std::map<std::string, sf::Music*> GameState::sounds = std::map<std::string, sf::Music*>();
 
+std::map<std::string, sf::Font*> GameState::fonts = std::map<std::string,sf::Font*>();
+
 PausableClock GameState::globalTime;
 PausableClock GameState::waveTime;
 sf::Time GameState::loadedTime;
@@ -104,21 +106,32 @@ void GameState::init() {
 
 	sounds["forest"] = new sf::Music();
 	sounds["forest"]->openFromFile("music/forest.ogg");
+
+	fonts["ptsans"] = new sf::Font();
+	fonts["ptsans"]->loadFromFile("graphics/ptsans.ttf");
 }
 
 void GameState::deinit() {
-//	for(auto & i : textures) {
-//		if(i.second != nullptr) {
-//			delete i.second;
-//			i.second = 0;
-//		}
-//	}
+	for(auto & i : textures) {
+		if(i.second != nullptr) {
+			delete i.second;
+			i.second = 0;
+		}
+	}
 
-//	for(auto & i : sounds){
-//		if(i.second != nullptr){
-//			delete i.second;
-//			i.second=nullptr;
-//		}
-//	}
+	for(auto & i : sounds){
+		if(i.second != nullptr){
+			delete i.second;
+			i.second=nullptr;
+		}
+	}
+
+	for(auto & i : fonts){
+			if(i.second != nullptr){
+				delete i.second;
+				i.second=nullptr;
+			}
+		}
+
 }
 

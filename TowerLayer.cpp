@@ -437,33 +437,6 @@ void TowerLayer::draw() {
 		}
 	}
 
-	// dialog, draw dialog!
-
-	_window->draw(_active);
-	_window->draw(_shadow);
-
-	if(_next != 0) {
-		_next->draw();
-	}
-
-	if(_dialog != 0) {
-		int x = _dialog->getX();
-		int y = _dialog->getY();
-
-		sf::Sprite sprite;
-		sprite.setTexture(*(GameState::textures["dialog"]));
-		if(_dialog->getOptions()) {
-			sprite.setTextureRect(sf::IntRect(0, 0, 120, 40));
-		}
-		else {
-			sprite.setTextureRect(sf::IntRect(0, 40, 120, 40));
-		}
-		sprite.setPosition((x - 1) * Board::fieldW, (y + 1) * Board::fieldH);
-
-		_window->draw(sprite);
-	}
-
-
 	sf::Time shotDuration = sf::seconds(0.125f);
 	for(auto  i : _towers){
 		if(i->_time.getElapsedTime() <= shotDuration && !i->_firstShot && i->_target){
@@ -496,4 +469,33 @@ void TowerLayer::draw() {
 			}
 		}
 	}
+
+	// dialog, draw dialog!
+
+	_window->draw(_active);
+	_window->draw(_shadow);
+
+	if(_next != 0) {
+		_next->draw();
+	}
+
+	if(_dialog != 0) {
+		int x = _dialog->getX();
+		int y = _dialog->getY();
+
+		sf::Sprite sprite;
+		sprite.setTexture(*(GameState::textures["dialog"]));
+		if(_dialog->getOptions()) {
+			sprite.setTextureRect(sf::IntRect(0, 0, 120, 40));
+		}
+		else {
+			sprite.setTextureRect(sf::IntRect(0, 40, 120, 40));
+		}
+		sprite.setPosition((x - 1) * Board::fieldW, (y + 1) * Board::fieldH);
+
+		_window->draw(sprite);
+	}
+
+
+
 }

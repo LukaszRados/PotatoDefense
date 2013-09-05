@@ -4,8 +4,8 @@ int Tower::_stats [3][3][5]= {
 		// { range, damage, reloadTime, anti-air(0/1/2), price ($)}
 		{ //tower 1 -universal since 2nd level
 				{70,	4,	800,	0,	15}, // level 1
-				{80,	7,	700,	2,	80}, // level 2
-				{100,	10,	600,	2,	150} //level 3
+				{75,	7,	700,	2,	80}, // level 2
+				{85,	10,	600,	2,	150} //level 3
 		},
 		{ //tower 2 - anti air
 				{110,	12,	700,	1,	90}, //level 1
@@ -134,7 +134,7 @@ void Tower::levelUp() {
  */
 
 std::string Tower::getDesc(int lvl) const {
-	return "Range:\t\t " + toString(_stats[_no][0][0]) + " \nReload:\t\t2s\nInfo:\n" + _desc[_no][lvl];
+	return "Damage: \t\t"+toString(_stats[_no][lvl][1])+"\nRange:\t\t " + toString(_stats[_no][lvl][0]) + " \nReload:\t\t"+toString(_stats[_no][lvl][2])+"\nInfo:\n" + _desc[_no][lvl];
 }
 
 sf::Vector2f Tower::getPosition(){

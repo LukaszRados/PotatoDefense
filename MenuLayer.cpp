@@ -234,10 +234,8 @@ void MenuLayer::draw() {
 			circle.setFillColor(sf::Color::Transparent);
 			_window->draw(circle);
 
-			sf::Font font;
-			font.loadFromFile("graphics/ptsans.ttf");
 
-			sf::Text text(_tips[tip].text, font);
+			sf::Text text(_tips[tip].text, *GameState::fonts["ptsans"]);
 			text.setCharacterSize(20);
 			text.setColor(sf::Color::Yellow);
 			text.setPosition(550 - text.getGlobalBounds().width, 550 - text.getGlobalBounds().height);
