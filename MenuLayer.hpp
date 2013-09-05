@@ -9,15 +9,39 @@
 
 #include <iostream>
 
+
+/**
+ * \class MenuLayer
+ * \brief Warstwa odpowiedzialna za menu glowne gry.
+ *
+ * Klasa wyswietla menu glowne jesli trzeba, a takze jest odpowiedzialna za pelnoekranowe komunikaty podczas gry:
+ * <ul>
+ * <li>GameOver</li>
+ * <li>Victory</li>
+ * <li>Next wave in...</li>
+ * <li>How to play </li>
+ * </ul></br>
+ *
+ */
 class MenuLayer : public Layer {
 public:
+	/**
+	 * Konstruktor
+	 */
 	MenuLayer(sf::RenderWindow*);
-	~MenuLayer();
-
+	virtual ~MenuLayer();
+	/**
+	 * Procedura do obslugi zdarzen.
+	 */
+	virtual void parseEvent(sf::Event &event);
+	/**
+	 * Procedura do rysowania warstwy.
+	 */
 	virtual void draw();
-	virtual void parseEvent(sf::Event&);
+	/**
+	 * Procedura aktualizujaca logike warstwy - przemieszczanie sie robali, strzelanie wiez...
+	 */
 	virtual void update();
-
 private:
 	struct MenuPosition {
 		int no;			// ID

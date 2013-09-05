@@ -33,10 +33,6 @@
 
   SPECIAL THANKS TO SFML LIBRARY (See http://sfml-dev.org)
   AND to Laurent Gomila.
-
-
-Thanks, I hope you don't mind deleteing the namespace :)
-Qrzychu
 */
 
 
@@ -44,38 +40,28 @@ Qrzychu
 #ifndef PAUSABLECLOCK_HPP
 #define PAUSABLECLOCK_HPP
 
-/*!
- \file pausableclock.hpp
- \brief Definition and implementation of PausableClock class.
-*/
 #include <SFML/System.hpp>
 
-/*!
- \namespace sftools
- \brief namespace containing tools using SFML library.
-*/
-
-
-/*!
- \class PausableClock
- \brief sf::Clock with Pause function.
-*/
+/**
+ * \class PuasableClock
+ * \brief Zegar, ktory mozna zatrzymac i wznowic
+ *
+ * Klasa opakowuje zwykly sf::Clock i dodaje do niego funkcje pause(),start() oraz isPaused(). Zostala stworzona na podstawie PausableClock autorstwa Marco Antognini,
+ * jednak zostala dostosowana do wersji 2.0 biblioteki SFML, usunieto przestrzen nazw oraz dodano funkcje isPaused().
+ */
 class PausableClock
 {
         public :
-                /*!
-                 \brief Semi-default ctor.
-                 \param paused : does the clock start paused ?
-                */
-                PausableClock(bool paused = false)
+			/**
+			 * Konstruktor domyslny
+			 */
+			PausableClock(bool paused = false)
                 : am_i_paused(paused)
                 {
-                        // Nothing else.
                 }
-
-                /*!
-                 \brief Set the clock in 'pause' mode.
-                */
+			/**
+			 * Procedura zatrzymujaca zegar
+			 */
                 void pause(void)
                 {
                         // If not yet paused...
@@ -86,9 +72,9 @@ class PausableClock
                         }
                 }
 
-                /*!
-                 \brief Start the clock (again).
-                */
+                /**
+                 * Procedura wznawiajaca zegar
+                 */
                 void start(void)
                 {
                         // If not yet started...
@@ -99,9 +85,10 @@ class PausableClock
                         }
                 }
 
-                /*!
-                 \brief Get the time elapsed since last Reset.
-                */
+                /**
+                 * Funckja zwracajaca czas od ostatniego wywolanaia funkcji restart() lub konstruktora ( z wylaczeniem czasu, gdy zegar byl zatrzymany).
+                 * \return sf::Time czas od ostatniego restartu
+                 */
                 sf::Time getElapsedTime(void) const
                 {
                         // If not paused...
@@ -111,10 +98,9 @@ class PausableClock
                                 return my_time;
                 }
 
-                /*!
-                 \brief Reset the clock.
-                 \param paused : does the clock start paused ?
-                */
+                /**
+                 * Procedura restartowania zegara
+                 */
                 void restart(bool paused = false)
                 {
                         am_i_paused = paused;
@@ -122,25 +108,17 @@ class PausableClock
                         my_clock.restart();
                 }
 
-
+                /**
+                 * Procedura sprawdzajaca czy zegar jest zatrzymany
+                 * \return true Jesli zegar jest zatrzymany
+                 * \return false Jesli zegar nie jest zatrzymany
+                 */
                 bool isPaused(void) const{
                 	return am_i_paused;
                 }
         private :
-                /*!
-                 \brief Is the PausableClock paused ?
-                */
                 bool am_i_paused;
-
-                /*!
-                 \brief Time buffer.
-                */
-               sf::Time my_time;
-
-
-                /*!
-                 \brief The sf::Clock used.
-                */
+                sf::Time my_time;
                 sf::Clock my_clock;
 };
 

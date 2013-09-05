@@ -1,14 +1,8 @@
 #include "Dialog.hpp"
 
-Dialog::Dialog(bool opt, int x, int y):_options(opt), _x(x), _y(y) {
-}
-
-int Dialog::getX() const {
-	return _x;
-}
-
-int Dialog::getY() const {
-	return _y;
+Dialog::Dialog(bool opt, int x, int y):_options(opt){
+	setX(x);
+	setY(y);
 }
 
 bool Dialog::getOptions() const {
@@ -17,4 +11,8 @@ bool Dialog::getOptions() const {
 
 void Dialog::setOptions(bool opt) {
 	_options = opt;
+}
+
+std::string Dialog::getName() const {
+	return "dialog";
 }

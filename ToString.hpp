@@ -5,8 +5,9 @@
 #include <sstream>
 
 /**
- * Function changing any type to string
- * (Overriden operator << required)
+ * Szablon funkcji do zamiany dowolnego typu, ktory posiada operator << dla strumienia std::ostream.
+ * \param Obiekt do zamiany na napis
+ * \return Obiekt std::string z reprezentacja napisowa argumentu
  */
 template<typename T>
 std::string toString(T val) {
@@ -16,8 +17,9 @@ std::string toString(T val) {
 }
 
 /**
- * Function changing string to any type
- * (Overriden operator >> required)
+ * Szablon funkcji do zamiany napisu na typ okreslony w parametrze szablonu. Wymagany przeladowany operator >> dla strumienia std::istream.
+ * \param Napis do zamiany na obiekt
+ * \return Obiekt klasy okreslonej w parametrze szablonu
  */
 template<typename T>
 T stringTo(std::string txt) {

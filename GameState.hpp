@@ -7,6 +7,10 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include "PausableClock.hpp"
+/**
+ * \enum Typ wyliczeniowy opisujacy stan, w jakim znajduje sie aplikacja
+ */
+
 
 enum States {
 	MainMenu	= 0,
@@ -18,6 +22,13 @@ enum States {
 	Load		= 6,
 	Exit		= 7
 };
+
+/**
+ *  \class GameState
+ *  \brief Kontener na zmienne globalne
+ *
+ *  Klasa statyczna GameState, ktora zastepuje zmienne globalne i zbiera je w jednym miejscu.
+ */
 
 struct GameState {
 	static int lifes;
@@ -34,11 +45,25 @@ struct GameState {
 	static PausableClock waveTime;
 	static States state;
 	static bool music;
-
+	/**
+	 * Procedura ktora przywraca stan poczatkowy klasie GameState.
+	 */
 	static void reset();
+	/**
+	 * Procedura zatrzymujaca wszystkie zegary w klasie GameState.
+	 */
 	static void pause();
+	/**
+	 * Procedura wznawiajaca prace wszystkich zegarow w klasie GameState.
+	 */
 	static void unpause();
+	/**
+	 * Procedura inicjujaca klase GameState, w tym wczytanie testur, czcionek i dzwiekow.
+	 */
 	static void init();
+	/**
+	 * Procedura czyszczaca, odpowiednik statycznego "destruktora".
+	 */
 	static void deinit();
 
 	static void toggleMusic();

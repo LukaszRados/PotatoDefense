@@ -5,14 +5,32 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+/**
+ * \class Wall
+ * \brief Klasa sluzaca do stworzenia ramki dookola planszy. W skrocie jest to wieza ktora nie strzela.
+ */
 class Wall : public Clickable {
 public:
+	/**
+	 * Konstruktor domyslny, rownowazny z Wall(1)
+	 */
 	Wall();
-	Wall(int);
+	/**
+	 * Konstruktor okreslajacy rodzaj muru
+	 * \param n rodzaj muru ( 1 -mur, 2 - wejscie dla robali, 3 - wyjscie)
+	 */
+	Wall(int n);
+	/**
+	 * Wirtualny destruktor
+	 */
 	virtual ~Wall();
-	virtual void firstClick();
-	virtual Clickable* secondClick(int, int);
+	/**
+	 * Nadpisana funkcja getName z klasy Clickable
+	 */
 	virtual std::string getName() const;
+	/**
+	 * Procedura zwracajaca rodzaj muru
+	 */
 	virtual int getNumber() const;
 
 private:
