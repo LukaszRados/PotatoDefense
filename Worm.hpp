@@ -7,31 +7,61 @@
 #include <SFML/Graphics.hpp>
 #include <ctime>
 #include <cstdlib>
-
+/**
+ * \class Worm
+ * \brief Klasa reprezentujaca robala
+ *
+ * Klasa dziedziczy po sf::Drawable, co oznacza, ze oiekty tej klasy mozna rysowac bezposrednio w sf::RenderWindow.
+ * Posiada interfejs, dzieki ktoremu klasy WormLayer oraz TowerLayer moga decydowac, co ma sie dziac z robalami.
+ * Kazdy robal to autonomiczny obiekt, ktory porusza sie po sciezce przeslanej z WormLayer do funkcji go().
+ * W konstruktorze okresla sie jakiego rodzaju ma byc robal, co wplywa na jego statystyki: punkty zycia, predkosc, wartosc, czy lata itp.
+ *
+ */
 class Worm : public sf::Drawable {
 public:
-	Worm(int); //konstruktor okreslajacy rodzaj robaka
-
-
-	/** Funkcja ktora zadaje obrazenia
-	 *  @return true-jesli robak przezyl | false - jesli umarl
+	/**
+	 * Konstruktor okreslajacy rodzaj robaka. Ustawia go tez na wejsciu planszy.
+	 * \param type Typ robaka
 	 */
-	bool dmg(int);
+	Worm(int type);
 
-	/** Funkcja iscia
-	 *  pos+=dir*v*time
-	 *  time - czas od ostatniego przesunieca
-	 *  dziekie temu bedzie latwo dostosowac predkosc
-	 *  @return false - jesli ciagle idzie | true - jesli przeszla plansze
+
+	/**
+	 * Funkcja zadajaca obrazenia robakowi.
+	 * \param attack Obrazenia ktore ma odniesc cel
+	 * \return true Jesli robak przezyl
+	 * \return false Jesli robak zginal
 	 */
-	bool go(float,std::vector<std::vector<int> >);
-	float distance(int, int);
+	bool dmg(int attack);
 
+	/**
+	 * Funkcja przesuwajaca robaka po sciezce.
+	 * \param time Czas, ktory minal od ostatniego przesuniecia
+	 * \param path Sciezka wyznaczona przez obiekt klasy WormLayer
+	 * \return true Jesli robak dotarl do wyjscia
+	 * \return false Jesli robak nie dotarl do wyjscia
+	 */
+	bool go(float time,std::vector<std::vector<int> > path);
+	/**
+	 * Funkcja okreslajaca odleglosc robaka od srodka kwadratu z Board::board o zadanych wspolrzednych.
+	 * Bardzo pomocna przy wybieraniu celu dla wiezyczki
+	 * \param x Wspolrzedna x wiezy
+	 * \param y Wspolrzedna y wiezy
+	 * \return float Odleglosc od zadanej wiezy
+	 */
+	float distance(int x, int y);
+
+	/**
+	 * Przeladowana funkcja z klasy sf::Drawable
+	 */
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
+	/**
+	 * Destruktor
+	 */
 	virtual ~Worm(){}
 
-//getery (pisze tu bo by bylo duzo roboty :)
+// zestaw setterow i getterow
 	int getValue(){
 		return _value;
 	}
@@ -59,7 +89,7 @@ public:
 	int getDist(){
 		return _dist;
 	}
-	// frienship for accessing private members
+
 	friend class WormLayer;
 private:
 	sf::Sprite getSprite(int type); //wycina z tekstury odpowiedni dla typu robaka fragment

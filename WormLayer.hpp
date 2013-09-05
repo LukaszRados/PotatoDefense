@@ -10,59 +10,50 @@
 #include <cmath>
 
 /**
- * Warstwa do obslugi robakow. Szuka im sciezki, animuje je oraz decyduje kiedy wchodza nastepne
+ * \brief Warstwa do obslugi robakow.
+ *
+ * Szuka im sciezki, animuje je oraz decyduje kiedy wchodza nastepne. Mocno wspolpracuje z klasa TowerLayer oraz Board, dzieki ktorym jest w stanie wyznaczyc sciezke dla robali.
+ * Udostepnia takze interfejs specjalnie dla klasy TowerLayer, mianowicie funkcje pathExists() oraz isFree(), ktore okreslaja gdzie moze stanac kolejna wieza, a gdzie nie.</br>
+ * Zeby zapewnic, ze fale zawsze sa takie same, wykorzystano macierz enemies, gdzie pod indeksami [fala][czas] kryje sie rodzaj robaka ktory ma sie pojawic jako kolejny.
+ *
+ * </br></br> Dla wygody ma zadeklarowana przyjazn z klasa Worm.
  */
 
 class WormLayer : public Layer {
 public:
+	/**
+	 * Konstruktor
+	 */
 	WormLayer(sf::RenderWindow *w);
+	/**
+	 * Wirtualny destruktor
+	 */
 	virtual ~WormLayer();
+	/**
+	 * Procedura do obslugi zdarzen.
+	 */
 	virtual void parseEvent(sf::Event &event);
+	/**
+	 * Procedura do rysowania warstwy.
+	 */
 	virtual void draw();
+	/**
+	 * Procedura aktualizujaca logike warstwy - przemieszczanie sie robali, strzelanie wiez...
+	 */
 	virtual void update();
-
 	void setPath(std::vector<std::vector<int> >);
-
 	bool pathExists(std::vector<std::vector<int> >);
-	// wg tej sciezki beda chodzic robaki
 	static std::vector<std::vector<int> > _path;
 	static std::list<Worm> worms;
-
-	// array for queueing enemies array[wave][second]=type of enemy
-	// 0- no enemy in this second
-	// -1 - end of wave
-
 	static bool isFree(int, int);
-
 	static std::vector<std::vector<int> > enemies;
 private:
-
-
-	const int _dens=3; // stala okresla gestosc siatki po ktorej chodza stonki
-	// Board::height okresla rozmiar planszy
-	const int _s = Board::height; //s jak size
-
-	bool _moreEnemies; // tells whether to add new worms
-	bool _waveOn; //true if wave is on, false between waves
-
-	PausableClock _time; // for animating worms' movement
-
-	// metoda do przerabiania siatki wiez na siatke robakow - niepotrzebna
-	//std::vector<std::vector<int> > getBoard(std::vector<std::vector<int> >);
-	//std::vector<std::vector<int> > _board;
-
+	int _s=Board::height;
+	bool _moreEnemies; // okresla czy w danej fali pojawia sie kolejni przeciwnicy
+	bool _waveOn; //okresla czy trwa fala
+	PausableClock _time; // zegar do animowania robakow
 	std::vector<std::vector<int> >  findPath(std::vector<std::vector<int> >);
-
-	/**
-	 * wypisuje dowolna tablice dwuwymiarowa, endl co wiersz
-	 */
 	void printPath(std::vector<std::vector<int> >);
-	/** Wypelnia tablice _board o gestszej siatce wartosciami val w polach x,y(w zasiegu _dens)
-	 *
-	 */
-//	niepotrzebne
-//	void fillBoard(std::vector<std::vector<int> >  & board,int val, int x, int y);
-
 };
 
 

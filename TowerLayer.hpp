@@ -19,6 +19,8 @@
  * W tej warstwie dzieje sie najwiecej magii. W funkcji parseEvent obslugiwane sa zdarzenia, co pozwala na budowanie, ulepszanie i sprzedawanie wiez.
  * Natomiast w funkcja update zajmuje sie strzelaniem wiez. Warstwa ta bardzo mocno wspolpracuje z warstwa WormLayer, ktora jest nastepna na stosie.
  * Po kazdej zmianie w planszy(kupienie lub sprzedaz wiezy) jest ona o tym informowana.
+ * </br></br>
+ * Dla wygody ma przyjazn z klasa Tower.
  */
 class TowerLayer : public Layer {
 public:

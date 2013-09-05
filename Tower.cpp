@@ -15,7 +15,7 @@ int Tower::_stats [3][3][5]= {
 		{ //tower 3 - shooting ground
 				{70,	12,	900,	0,	100}, //level 1
 				{100,	25,	800,	0,	300}, // level 2
-				{120,	30,	700,	0,	1000} // level 3
+				{120,	40,	700,	0,	1000} // level 3
 		}
 };
 
@@ -52,9 +52,6 @@ Tower::Tower():Tower(0) {
 Tower::Tower(int no):_no(no), _target(nullptr) {
 	setStats(no,1);
 	_sprite = sf::IntRect(_no * 40, 0, 40, 40);
-//	_sound.setBuffer(*(GameState::sounds["laser" + toString(_no + 1)]));
-//	_sound.setVolume(50);
-//	_sound.setLoop(false);
 }
 
 Tower::~Tower() {
