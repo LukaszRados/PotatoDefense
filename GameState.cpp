@@ -119,19 +119,19 @@ void GameState::deinit() {
 //		}
 //	}
 //
-//	for(auto & i : sounds){
-//		if(i.second != nullptr){
-//			delete i.second;
-//			i.second=nullptr;
-//		}
-//	}
-//
-//	for(auto & i : fonts){
-//			if(i.second != nullptr){
-//				delete i.second;
-//				i.second=nullptr;
-//			}
-//		}
+	for(auto & i : sounds){
+		if(i.second != nullptr){
+			delete i.second;
+			i.second=nullptr;
+		}
+	}
+
+	for(auto & i : fonts){
+			if(i.second != nullptr){
+				delete i.second;
+				i.second=nullptr;
+			}
+		}
 
 }
 
