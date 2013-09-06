@@ -12,16 +12,6 @@ TowerBuilder::~TowerBuilder() {
 
 }
 
-void TowerBuilder::firstClick() {
-//	if(GameState::money < prices[0]) {
-//		// Nie ma wystarczajaco kasy, by zbudowac wiezyczke
-//		// w Board bedzie zmienna dotyczaca komunikatow
-//	}
-//	else {
-////		Board::buffer = this; // - nie moze byc tak ;(
-//	}
-}
-
 Clickable* TowerBuilder::secondClick(int x, int y) {
 	Tower *tmp;
 

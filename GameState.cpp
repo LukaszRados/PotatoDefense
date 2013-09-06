@@ -112,26 +112,26 @@ void GameState::init() {
 }
 
 void GameState::deinit() {
-	for(auto & i : textures) {
-		if(i.second != nullptr) {
-			delete i.second;
-			i.second = 0;
-		}
-	}
-
-	for(auto & i : sounds){
-		if(i.second != nullptr){
-			delete i.second;
-			i.second=nullptr;
-		}
-	}
-
-	for(auto & i : fonts){
-			if(i.second != nullptr){
-				delete i.second;
-				i.second=nullptr;
-			}
-		}
+//	for(auto & i : textures) {
+//		if(i.second != nullptr) {
+//			delete i.second;
+//			i.second = 0;
+//		}
+//	}
+//
+//	for(auto & i : sounds){
+//		if(i.second != nullptr){
+//			delete i.second;
+//			i.second=nullptr;
+//		}
+//	}
+//
+//	for(auto & i : fonts){
+//			if(i.second != nullptr){
+//				delete i.second;
+//				i.second=nullptr;
+//			}
+//		}
 
 }
 

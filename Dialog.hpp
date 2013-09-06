@@ -26,7 +26,7 @@ public:
 	 */
 	void setOptions(bool);
 	/**
-	 * Funkcja wirtualna identyfikujaca obeikty tej klasy
+	 * Funkcja wirtualna identyfikujaca obiekty tej klasy
 	 * \return std::string("dialog")
 	 */
 	virtual std::string getName() const;
