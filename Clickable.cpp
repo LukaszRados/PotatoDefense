@@ -37,5 +37,5 @@ void Clickable::save(std::ostream & a) const {
 }
 
 bool Clickable::load(std::istream & a) {
-
+	return false;
 }

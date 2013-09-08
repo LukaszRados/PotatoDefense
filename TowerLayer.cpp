@@ -460,9 +460,9 @@ void TowerLayer::draw() {
 					i->_sound.play();
 				}
 
+				line.setOrigin(0,-(i->_damage/5)/2);
 				line.setPosition(i->getPosition().x,i->getPosition().y-(i->_damage/5+1)/2);
 				float angle=atan2(i->getPosition().y-i->_target->getPos().y,i->getPosition().x-i->_target->getPos().x)*180/3.1415f-90;
-				line.setOrigin(0,-(i->_damage/5)/2);
 				line.setRotation(angle);
 
 				_window->draw(line);
