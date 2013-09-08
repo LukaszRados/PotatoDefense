@@ -20,7 +20,7 @@ sf::Time GameState::loadedTime;
 
 States GameState::state = MainMenu;
 
-const int GameState::maxWaves=7;
+const int GameState::maxWaves=8;
 const int GameState::secondsBetweenWaves=5;
 
 bool GameState::music = true;
@@ -112,12 +112,12 @@ void GameState::init() {
 }
 
 void GameState::deinit() {
-//	for(auto & i : textures) {
-//		if(i.second != nullptr) {
-//			delete i.second;
-//			i.second = 0;
-//		}
-//	}
+	for(auto & i : textures) {
+		if(i.second != nullptr) {
+			delete i.second;
+			i.second = 0;
+		}
+	}
 
 	for(auto & i : sounds){
 		if(i.second != nullptr){
@@ -126,12 +126,12 @@ void GameState::deinit() {
 		}
 	}
 
-//	for(auto & i : fonts){
-//			if(i.second != nullptr){
-//				delete i.second;
-//				i.second=nullptr;
-//			}
-//		}
+	for(auto & i : fonts){
+			if(i.second != nullptr){
+				delete i.second;
+				i.second=nullptr;
+			}
+		}
 
 }
 

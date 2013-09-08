@@ -55,10 +55,10 @@ Worm::Worm(int type){
 			_flying=false;
 			break;
 	case 7:
-		_max_health=_health=500;
-		_value=100;
-		_lifes=5;
-		_v=1;
+		_max_health=_health=1000;
+		_value=80;
+		_lifes=3;
+		_v=1.2;
 		_flying=false;
 		break;
 	case 8:
