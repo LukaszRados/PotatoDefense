@@ -6,10 +6,6 @@
 #include "ToString.hpp"
 #include "GameState.hpp"
 
-
-#include <iostream>
-
-
 /**
  * \class MenuLayer
  * \brief Warstwa odpowiedzialna za menu glowne gry.

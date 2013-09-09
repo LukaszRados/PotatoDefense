@@ -90,7 +90,7 @@ void Board::save(){
 	std::ofstream file;
 	file.open("autosave.pd", std::ofstream::binary);
 	if(!file){
-		std::cout << "Autosave could not be created!" << std::endl;
+		// Autosave couldn't be created
 	} else {
 		file << GameState::money << " " << GameState::lifes << " " << GameState::wave << " ";
 		file << GameState::globalTime.getElapsedTime().asSeconds() << " ";

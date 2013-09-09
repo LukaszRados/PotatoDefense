@@ -3,7 +3,6 @@
 
 #include "Clickable.hpp"
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 /**
  * \class Wall

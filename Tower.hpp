@@ -8,8 +8,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <list>
-#include <iostream>
-
 
 /**
  * \brief Klasa wiezy

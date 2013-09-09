@@ -191,17 +191,6 @@ void WormLayer::update(){
 
 }
 
-void WormLayer::printPath(std::vector<std::vector<int> >  path){
-	std::cout << std::endl;
-	for(auto i : path){
-		for(auto j : i)
-			std::cout << j << " ";
-		std::cout << std::endl;
-	}
-}
-
-
-
 std::vector<std::vector<int> > WormLayer::findPath(std::vector<std::vector<int> >  board){
 
 

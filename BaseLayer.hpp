@@ -4,7 +4,6 @@
 #include "Layer.hpp"
 #include "BgLayer.hpp"
 #include "Wall.hpp"
-#include <iostream>
 #include <string>
 
 /**

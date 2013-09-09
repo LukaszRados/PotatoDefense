@@ -44,7 +44,7 @@ TowerLayer::TowerLayer(sf::RenderWindow *w, std::string filename):Layer(w) {
 		std::ifstream save;
 		save.open(filename.c_str(),std::ifstream::in | std::ifstream::binary);
 		if(!save){
-			std::cout << "Autosave could not be loaded" << std::endl;
+			// Autosave couldn't be loaded
 		} else {
 			save >> GameState::money >> GameState::lifes >> GameState::wave;
 			float time;

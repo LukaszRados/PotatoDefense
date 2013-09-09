@@ -1,6 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>				// for debugging
-
 #include "GameState.hpp"
 #include "Layer.hpp"
 #include "MenuLayer.hpp"

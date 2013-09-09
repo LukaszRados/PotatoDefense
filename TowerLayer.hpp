@@ -10,8 +10,6 @@
 #include "GameState.hpp"
 #include <cmath>
 
-#include <iostream>
-
 /**
  * \class TowerLayer
  * \brief Warstwa obslugujaca wiezyczki

@@ -5,7 +5,6 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <iostream>
 #include "PausableClock.hpp"
 /**
  * \enum Typ wyliczeniowy opisujacy stan, w jakim znajduje sie aplikacja

@@ -53,7 +53,6 @@ private:
 	bool _waveOn; //okresla czy trwa fala
 	PausableClock _time; // zegar do animowania robakow
 	std::vector<std::vector<int> >  findPath(std::vector<std::vector<int> >);
-	void printPath(std::vector<std::vector<int> >);
 };
 
 
